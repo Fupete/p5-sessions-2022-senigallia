@@ -12,8 +12,8 @@ var s1 = function(s) {
     deleteAtTheEnd: false,
     threeshold: .55,
     invert: true,
-    wCopia: 8,
-    wDestinazione: 20
+    wCopia: 8, // *
+    wDestinazione: 20 // *
   }
 
   // s.preload = function() {
