@@ -3,7 +3,7 @@ var s1 = function(s) {
   let units = [];
 
   let p = {
-    // parameter: value,
+    grids: [2, 4, 8, 16, 24, 32],
   }
 
 
@@ -24,8 +24,7 @@ var s1 = function(s) {
   }
   s.genGrid = function() {
     if (units.length > 0) units = [];
-    let grids = [2, 4, 8, 16, 24, 32]
-    let grid = s.random(grids);
+    let grid = s.random(p.grids);
     for (let u = 0; u < grid; u++) {
       units.push(new Unit(s, u, u * w / grid, h, w / grid, 255));
     }
@@ -51,8 +50,10 @@ var s1 = function(s) {
       this.s.vertex(this.x, this.y - 100 - volume)
       this.s.endShape();
       //this.s.rect(this.x, this.y, this.w, -100 - volume);
-      this.s.fill(255, 0, 0);
-      this.s.text(this.id, this.x, this.y);
+      // this.s.push();
+      // this.s.fill(255, 0, 0);
+      // this.s.text(this.id, this.x, this.y);
+      // this.s.pop();
     }
   }
 
