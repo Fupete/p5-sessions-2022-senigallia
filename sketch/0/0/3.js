@@ -6,6 +6,9 @@ var s1 = function(s) {
 
   let p = {
     noAttractors: 3,
+    xAttractor: 100, //** < connesso a quale è i...
+    yAttractor: 100, //*
+    sizeAttractor: 200, //*
     isGreen: true,
   }
 
@@ -22,6 +25,9 @@ var s1 = function(s) {
     s.noStroke();
     s.pixelDensity(1);
 
+    p.yAttractor = h / 2;
+    p.sizeAttractor = 100;
+
     engine = Engine.create();
     engine.world.gravity.scale = 0;
 
@@ -29,7 +35,7 @@ var s1 = function(s) {
     let allAttractors = [];
     for (let i = 0; i < p.noAttractors; i++)
       allAttractors.push(
-        Bodies.circle(w / 3 * i + w / 6, h / 2, 100, {
+        Bodies.circle(w / 3 * i + w / 6, p.yAttractor, p.sizeAttractor, {
           isStatic: true,
           plugin: {
             attractors: [
