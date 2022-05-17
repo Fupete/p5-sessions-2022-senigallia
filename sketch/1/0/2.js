@@ -1,6 +1,10 @@
 var s1 = function(s) {
-
+  let w, h;
   let units = [];
+
+  let p = {
+    // parameter: value,
+  }
 
   s.setup = function() {
     let cnv;

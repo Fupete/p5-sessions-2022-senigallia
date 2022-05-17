@@ -1,15 +1,13 @@
 var s1 = function(s) {
-
-  let isGreen = true;
-
+  let w, h;
   let attractor;
   let attractors = [];
-  let boxes;
-  let eyeImg;
+  let boxes, eyeImg, boxImg;
 
-  let boxImg;
-
-  let w, h;
+  let p = {
+    noAttractors: 3,
+    isGreen: true,
+  }
 
   s.preload = function() {
     let imgLoc = artFolder + '/' + current_set + '/' + current_bank + '/';
@@ -29,7 +27,7 @@ var s1 = function(s) {
 
     // create engine attractors
     let allAttractors = [];
-    for (let i = 0; i < 1; i++)
+    for (let i = 0; i < p.noAttractors; i++)
       allAttractors.push(
         Bodies.circle(w / 2, h / 3, 400, {
           isStatic: true,
@@ -94,7 +92,7 @@ var s1 = function(s) {
       s.pop();
     }
     s.filter(s.THRESHOLD);
-    if (isGreen) {
+    if (p.isGreen) {
       s.blendMode(s.MULTIPLY);
       s.fill(0, 255, 0);
       s.rect(0, 0, w, h);
