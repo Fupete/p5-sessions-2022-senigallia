@@ -12,4 +12,4 @@ the base keyboard VJ engine is heavily inspired and builded upon the work of Geo
 
 ------
 
-_work in progress, more credits && work to come, stay tuned, we have really just 10 days to finish... no comment... [@fupete](https://twitter.com/fupete)_
+_work in progress, more credits && work to come, stay tuned [@fupete](https://twitter.com/fupete)_
