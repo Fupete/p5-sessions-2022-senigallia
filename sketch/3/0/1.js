@@ -1,4 +1,4 @@
-var s1 = function(s) {
+  var s1 = function(s) {
   let w, h;
   let letters = [];
   let rows, cols, letterW, letterH;
@@ -6,17 +6,21 @@ var s1 = function(s) {
   let scrollIndex = 0;
 
   let p = {
-    testo: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    testo: "LOREM IPSUM IS SIMPLY DUMMY TEXT OF THE PRINTING AND TYPESETTING INDUSTRY. LOREM IPSUM HAS BEEN THE INDUSTRY'S STANDARD DUMMY TEXT EVER SINCE THE 1500S, WHEN AN UNKNOWN PRINTER TOOK A GALLEY OF TYPE AND SCRAMBLED IT TO MAKE A TYPE SPECIMEN BOOK. IT HAS SURVIVED NOT ONLY FIVE CENTURIES, BUT ALSO THE LEAP INTO ELECTRONIC TYPESETTING, REMAINING ESSENTIALLY UNCHANGED. IT WAS POPULARISED IN THE 1960S WITH THE RELEASE OF LETRASET SHEETS CONTAINING LOREM IPSUM PASSAGES, AND MORE RECENTLY WITH DESKTOP PUBLISHING SOFTWARE LIKE ALDUS PAGEMAKER INCLUDING VERSIONS OF LOREM IPSUM.",
     gridWidth: 400, //* per tutto schermo vedi fine setup (righe commentate)
     gridHeight: 400,
     gridColumns: [1, 2, 4, 8, 16, 32, 64],
     gridRows: [1, 2, 4, 8, 16, 32, 64],
     showRect: false,
     autoScroll: true,
-    scrollVel: 25, // >= 25!!! < 60 = 1sec, 10 = 1/6sec, 120 = 2sec, 1 = 1/60sec
+    scrollVel: 10, // >= 25!!! < 60 = 1sec, 10 = 1/6sec, 120 = 2sec, 1 = 1/60sec
     isViolet: false,
   }
 
+  let fontRegular;
+  s.preload = function() {
+    fontRegular = loadFont('Macbethfont/Macbeth-Regular.otf');
+  }
 
   s.setup = function() {
     let cnv;
@@ -25,6 +29,11 @@ var s1 = function(s) {
     cnv.parent("canvas");
     s.background(0);
     s.pixelDensity(1);
+   s.textFont (fontRegular);
+    //s.fill (255);
+
+
+
 
     p.gridWidth = w; // < griglie tutto schermo
     p.gridHeight = h;
@@ -41,7 +50,7 @@ var s1 = function(s) {
       letters[l].display();
     }
     if (p.autoScroll)
-      if (s.frameCount % p.scrollVel == 0) scrollIndex++;
+      if (s.frameCount % p.scrollVel == 1) scrollIndex++;
   }
   s.genGrid = function() {
     if (letters.length > 0) letters = [];

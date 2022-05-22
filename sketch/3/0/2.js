@@ -4,6 +4,13 @@ var s1 = function(s) {
   let rows, cols, letterW, letterH;
   let testoLength;
   let scrollIndex = 0;
+  var letters = [];
+var density = 2.5;
+var ribbonWidth = 92;
+var shapeColor;
+var fontSize = 800;
+var pathSimplification = 0;
+var pathSampleFactor = 0.1;
 
   let p = {
     testo: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
@@ -32,6 +39,8 @@ var s1 = function(s) {
     s.genGrid();
     testoLength = p.testo.length;
     //console.log(testoLength);
+
+    
   }
   s.draw = function() {
     s.clear();
