@@ -5,13 +5,13 @@ var s1 = function(s) {
   let xScan = 0;
 
   let p = {
-    gridScan: 0.5,
-    playSpeed: 0.1,
+    gridScan: 0.3,
+    playSpeed: 0.4,
     duoTone: true,
-    isYellow: true,
+    isYellow: false,
     deleteAtTheEnd: false,
-    threeshold: .55,
-    invert: true,
+    threeshold: .20,
+    invert: false,
     wCopia: 8, // *
     wDestinazione: 20 // *
   }
@@ -28,13 +28,13 @@ var s1 = function(s) {
     s.pixelDensity(1);
 
     let vidLoc = artFolder + '/' + current_set + '/' + current_bank + '/';
-    video = s.createVideo(vidLoc + "/" + "fingers.mov ", s.vidLoad);
+    video = s.createVideo(vidLoc + "/" + "occhio.mp4 ", s.vidLoad);
 
     vidW = video.width;
     vidH = video.height;
 
     p.wDestinazione = w;
-    p.wCopia = vidW / 4;
+    p.wCopia = vidW / 2;
 
     gialloNero = s.createGraphics(w, h);
   }
@@ -44,9 +44,9 @@ var s1 = function(s) {
     s.translate(0, h);
     s.scale(1, -1);
 
-    if (!p.duoTone) s.copy(video, vidW / 2, 0, p.wCopia, vidH, xScan, 0, p.wDestinazione, h);
+    if (!p.duoTone) s.copy(video, vidW / 2, 0, p.wCopia, vidH * 2, xScan, 0, p.wDestinazione, h);
     else {
-      gialloNero.copy(video, vidW / 2, 0, p.wCopia, vidH, xScan, 0, p.wDestinazione, h);
+      gialloNero.copy(video, vidW / 2, 0, p.wCopia, vidH * 2 , xScan, 0, p.wDestinazione, h);
       gialloNero.filter(s.THRESHOLD, p.threeshold);
       if (p.invert) gialloNero.filter(s.INVERT);
       s.image(gialloNero, 0, 0);
