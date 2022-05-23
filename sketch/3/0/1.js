@@ -13,7 +13,7 @@
     gridRows: [1, 2, 4, 8, 16, 32, 64],
     showRect: false,
     autoScroll: true,
-    scrollVel: 25, // >= 25!!! < 60 = 1sec, 10 = 1/6sec, 120 = 2sec, 1 = 1/60sec
+    scrollVel: 10, // >= 25!!! < 60 = 1sec, 10 = 1/6sec, 120 = 2sec, 1 = 1/60sec
     isViolet: false,
   }
 
