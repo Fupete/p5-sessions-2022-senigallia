@@ -13,11 +13,15 @@ var s1 = function(s) {
     gridRows: [8],
     showRect: false,
     autoScroll: true,
-    scrollVel: 40, // >= 25!!! < 60 = 1sec, 10 = 1/6sec, 120 = 2sec, 1 = 1/60sec
+    scrollVel: 25, // >= 25!!! < 60 = 1sec, 10 = 1/6sec, 120 = 2sec, 1 = 1/60sec
     isViolet: false,
     isBackgroundViolet: false
   }
 
+  let fontRegular;
+  s.preload = function() {
+    fontRegular = loadFont('MacbethMad/Macbeth-Mad-Regular.otf');
+  }
 
   s.setup = function() {
     let cnv;
@@ -29,7 +33,7 @@ var s1 = function(s) {
 
     // p.gridWidth = w; // < griglie tutto schermo
     // p.gridHeight = h;
-
+    s.textFont (fontRegular);
     s.genGrid();
     testoLength = p.testo.length;
     //console.log(testoLength);
