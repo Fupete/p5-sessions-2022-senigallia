@@ -6,7 +6,7 @@ var s1 = function(s) {
   let scrollIndex = 0;
 
   let p = {
-    testo: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    testo: "LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT, SED DO EIUSMOD TEMPOR INCIDIDUNT UT LABORE ET DOLORE MAGNA ALIQUA. UT ENIM AD MINIM VENIAM, QUIS NOSTRUD EXERCITATION ULLAMCO LABORIS NISI UT ALIQUIP EX EA COMMODO CONSEQUAT. DUIS AUTE IRURE DOLOR IN REPREHENDERIT IN VOLUPTATE VELIT ESSE CILLUM DOLORE EU FUGIAT NULLA PARIATUR. EXCEPTEUR SINT OCCAECAT CUPIDATAT NON PROIDENT, SUNT IN CULPA QUI OFFICIA DESERUNT MOLLIT ANIM ID EST LABORUM.",
     gridWidth: 400, //* per tutto schermo vedi fine setup (righe commentate)
     gridHeight: 400,
     gridColumns: [1],
@@ -14,9 +14,13 @@ var s1 = function(s) {
     showRect: false,
     autoScroll: true,
     scrollVel: 25, // >= 25!!! < 60 = 1sec, 10 = 1/6sec, 120 = 2sec, 1 = 1/60sec
-    isViolet: true,
+    isViolet: false,
   }
 
+  let fontRegular;
+  s.preload = function() {
+    fontRegular = loadFont('MacbethMad/Macbeth-Mad-Regular.otf');
+  }
 
   s.setup = function() {
     let cnv;
@@ -29,12 +33,14 @@ var s1 = function(s) {
     p.gridWidth = w; // < griglie tutto schermo
     p.gridHeight = h;
 
+    s.textFont (fontRegular);
     s.genGrid();
     testoLength = p.testo.length;
     //console.log(testoLength);
   }
   s.draw = function() {
     s.clear();
+
     for (let l = 0; l < letters.length; l++) {
       let charIndex = (l + scrollIndex) % testoLength;
       letters[l].letter = p.testo[charIndex];
