@@ -15,6 +15,7 @@ var s1 = function(s) {
     autoScroll: true,
     scrollVel: 40, // >= 25!!! < 60 = 1sec, 10 = 1/6sec, 120 = 2sec, 1 = 1/60sec
     isViolet: false,
+    isBackgroundViolet: false
   }
 
 
@@ -35,11 +36,15 @@ var s1 = function(s) {
   }
   s.draw = function() {
     s.clear();
+    if (p.isBackgroundViolet) s.background(255, 0, 150);
     for (let l = 0; l < letters.length; l++) {
       let charIndex = (l + scrollIndex) % testoLength;
       letters[l].letter = p.testo[charIndex];
       letters[l].display();
     }
+    //
+    // rettangoli a caso sullo schermo usando la griglia...
+    //
     if (p.autoScroll)
       if (s.frameCount % p.scrollVel == 0) scrollIndex++;
   }
@@ -79,6 +84,7 @@ var s1 = function(s) {
         this.s.rect(this.col * letterW, this.row * letterH, letterW, letterH);
       }
       if (p.isViolet) this.s.fill(255, 0, 150);
+      else if (p.isBackgroundViolet) this.s.fill(0);
       else this.s.fill(255);
       this.s.translate(this.col * letterW, this.row * letterH);
       let letterWidth = this.s.textWidth(this.letter);
