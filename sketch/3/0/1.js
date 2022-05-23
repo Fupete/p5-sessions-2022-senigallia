@@ -15,6 +15,7 @@
     autoScroll: true,
     scrollVel: 10, // >= 25!!! < 60 = 1sec, 10 = 1/6sec, 120 = 2sec, 1 = 1/60sec
     isViolet: false,
+    isBackgroundViolet: true
   }
 
   let fontRegular;
@@ -44,6 +45,7 @@
   }
   s.draw = function() {
     s.clear();
+    if (p.isBackgroundViolet) s.background(255, 0, 150);
     for (let l = 0; l < letters.length; l++) {
       let charIndex = (l + scrollIndex) % testoLength;
       letters[l].letter = p.testo[charIndex];
@@ -88,6 +90,7 @@
         this.s.rect(this.col * letterW, this.row * letterH, letterW, letterH);
       }
       if (p.isViolet) this.s.fill(255, 0, 150);
+      else if (p.isBackgroundViolet) this.s.fill(0);
       else this.s.fill(255);
       this.s.translate(this.col * letterW, this.row * letterH);
       let letterWidth = this.s.textWidth(this.letter);
