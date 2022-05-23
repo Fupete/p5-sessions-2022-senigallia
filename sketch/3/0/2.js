@@ -5,12 +5,12 @@ var s1 = function(s) {
   let testoLength;
   let scrollIndex = 0;
   var letters = [];
-var density = 2.5;
-var ribbonWidth = 92;
-var shapeColor;
-var fontSize = 800;
-var pathSimplification = 0;
-var pathSampleFactor = 0.1;
+  var density = 2.5;
+  var ribbonWidth = 92;
+  var shapeColor;
+  var fontSize = 800;
+  var pathSimplification = 0;
+  var pathSampleFactor = 0.1;
 
   let p = {
     testo: "LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT, SED DO EIUSMOD TEMPOR INCIDIDUNT UT LABORE ET DOLORE MAGNA ALIQUA. UT ENIM AD MINIM VENIAM, QUIS NOSTRUD EXERCITATION ULLAMCO LABORIS NISI UT ALIQUIP EX EA COMMODO CONSEQUAT. DUIS AUTE IRURE DOLOR IN REPREHENDERIT IN VOLUPTATE VELIT ESSE CILLUM DOLORE EU FUGIAT NULLA PARIATUR. EXCEPTEUR SINT OCCAECAT CUPIDATAT NON PROIDENT, SUNT IN CULPA QUI OFFICIA DESERUNT MOLLIT ANIM ID EST LABORUM.",
@@ -27,7 +27,7 @@ var pathSampleFactor = 0.1;
 
   let fontRegular;
   s.preload = function() {
-    fontRegular = loadFont('MacbethMad/Macbeth-Mad-Regular.otf');
+    fontRegular = loadFont('assets/fonts/Macbeth-Mad-Regular.otf');
   }
 
   s.setup = function() {
@@ -41,12 +41,12 @@ var pathSampleFactor = 0.1;
     p.gridWidth = w; // < griglie tutto schermo
     p.gridHeight = h;
 
-    s.textFont (fontRegular);
+    s.textFont(fontRegular);
     s.genGrid();
     testoLength = p.testo.length;
     //console.log(testoLength);
 
-    
+
   }
   s.draw = function() {
     s.clear();

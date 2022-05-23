@@ -20,7 +20,7 @@ var s1 = function(s) {
 
   let fontRegular;
   s.preload = function() {
-    fontRegular = loadFont('MacbethMad/Macbeth-Mad-Regular.otf');
+    fontRegular = loadFont('assets/fonts/Macbeth-Mad-Regular.otf');
   }
 
   s.setup = function() {
@@ -33,7 +33,7 @@ var s1 = function(s) {
 
     // p.gridWidth = w; // < griglie tutto schermo
     // p.gridHeight = h;
-    s.textFont (fontRegular);
+    s.textFont(fontRegular);
     s.genGrid();
     testoLength = p.testo.length;
     //console.log(testoLength);
