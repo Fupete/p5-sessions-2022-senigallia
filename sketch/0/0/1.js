@@ -3,6 +3,7 @@ var s1 = function(s) {
   let attractor;
   let attractors = [];
   let boxes, eyeImg, boxImg;
+  let occhio1, occhio2, occhio3;
 
   let p = {
     noAttractors: 1,
@@ -10,11 +11,17 @@ var s1 = function(s) {
     yAttractor: 100, //*
     sizeAttractor: 200, //*
     isGreen: false,
+    coloreBulbo: "#00ff00",
+    colorePupilla: "#000000",
+    backgroundColor: "#00ff00",
+    sizeMultiplier: 60
   }
 
   s.preload = function() {
     let imgLoc = artFolder + '/' + current_set + '/' + current_bank + '/';
-    eyeImg = s.loadImage(imgLoc + "eye_02.gif");
+    occhio1 = s.loadImage(imgLoc + "eye_01.gif");
+    occhio2 = s.loadImage(imgLoc + "eye_02.gif");
+    occhio3 = s.loadImage(imgLoc + "eye_03.gif");
   }
 
   s.setup = function() {
@@ -46,10 +53,10 @@ var s1 = function(s) {
                 let m = Math.sqrt(vx * vx + vy * vy);
                 let dx = vx / m;
                 let dy = vy / m;
-                let mM = 0.3
+                // let mM = 0.3
                 var force = {
-                  x: (dx * mM) / m,
-                  y: (dy * mM) / m,
+                  x: (dx * p.mM) / m,
+                  y: (dy * p.mM) / m,
                 };
                 Body.applyForce(bodyA, bodyA.position, Matter.Vector.neg(force));
                 Body.applyForce(bodyB, bodyB.position, force);
@@ -64,8 +71,8 @@ var s1 = function(s) {
 
     // create engine particles
     let allBoxes = [];
-    for (let i = 0; i < 100; i++) {
-      allBoxes.push(Bodies.rectangle(s.random(w / 2 - w / 4, w / 2 + w / 4), s.random(h / 2 - h / 4, h / 2 + h / 4), s.random(20) + 25, s.random(5) + 15, {
+    for (let i = 0; i < p.nBoxes; i++) {
+      allBoxes.push(Bodies.rectangle( s.random(w / 2 - w / 4, w / 2 + w / 4), s.random(h / 2 - h / 4, h / 2 + h / 4), s.random(20) + 25, s.random(5) + 15, {
         isStatic: false
       }));
     }
@@ -79,24 +86,31 @@ var s1 = function(s) {
 
   s.draw = function() {
     s.clear();
-    s.background(0);
+    s.background(p.backgroundColor);
 
     for (let i = 0; i < boxes.bodies.length; i++) {
       s.push();
+      s.rectMode(CENTER);
+      s.fill(p.colorePupilla);
       // same mass
-      let particleSize = boxes.bodies[i].mass * 120;
+      let particleSize = boxes.bodies[i].mass * p.sizeMultiplier;
       s.translate(boxes.bodies[i].position.x, boxes.bodies[i].position.y)
-      s.rotate(boxes.bodies[i].angle)
-      s.image(eyeImg, 0, 0, particleSize, particleSize)
+      // s.rotate(boxes.bodies[i].angle)
+      s.rect(0, 0, particleSize, particleSize, particleSize / 10)
+      s.fill(p.coloreBulbo);
+      s.rect(0, 0, particleSize - 5, particleSize - 5, particleSize / 12)
+      s.fill(p.colorePupilla);
+      s.rect(0, 0, particleSize / 4, particleSize / 4, particleSize / 20)
+      //s.image(eyeImg, 0, 0, particleSize, particleSize)
       s.pop();
     }
-    s.filter(s.THRESHOLD);
-    if (p.isGreen) {
-      s.blendMode(s.MULTIPLY);
-      s.fill(0, 255, 0);
-      s.rect(0, 0, w, h);
-      s.blendMode(s.BLEND);
-    }
+    // s.filter(s.THRESHOLD);
+    // if (p.isGreen) {
+    //   s.blendMode(s.MULTIPLY);
+    //   s.fill(0, 255, 0);
+    //   s.rect(0, 0, w, h);
+    //   s.blendMode(s.BLEND);
+    // }
   }
 
   s.keyPressed = function() {
@@ -109,4 +123,4 @@ var s1 = function(s) {
       }
     }
   }
-}
+  }
