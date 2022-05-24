@@ -1,10 +1,13 @@
+//LETTERA C.
+
 var s1 = function(s) {
   let w, h;
   let units = [];
 
   let p = {
-    grids: [2, 4, 8, 16],
+    grids: [4, 8, 16],
   }
+
 
   s.setup = function() {
     let cnv;
@@ -14,6 +17,7 @@ var s1 = function(s) {
     s.background(0);
     s.pixelDensity(1);
     s.genGrid();
+    s.frameRate(15);
   }
   s.draw = function() {
     s.clear();
@@ -40,12 +44,15 @@ var s1 = function(s) {
       this.h = _h;
     }
     display() {
-      let volume = Sound.mapSound(10, this.id * 22, 0, 255);
+      let volume = Sound.mapSound(10, this.id * 22, 0, 500); //se tolgo 10 tutti salgono contemporaneamente, da 0 a 255 = quanta sara l ampiezza del volume
       this.s.fill(255);
+      this.s.stroke(255);
+      this.s.strokeWeight(2);
       this.s.beginShape();
       this.s.vertex(this.x, this.y);
       this.s.vertex(this.x + this.w, this.y);
-      this.s.vertex(this.x + this.w, this.y - 200 - volume);
+      this.s.vertex(this.x + this.w, this.y - volume); // 0 e per far partire i rettangoli dalla base
+      this.s.vertex(this.x, this.y - volume)
       this.s.endShape();
       //this.s.rect(this.x, this.y, this.w, -100 - volume);
       // this.s.push();
