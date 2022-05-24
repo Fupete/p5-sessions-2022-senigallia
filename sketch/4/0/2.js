@@ -8,7 +8,6 @@ var s1 = function(s) {
     isBlack: [true, false],
   }
 
-
   s.setup = function() {
     let cnv;
     if (fs) cnv = s.createCanvas(w = s.displayWidth, h = s.displayHeight);
@@ -18,7 +17,7 @@ var s1 = function(s) {
     s.pixelDensity(1);
 
     engine = Engine.create();
-    engine.world.gravity.scale = random(0.0001, 0.0005);
+    engine.world.gravity.scale = random(0.0001, 0.0005); // 0.001
 
     isB = random(p.isBlack);
 
