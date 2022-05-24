@@ -10,9 +10,13 @@ var s1 = function(s) {
     xAttractor: 100, //** < connesso a quale è i...
     yAttractor: 100, //*
     sizeAttractor: 200, //*
-    isGreen: false,
     mM:0.1,
+    isGreen: false,
+    isInvert: true,
     nBoxes:400,
+
+
+
 
   }
 
@@ -28,7 +32,8 @@ var s1 = function(s) {
     if (fs) cnv = s.createCanvas(w = s.displayWidth, h = s.displayHeight);
     else cnv = s.createCanvas(w = s.windowWidth, h = s.windowHeight);
     cnv.parent("canvas");
-    s.noStroke();
+// s.noStroke();
+    s.fill(0,255,0);
     s.pixelDensity(1);
 
     p.yAttractor = h / 2;
@@ -55,9 +60,11 @@ var s1 = function(s) {
                 var force = {
                   x: (dx * p.mM) / m,
                   y: (dy * p.mM) / m,
+
                 };
                 Body.applyForce(bodyA, bodyA.position, Matter.Vector.neg(force));
                 Body.applyForce(bodyB, bodyB.position, force);
+
               }
             ]
           }
@@ -85,6 +92,7 @@ var s1 = function(s) {
   s.draw = function() {
     s.clear();
     s.background(0);
+
 
     for (let i = 0; i < boxes.bodies.length; i++) {
       s.push();
@@ -114,13 +122,25 @@ var s1 = function(s) {
           s.pop();
         }
 
+
     s.filter(s.THRESHOLD);
+    if (p.isInvert){
+      s.filter(s.INVERT);
+      s.blendMode(s.MULTIPLY);
+      s.fill(0, 255, 0);
+      s.rect(0, 0, w, h);
+      s.blendMode(s.BLEND);
+
+    }
     if (p.isGreen) {
       s.blendMode(s.MULTIPLY);
       s.fill(0, 255, 0);
       s.rect(0, 0, w, h);
       s.blendMode(s.BLEND);
     }
+
+
+
   }
 
   s.keyPressed = function() {

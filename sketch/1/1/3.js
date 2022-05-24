@@ -51,8 +51,8 @@ var s1 = function(s) {
     display(cv=250,m=22) {
       let volume = Sound.mapSound(10, this.id * m, 0, cv);
       //se tolgo 10 tutti salgono contemporaneamente
-      this.s.fill(255);
-      this.s.stroke(255);
+      this.s.fill("red");
+      this.s.stroke("red");
       this.s.strokeWeight(2);
       this.s.beginShape();
       this.s.vertex(this.x, this.y);

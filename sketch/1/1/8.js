@@ -1,4 +1,4 @@
-//LETTERA D.
+//LETTERA I.
 
 var s1 = function(s) {
   let w, h;
@@ -6,7 +6,7 @@ var s1 = function(s) {
   let inverso = [];
 
   let p = {
-    grids: [4, 8, 22],
+    grids: [ 12, 20, 32],
   }
 
 
@@ -18,13 +18,13 @@ var s1 = function(s) {
     s.background(0);
     s.pixelDensity(1);
     s.genGrid();
-    s.frameRate(15);
+    s.frameRate(20);
   }
   s.draw = function() {
     s.clear();
     for (let u = 0; u < units.length; u++) {
-      units[u].display(300,22);//parametri da modificare fascia di sotto
-      inverso[u].display(-300,22);//parametri da modificare fascia di sopra
+      units[u].display(250,22);//parametri da modificare fascia di sotto
+      inverso[u].display(-250,22);//parametri da modificare fascia di sopra
     }
   }
   s.genGrid = function() {
@@ -50,15 +50,20 @@ var s1 = function(s) {
     }
     display(cv=250,m=22) {
       let volume = Sound.mapSound(10, this.id * m, 0, cv);
+
       //se tolgo 10 tutti salgono contemporaneamente
-      this.s.fill(255);
-      this.s.stroke(255);
-      this.s.strokeWeight(2);
+      this.s.fill("red");
+      this.s.noStroke();
       this.s.beginShape();
       this.s.vertex(this.x, this.y);
-      this.s.vertex(this.x + this.w, this.y );
-      this.s.vertex(this.x + this.w, this.y - volume); // 0 e per far partire i rettangoli dalla base
-      this.s.vertex(this.x, this.y -volume)
+      this.s.vertex(this.x + this.w, this.y);
+      let dif = (h/2)-(this.y - cv - volume);
+      if (volume >= h/2){
+        this.s.vertex(this.x + this.w/2, this.y - cv - volume - dif);
+      }
+      else {
+        this.s.vertex(this.x + this.w/2, this.y - cv - volume);
+      }
       this.s.endShape();
       //this.s.rect(this.x, this.y, this.w, -100 - volume);
       // this.s.push();

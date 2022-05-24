@@ -3,6 +3,7 @@ var s1 = function(s) {
   let attractor;
   let attractors = [];
   let boxes, eyeImg, boxImg;
+  let occhio1, occhio2, occhio3;
 
   let p = {
     noAttractors: 1,
@@ -18,7 +19,9 @@ var s1 = function(s) {
 
   s.preload = function() {
     let imgLoc = artFolder + '/' + current_set + '/' + current_bank + '/';
-    eyeImg = s.loadImage(imgLoc + "eye_02.gif");
+    occhio1 = s.loadImage(imgLoc + "eye_01.gif");
+    occhio2 = s.loadImage(imgLoc + "eye_02.gif");
+    occhio3 = s.loadImage(imgLoc + "eye_03.gif");
   }
 
   s.setup = function() {
@@ -50,10 +53,10 @@ var s1 = function(s) {
                 let m = Math.sqrt(vx * vx + vy * vy);
                 let dx = vx / m;
                 let dy = vy / m;
-                let mM = 0.3
+                // let mM = 0.3
                 var force = {
-                  x: (dx * mM) / m,
-                  y: (dy * mM) / m,
+                  x: (dx * p.mM) / m,
+                  y: (dy * p.mM) / m,
                 };
                 Body.applyForce(bodyA, bodyA.position, Matter.Vector.neg(force));
                 Body.applyForce(bodyB, bodyB.position, force);
@@ -68,8 +71,8 @@ var s1 = function(s) {
 
     // create engine particles
     let allBoxes = [];
-    for (let i = 0; i < 100; i++) {
-      allBoxes.push(Bodies.rectangle(s.random(w / 2 - w / 4, w / 2 + w / 4), s.random(h / 2 - h / 4, h / 2 + h / 4), s.random(20) + 25, s.random(5) + 15, {
+    for (let i = 0; i < p.nBoxes; i++) {
+      allBoxes.push(Bodies.rectangle( s.random(w / 2 - w / 4, w / 2 + w / 4), s.random(h / 2 - h / 4, h / 2 + h / 4), s.random(20) + 25, s.random(5) + 15, {
         isStatic: false
       }));
     }
@@ -120,4 +123,4 @@ var s1 = function(s) {
       }
     }
   }
-}
+  }
