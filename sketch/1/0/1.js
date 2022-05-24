@@ -1,11 +1,12 @@
+//LETTERA B.
+
 var s1 = function(s) {
   let w, h;
   let units = [];
 
   let p = {
-    grids: [2, 4, 8, 16, 24, 32],
+    grids: [ 15, 30, 40],
   }
-
 
   s.setup = function() {
     let cnv;
@@ -41,13 +42,13 @@ var s1 = function(s) {
       this.h = _h;
     }
     display() {
-      let volume = Sound.mapSound(10, this.id * 22, 0, 50);
+      let volume = Sound.mapSound(10, this.id * 22, 0, 150);
       this.s.fill(255);
+      this.s.noStroke();
       this.s.beginShape();
       this.s.vertex(this.x, this.y);
       this.s.vertex(this.x + this.w, this.y);
-      this.s.vertex(this.x + this.w, this.y - 100 - volume);
-      this.s.vertex(this.x, this.y - 100 - volume)
+      this.s.vertex(this.x + this.w/2 - volume, this.y - h );
       this.s.endShape();
       //this.s.rect(this.x, this.y, this.w, -100 - volume);
       // this.s.push();
