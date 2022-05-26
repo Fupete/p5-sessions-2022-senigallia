@@ -4,6 +4,8 @@ var s1 = function(s) {
   let attractors = [];
   let boxes, eyeImg, boxImg;
   let occhio1, occhio2, occhio3;
+  let velocity;
+  let sizes=[];
 
   let p = {
     noAttractors: 3,
@@ -11,17 +13,21 @@ var s1 = function(s) {
     yAttractor: 100, //*
     sizeAttractor: 200, //*
     isGreen: false,
+    coloreBulbo: "#000000",
+    colorePupilla: "#ffffff",
+    backgroundColor: "#000000",
+    sizeMultiplier: 60,
     mM:0.1,
     nBoxes:400,
 
   }
 
-  s.preload = function() {
+  /*s.preload = function() {
     let imgLoc = artFolder + '/' + current_set + '/' + current_bank + '/';
     occhio1 = s.loadImage(imgLoc + "eye_01.gif");
     occhio2 = s.loadImage(imgLoc + "eye_02.gif");
     occhio3 = s.loadImage(imgLoc + "eye_03.gif");
-  }
+  }*/
 
   s.setup = function() {
     let cnv;
@@ -30,7 +36,11 @@ var s1 = function(s) {
     cnv.parent("canvas");
     s.noStroke();
     s.pixelDensity(1);
+    s.rectMode(CENTER);
 
+    velocity=new Array(100).fill(random(0.1,1));
+
+    p.xAttractor = w / 2;
     p.yAttractor = h / 2;
     p.sizeAttractor = 100;
 
@@ -80,47 +90,51 @@ var s1 = function(s) {
 
     // let's start the engine
     Runner.run(engine);
+
+    for (let i = 0; i < boxes.bodies.length; i++) {
+      // same mass
+      let particleSize = boxes.bodies[i].mass * p.sizeMultiplier;
+      sizes.push(particleSize);
+    }
   }
 
   s.draw = function() {
     s.clear();
-    s.background(0);
+    s.background(p.backgroundColor);
 
+    for(let i=0;i<sizes.length;i++){
+      sizes[i]=sizes[i]-velocity[i];
+      let boxH=boxes.bodies[i].mass * p.sizeMultiplier;
+      if (sizes[i]<boxH/7 || sizes[i]>boxH) velocity[i]=-velocity[i];
+      
+    }
+      
     for (let i = 0; i < boxes.bodies.length; i++) {
       s.push();
+      s.fill(p.colorePupilla);
       // same mass
-      let particleSize = boxes.bodies[i].mass * 120;
-      s.translate(boxes.bodies[i].position.x, boxes.bodies[i].position.y)
-      s.rotate(boxes.bodies[i].angle)
-      s.image(occhio1, 0, 0, particleSize, particleSize)
-      s.pop();
-}
-      for (let i = 0; i < boxes.bodies.length/2; i++) {
-        s.push();
-        // same mass
-        let particleSize = boxes.bodies[i].mass * 120;
-        s.translate(boxes.bodies[i].position.x, boxes.bodies[i].position.y)
-        s.rotate(boxes.bodies[i].angle)
-        s.image(occhio2, 0, 0, particleSize, particleSize)
-        s.pop();
-}
-        for (let i = 0; i < boxes.bodies.length/3; i++) {
-          s.push();
-          // same mass
-          let particleSize = boxes.bodies[i].mass * 120;
-          s.translate(boxes.bodies[i].position.x, boxes.bodies[i].position.y)
-          s.rotate(boxes.bodies[i].angle)
-          s.image(occhio3, 0, 0, particleSize, particleSize)
-          s.pop();
-        }
+      let particleSize = boxes.bodies[i].mass * p.sizeMultiplier;
 
-    s.filter(s.THRESHOLD);
+
+
+      s.translate(boxes.bodies[i].position.x, boxes.bodies[i].position.y)
+      // s.rotate(boxes.bodies[i].angle)
+      s.rect(0, 0, particleSize, sizes[i], particleSize / 10)
+      s.fill(p.coloreBulbo);
+      s.rect(0, 0, particleSize - 5, sizes[i] - 5, particleSize / 12)
+      s.fill(p.colorePupilla);
+      s.rect(0, 0, particleSize / 4, sizes[i] / 4, particleSize / 20)
+      //s.image(eyeImg, 0, 0, particleSize, particleSize)
+      s.pop();
+    }
+
+    /*s.filter(s.THRESHOLD);
     if (p.isGreen) {
       s.blendMode(s.MULTIPLY);
       s.fill(0, 255, 0);
       s.rect(0, 0, w, h);
       s.blendMode(s.BLEND);
-    }
+    }*/
   }
 
   s.keyPressed = function() {
