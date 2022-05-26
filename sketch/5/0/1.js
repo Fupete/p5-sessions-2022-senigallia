@@ -19,7 +19,7 @@ var s1 = function(s) {
     s.pixelDensity(1);
 
     engine = Engine.create();
-    engine.world.gravity.scale = random(0.0001, 0.0005);
+    engine.world.gravity.scale = 0.001; //random(0.0001, 0.0005);
 
     isB = random(p.isBlack);
 
@@ -28,9 +28,9 @@ var s1 = function(s) {
     g = w * 2 / 3 / p.gridX;
     let bodyProporties = {
       isStatic: false,
-      // frictionAir: 0,
-      // friction: 0.0001,
-      // restitution: 0.8
+      frictionAir: 0,
+      friction: 0.0001,
+      restitution: 0.8
     }
     // icon grid
     allParts.push(Bodies.rectangle(g * 0, g * 0, g, g, bodyProporties));
@@ -80,17 +80,31 @@ var s1 = function(s) {
     s.translate(shiftX, shiftY);
 
     for (let i = 0; i < icon.bodies.length; i++) {
+      let body = icon.bodies[i];
       s.beginShape();
-      s.vertex(icon.bodies[i].vertices[0].x, icon.bodies[i].vertices[0].y);
-      s.vertex(icon.bodies[i].vertices[1].x, icon.bodies[i].vertices[1].y);
-      s.vertex(icon.bodies[i].vertices[2].x, icon.bodies[i].vertices[2].y);
-      s.vertex(icon.bodies[i].vertices[3].x, icon.bodies[i].vertices[3].y);
+      s.vertex(body.vertices[0].x, body.vertices[0].y);
+      s.vertex(body.vertices[1].x, body.vertices[1].y);
+      s.vertex(body.vertices[2].x, body.vertices[2].y);
+      s.vertex(body.vertices[3].x, body.vertices[3].y);
       s.endShape();
     }
   }
 
   s.keyPressed = function() {
     if (s.keyCode === s.RIGHT_ARROW) {
+      console.log("explode");
+      // let bodies = Composite.allBodies(engine.world);
+      for (var i = 0; i < icon.bodies.length; i++) {
+        // icon.bodies[i].isStatic = false;
+        // if (bodies[i].isStatic /*&& body.position.y >= 500*/ ) {
+        var forceMagnitude = 0.02 * icon.bodies[i].mass;
+
+        Body.applyForce(icon.bodies[i], icon.bodies[i].position, {
+          x: (forceMagnitude + Common.random() * forceMagnitude) * Common.choose([1, -1]),
+          y: (forceMagnitude + Common.random() * forceMagnitude) * Common.choose([1, -1]),
+        });
+        // }
+      }
       Runner.run(engine);
     }
   }
