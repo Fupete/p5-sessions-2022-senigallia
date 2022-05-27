@@ -5,8 +5,8 @@ var s1 = function(s) {
   let g;
 
   let p = {
-    gridX: 5,
-    gridY: 2,
+    gridX: 7,
+    gridY: 7,
     isBlack: [true, false],
   }
 
@@ -33,14 +33,12 @@ var s1 = function(s) {
       restitution: 0.8
     }
     // icon grid
-    allParts.push(Bodies.rectangle(g * 0, g * 0, g, g, bodyProporties));
-    allParts.push(Bodies.rectangle(g * 0, g * 1, g, g, bodyProporties));
-    allParts.push(Bodies.rectangle(g * 1, g * 1, g, g, bodyProporties));
-    allParts.push(Bodies.rectangle(g * 2, g * 1, g, g, bodyProporties));
-    allParts.push(Bodies.rectangle(g * 2, g * 0, g, g, bodyProporties));
-    allParts.push(Bodies.rectangle(g * 4, g * 0, g, g, bodyProporties));
-    allParts.push(Bodies.rectangle(g * 4, g * 1, g, g, bodyProporties));
-    allParts.push(Bodies.rectangle(g * 3, g * 1, g, g, bodyProporties));
+    allParts.push(Bodies.rectangle(g * 1, g * 2, g, g, bodyProporties));
+    allParts.push(Bodies.rectangle(g * 3, g * 2, g, g, bodyProporties));
+    allParts.push(Bodies.rectangle(g * 5, g * 2, g, g, bodyProporties));
+    allParts.push(Bodies.rectangle(g * 2, g * 3, g, g, bodyProporties));
+    allParts.push(Bodies.rectangle(g * 3, g * 3, g, g, bodyProporties));
+    allParts.push(Bodies.rectangle(g * 4, g * 3, g, g, bodyProporties));
     //
     icon = Composite.create();
     Composite.add(icon, allParts);

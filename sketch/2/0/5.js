@@ -6,11 +6,11 @@ var s1 = function(s) {
 
   let p = {
     gridScan: 0.5,
-    playSpeed: 0.6,
+    playSpeed: 0.5,
     duoTone: true,
     isYellow: true,
     deleteAtTheEnd: false,
-    threeshold: .20,
+    threeshold: .60,
     invert: false,
     wCopia: 8, // *
     wDestinazione: 20 // *
@@ -28,7 +28,7 @@ var s1 = function(s) {
     s.pixelDensity(1);
 
     let vidLoc = artFolder + '/' + current_set + '/' + current_bank + '/';
-    video = s.createVideo(vidLoc + "/" + "solitudine.mp4 ", s.vidLoad);
+    video = s.createVideo(vidLoc + "/" + "preparazione-banchetto.mp4 ", s.vidLoad);
 
     vidW = video.width;
     vidH = video.height;
@@ -44,9 +44,9 @@ var s1 = function(s) {
     s.translate(0, h);
     s.scale(1, -1);
 
-    if (!p.duoTone) s.copy(video, vidW/2, 0, p.wCopia, vidH*1.5, xScan, 0, p.wDestinazione, h);
+    if (!p.duoTone) s.copy(video, vidW/2, 0, p.wCopia, vidH * 2, xScan, 0, p.wDestinazione, h);
     else {
-      gialloNero.copy(video, vidW/2, 0, p.wCopia, vidH*1.5, xScan, 0, p.wDestinazione, h);
+      gialloNero.copy(video, vidW/2, 0, p.wCopia, vidH * 2, xScan, 0, p.wDestinazione, h);
       gialloNero.filter(s.THRESHOLD, p.threeshold);
       if (p.invert) gialloNero.filter(s.INVERT);
       s.image(gialloNero, 0, 0);
