@@ -45,7 +45,7 @@
     }
     s.draw = function() {
       s.clear();
-      if (p.isBackgroundViolet) s.background(255, 0, 150);
+      if (p.isBackgroundViolet) s.background(143,0,255);
       for (let l = 0; l < letters.length; l++) {
         let charIndex = (l + scrollIndex) % testoLength;
         letters[l].letter = p.testo[charIndex];
@@ -86,10 +86,10 @@
         this.s.push();
         this.s.translate(w / 2 - p.gridWidth / 2, h / 2 - p.gridHeight / 2);
         if (p.showRect) {
-          this.s.fill(255, 0, 150);
+          this.s.fill(143,0,255);
           this.s.rect(this.col * letterW, this.row * letterH, letterW, letterH);
         }
-        if (p.isViolet) this.s.fill(255, 0, 150);
+        if (p.isViolet) this.s.fill(143,0,255);
         else if (p.isBackgroundViolet) this.s.fill(0);
         else this.s.fill(255);
         this.s.translate(this.col * letterW, this.row * letterH);
