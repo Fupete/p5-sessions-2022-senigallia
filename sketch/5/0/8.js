@@ -1,3 +1,5 @@
+//FIAMMA
+
 var s1 = function(s) {
   let w, h;
   let icon;
@@ -25,7 +27,7 @@ var s1 = function(s) {
 
     // create engine icon
     let allParts = [];
-    g = w * 2 / 3 / p.gridX;
+    g = w * 2 / 5 / p.gridX;
     let bodyProporties = {
       isStatic: false,
       frictionAir: 0,
@@ -33,12 +35,24 @@ var s1 = function(s) {
       restitution: 0.8
     }
     // icon grid
+    allParts.push(Bodies.rectangle(g * 2, g * 0, g, g, bodyProporties));
+    allParts.push(Bodies.rectangle(g * 2, g * 1, g, g, bodyProporties));
+    allParts.push(Bodies.rectangle(g * 3, g * 1, g, g, bodyProporties));
     allParts.push(Bodies.rectangle(g * 1, g * 2, g, g, bodyProporties));
+    allParts.push(Bodies.rectangle(g * 2, g * 2, g, g, bodyProporties));
     allParts.push(Bodies.rectangle(g * 3, g * 2, g, g, bodyProporties));
-    allParts.push(Bodies.rectangle(g * 5, g * 2, g, g, bodyProporties));
+    allParts.push(Bodies.rectangle(g * 4, g * 2, g, g, bodyProporties));
+    allParts.push(Bodies.rectangle(g * 1, g * 3, g, g, bodyProporties));
     allParts.push(Bodies.rectangle(g * 2, g * 3, g, g, bodyProporties));
-    allParts.push(Bodies.rectangle(g * 3, g * 3, g, g, bodyProporties));
     allParts.push(Bodies.rectangle(g * 4, g * 3, g, g, bodyProporties));
+    allParts.push(Bodies.rectangle(g * 5, g * 3, g, g, bodyProporties));
+    allParts.push(Bodies.rectangle(g * 1, g * 4, g, g, bodyProporties));
+    allParts.push(Bodies.rectangle(g * 5, g * 4, g, g, bodyProporties));
+    allParts.push(Bodies.rectangle(g * 1, g * 5, g, g, bodyProporties));
+    allParts.push(Bodies.rectangle(g * 5, g * 5, g, g, bodyProporties));
+    allParts.push(Bodies.rectangle(g * 2, g * 6, g, g, bodyProporties));
+    allParts.push(Bodies.rectangle(g * 3, g * 6, g, g, bodyProporties));
+    allParts.push(Bodies.rectangle(g * 4, g * 6, g, g, bodyProporties));
     //
     icon = Composite.create();
     Composite.add(icon, allParts);
