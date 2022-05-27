@@ -14,15 +14,17 @@ var s1 = function(s) {
     coloreBulbo: "#00ff00",
     colorePupilla: "#000000",
     backgroundColor: "#00ff00",
-    sizeMultiplier: 60
+    sizeMultiplier: 60,
+    mM: 0.3,
+    nBoxes: 100,
   }
 
-  s.preload = function() {
-    let imgLoc = artFolder + '/' + current_set + '/' + current_bank + '/';
-    occhio1 = s.loadImage(imgLoc + "eye_01.gif");
-    occhio2 = s.loadImage(imgLoc + "eye_02.gif");
-    occhio3 = s.loadImage(imgLoc + "eye_03.gif");
-  }
+  // s.preload = function() {
+  //   let imgLoc = artFolder + '/' + current_set + '/' + current_bank + '/';
+  //   occhio1 = s.loadImage(imgLoc + "eye_01.gif");
+  //   occhio2 = s.loadImage(imgLoc + "eye_02.gif");
+  //   occhio3 = s.loadImage(imgLoc + "eye_03.gif");
+  // }
 
   s.setup = function() {
     let cnv;
@@ -72,7 +74,7 @@ var s1 = function(s) {
     // create engine particles
     let allBoxes = [];
     for (let i = 0; i < p.nBoxes; i++) {
-      allBoxes.push(Bodies.rectangle( s.random(w / 2 - w / 4, w / 2 + w / 4), s.random(h / 2 - h / 4, h / 2 + h / 4), s.random(20) + 25, s.random(5) + 15, {
+      allBoxes.push(Bodies.rectangle(s.random(w / 2 - w / 4, w / 2 + w / 4), s.random(h / 2 - h / 4, h / 2 + h / 4), s.random(20) + 25, s.random(5) + 15, {
         isStatic: false
       }));
     }
@@ -123,4 +125,4 @@ var s1 = function(s) {
       }
     }
   }
-  }
+}
