@@ -4,25 +4,20 @@ var s1 = function(s) {
   let rows, cols, letterW, letterH;
   let testoLength;
   let scrollIndex = 0;
-  var letters = [];
-  var density = 2.5;
-  var ribbonWidth = 92;
-  var shapeColor;
-  var fontSize = 800;
-  var pathSimplification = 0;
-  var pathSampleFactor = 0.1;
+  let isB;
+
 
   let p = {
-    testo: "LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT, SED DO EIUSMOD TEMPOR INCIDIDUNT UT LABORE ET DOLORE MAGNA ALIQUA. UT ENIM AD MINIM VENIAM, QUIS NOSTRUD EXERCITATION ULLAMCO LABORIS NISI UT ALIQUIP EX EA COMMODO CONSEQUAT. DUIS AUTE IRURE DOLOR IN REPREHENDERIT IN VOLUPTATE VELIT ESSE CILLUM DOLORE EU FUGIAT NULLA PARIATUR. EXCEPTEUR SINT OCCAECAT CUPIDATAT NON PROIDENT, SUNT IN CULPA QUI OFFICIA DESERUNT MOLLIT ANIM ID EST LABORUM.",
+    testo: "IL RE DUNCAN E STATO COSI LIMPIDO NEL SUO GRANDE UFFICIO CHE GLI ANGELI COME DESTRIERI DELL ARIA SOFFIERANNO IN OGNI OCCHIO L ATTO ORRENDO SI CHE LE LACRIME AFFOGHERANNO IL VENTO IO HO SOLO LA MIA VOLTEGGIANTE AMBIZIONE CHE SPICCA UN BALZO TROPPO ALTO E CADE DALL ALTRA PARTE",
     gridWidth: 400, //* per tutto schermo vedi fine setup (righe commentate)
     gridHeight: 400,
     gridColumns: [1],
     gridRows: [1],
     showRect: false,
     autoScroll: true,
-    scrollVel: 25, // >= 25!!! < 60 = 1sec, 10 = 1/6sec, 120 = 2sec, 1 = 1/60sec
-    isViolet: true,
-    isBackgroundViolet: false
+    scrollVel: 60, // >= 25!!! < 60 = 1sec, 10 = 1/6sec, 120 = 2sec, 1 = 1/60sec
+    //isBlack: [true, false],
+
   }
 
   let fontRegular;
@@ -37,27 +32,40 @@ var s1 = function(s) {
     cnv.parent("canvas");
     s.background(0);
     s.pixelDensity(1);
+    s.textFont(fontRegular);
+    //s.fill (255);
+    isB = random(p.isBlack);
+
+
+
 
     p.gridWidth = w; // < griglie tutto schermo
     p.gridHeight = h;
 
-    s.textFont(fontRegular);
     s.genGrid();
     testoLength = p.testo.length;
     //console.log(testoLength);
-
-
   }
   s.draw = function() {
     s.clear();
-    if (p.isBackgroundViolet) s.background(143,0,255);
+
+
+  //  if (isB) {
+  //    s.background(0);
+      s.fill(255)
+  //  }
+    //else s.background(123, 40, 255); // < 98, 48, 255 || 108, 0, 240 || 124, 31, 191 || 193, 0, 255 || 113, 0, 213
+  //  s.fill(0)
+
+
+  //  if (p.isBackgroundViolet) s.background(255, 0, 150);
     for (let l = 0; l < letters.length; l++) {
       let charIndex = (l + scrollIndex) % testoLength;
       letters[l].letter = p.testo[charIndex];
       letters[l].display();
     }
     if (p.autoScroll)
-      if (s.frameCount % p.scrollVel == 0) scrollIndex++;
+      if (s.frameCount % p.scrollVel == 1) scrollIndex++;
   }
   s.genGrid = function() {
     if (letters.length > 0) letters = [];
@@ -94,12 +102,13 @@ var s1 = function(s) {
         this.s.fill(143,0,255);
         this.s.rect(this.col * letterW, this.row * letterH, letterW, letterH);
       }
-      if (p.isViolet) this.s.fill(143,0,255);
-      else if (p.isBackgroundViolet) this.s.fill(0);
-      else this.s.fill(255);
+
+      //if (p.isBlack) this.s.fill(255, 0, 150);
+
+
       this.s.translate(this.col * letterW, this.row * letterH);
       let letterWidth = this.s.textWidth(this.letter);
-      this.s.translate(letterW / 2 - letterWidth / 2, letterH / 2 + s.textSize() / 3);
+      this.s.translate(letterW / 2 - letterWidth / 2, letterH / 2 + s.textSize() / 2);
       this.s.text(this.letter, 0, 0);
       // console.log(this.letter);
       this.s.pop();

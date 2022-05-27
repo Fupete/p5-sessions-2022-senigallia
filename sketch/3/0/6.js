@@ -4,30 +4,23 @@ var s1 = function(s) {
   let rows, cols, letterW, letterH;
   let testoLength;
   let scrollIndex = 0;
-  var letters = [];
-  var density = 2.5;
-  var ribbonWidth = 92;
-  var shapeColor;
-  var fontSize = 800;
-  var pathSimplification = 0;
-  var pathSampleFactor = 0.1;
 
   let p = {
-    testo: "LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT, SED DO EIUSMOD TEMPOR INCIDIDUNT UT LABORE ET DOLORE MAGNA ALIQUA. UT ENIM AD MINIM VENIAM, QUIS NOSTRUD EXERCITATION ULLAMCO LABORIS NISI UT ALIQUIP EX EA COMMODO CONSEQUAT. DUIS AUTE IRURE DOLOR IN REPREHENDERIT IN VOLUPTATE VELIT ESSE CILLUM DOLORE EU FUGIAT NULLA PARIATUR. EXCEPTEUR SINT OCCAECAT CUPIDATAT NON PROIDENT, SUNT IN CULPA QUI OFFICIA DESERUNT MOLLIT ANIM ID EST LABORUM.",
-    gridWidth: 400, //* per tutto schermo vedi fine setup (righe commentate)
-    gridHeight: 400,
-    gridColumns: [1],
-    gridRows: [1],
+    testo: "SPIRITI DI MORTE TOGLIETEMI IL SESSO E COLMATEMI DELLA PIU FEROCE CRUDELTA VENITE ALLE MIE MAMMELLE DI DONNA E MUTATE IL MIO LATTE IN FIELE VOI MINISTRI D ASSASSINIO ",
+    gridWidth: 600, //* per tutto schermo vedi fine setup (righe commentate)
+    gridHeight: 300,
+    gridColumns: [8],
+    gridRows: [8],
     showRect: false,
     autoScroll: true,
-    scrollVel: 25, // >= 25!!! < 60 = 1sec, 10 = 1/6sec, 120 = 2sec, 1 = 1/60sec
-    isViolet: true,
-    isBackgroundViolet: false
+    scrollVel: 50, // >= 25!!! < 60 = 1sec, 10 = 1/6sec, 120 = 2sec, 1 = 1/60sec
+    isBlack: [true, false],
+
   }
 
   let fontRegular;
   s.preload = function() {
-    fontRegular = loadFont('assets/fonts/Macbeth-Mad-Regular.otf');
+    fontRegular = loadFont('assets/fonts/Macbeth-Regular.otf');
   }
 
   s.setup = function() {
@@ -38,24 +31,33 @@ var s1 = function(s) {
     s.background(0);
     s.pixelDensity(1);
 
-    p.gridWidth = w; // < griglie tutto schermo
-    p.gridHeight = h;
-
+    // p.gridWidth = w; // < griglie tutto schermo
+    // p.gridHeight = h;
     s.textFont(fontRegular);
     s.genGrid();
     testoLength = p.testo.length;
     //console.log(testoLength);
-
+    isB = random(p.isBlack);
 
   }
   s.draw = function() {
     s.clear();
-    if (p.isBackgroundViolet) s.background(143,0,255);
+
+    if (isB) {
+      s.background(0);
+      s.fill(255)
+    }
+    else s.background(143,0,255);
+  //  s.fill(0)
+
     for (let l = 0; l < letters.length; l++) {
       let charIndex = (l + scrollIndex) % testoLength;
       letters[l].letter = p.testo[charIndex];
       letters[l].display();
     }
+    //
+    // rettangoli a caso sullo schermo usando la griglia...
+    //
     if (p.autoScroll)
       if (s.frameCount % p.scrollVel == 0) scrollIndex++;
   }
@@ -91,12 +93,10 @@ var s1 = function(s) {
       this.s.push();
       this.s.translate(w / 2 - p.gridWidth / 2, h / 2 - p.gridHeight / 2);
       if (p.showRect) {
-        this.s.fill(143,0,255);
+        this.s.fill(255, 0, 150);
         this.s.rect(this.col * letterW, this.row * letterH, letterW, letterH);
       }
-      if (p.isViolet) this.s.fill(143,0,255);
-      else if (p.isBackgroundViolet) this.s.fill(0);
-      else this.s.fill(255);
+
       this.s.translate(this.col * letterW, this.row * letterH);
       let letterWidth = this.s.textWidth(this.letter);
       this.s.translate(letterW / 2 - letterWidth / 2, letterH / 2 + s.textSize() / 3);
