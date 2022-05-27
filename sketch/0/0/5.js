@@ -7,18 +7,18 @@ var s1 = function(s) {
   let eyes = [];
 
   let p = {
-    noAttractors: 0,
+    noAttractors: 1,
     xAttractor: 100, //*
     yAttractor: 100, //*
     sizeAttractor: 200, //*
-    isBlack: [false],
+    isBlack: [true, false],
     coloreBulbo: "#000000",
-    colorePupilla: "#ffffff",
+    colorePupilla: "#00ff00",
     backgroundColor: "#000000",
-    sizeMultiplier: 50,
-    mM: 0.5,
-    nBoxes: 1,
-    angle: true
+    sizeMultiplier: 60,
+    mM: 0.4,
+    nBoxes: 400,
+    angle: false
   }
 
   s.setup = function() {
@@ -38,8 +38,8 @@ var s1 = function(s) {
     }
 
     p.xAttractor = w / 2;
-    p.yAttractor = h / 2;
-    p.sizeAttractor = h * 1 / 4;
+    p.yAttractor = h / 3;
+    p.sizeAttractor = h * 1 / 2;
 
     engine = Engine.create();
     engine.world.gravity.scale = 0;
@@ -77,7 +77,7 @@ var s1 = function(s) {
     // create engine particles
     let allBoxes = [];
     for (let i = 0; i < p.nBoxes; i++) {
-      allBoxes.push(Bodies.rectangle(w / 2, h / 2, h / 12, h / 12, {
+      allBoxes.push(Bodies.rectangle(s.random(w), s.random(h), s.random(30) + 15, s.random(5) + 15, {
         isStatic: false
       }));
     }
@@ -95,13 +95,13 @@ var s1 = function(s) {
     s.clear();
     s.background(p.backgroundColor);
 
-    // if (s.mouseIsPressed) {
-    //   // smoothly move the first attractor body towards the mouse if clicked
-    //   Body.translate(attractors.bodies[0], {
-    //     x: (s.mouseX - attractors.bodies[0].position.x) * 0.25,
-    //     y: (s.mouseY - attractors.bodies[0].position.y) * 0.25
-    //   });
-    // }
+    if (s.mouseIsPressed) {
+      // smoothly move the first attractor body towards the mouse if clicked
+      Body.translate(attractors.bodies[0], {
+        x: (s.mouseX - attractors.bodies[0].position.x) * 0.25,
+        y: (s.mouseY - attractors.bodies[0].position.y) * 0.25
+      });
+    }
 
     let isBlinking;
     if (s.frameCount % 120 == 0 && random(1) > .5) isBlinking = true;
@@ -136,18 +136,18 @@ var s1 = function(s) {
       this.s.translate(boxes.bodies[this.id].position.x, boxes.bodies[this.id].position.y)
       if (p.angle) this.s.rotate(boxes.bodies[this.id].angle)
       this.s.fill(p.colorePupilla);
-      this.s.rect(0, 0, this.size, this.size, this.size / 5)
+      this.s.rect(0, 0, this.size, this.size, this.size / 10)
       this.s.fill(p.coloreBulbo);
-      this.s.rect(0, 0, this.size - 6, this.size - 6, this.size / 6)
+      this.s.rect(0, 0, this.size - 5, this.size - 5, this.size / 12)
       this.s.fill(p.colorePupilla);
-      this.s.rect(0, 0, this.size / 4, this.size / 4, this.size / 10)
+      this.s.rect(0, 0, this.size / 4, this.size / 4, this.size / 20)
       this.s.fill(p.coloreBulbo);
-      this.s.rect(0, -this.size / 8, this.size - 12, this.VSize, this.size / 6) // palpebra
+      this.s.rect(0, 0, this.size - 5, this.VSize, this.size / 12) // palpebra
       this.s.pop();
     }
     blink() {
-      this.VSize += 12;
-      if (this.VSize >= this.size * 2 / 3) {
+      this.VSize += 2;
+      if (this.VSize >= this.size / 2) {
         this.VSize = this.originalVSize;
         this.blinking = false;
       }
@@ -156,7 +156,12 @@ var s1 = function(s) {
 
   s.keyPressed = function() {
     if (s.keyCode === s.RIGHT_ARROW) {
-      engine.world.gravity.scale = 0.01;
+      for (let i = 0; i < attractors.bodies.length; i++) {
+        Body.translate(attractors.bodies[i], {
+          x: (s.random(w) - attractors.bodies[i].position.x) * 1,
+          y: (s.random(h) - attractors.bodies[i].position.y) * 1
+        });
+      }
     }
   }
 

@@ -3,30 +3,23 @@ var s1 = function(s) {
   let attractor;
   let attractors = [];
   let boxes, eyeImg, boxImg;
-  let occhio1, occhio2, occhio3;
-  let velocity;
-  let sizes=[];
+  // let occhio1, occhio2, occhio3;
+  let eyes = [];
 
   let p = {
     noAttractors: 3,
-    xAttractor: 100, //** < connesso a quale è i...
+    xAttractor: 100, //*
     yAttractor: 100, //*
     sizeAttractor: 200, //*
-    isGreen: false,
+    isBlack: [true, false],
     coloreBulbo: "#000000",
     colorePupilla: "#00ff00",
     backgroundColor: "#000000",
     sizeMultiplier: 60,
-    mM:0.1,
-    nBoxes:300,
+    mM: 0.05,
+    nBoxes: 500,
+    angle: false
   }
-
-  /*s.preload = function() {
-    let imgLoc = artFolder + '/' + current_set + '/' + current_bank + '/';
-    occhio1 = s.loadImage(imgLoc + "eye_01.gif");
-    occhio2 = s.loadImage(imgLoc + "eye_02.gif");
-    occhio3 = s.loadImage(imgLoc + "eye_03.gif");
-  }*/
 
   s.setup = function() {
     let cnv;
@@ -37,11 +30,16 @@ var s1 = function(s) {
     s.pixelDensity(1);
     s.rectMode(CENTER);
 
-    velocity=new Array(100).fill(random(0.1,1));
+    let isB = random(p.isBlack);
+    if (isB) {
+      p.coloreBulbo = p.colorePupilla;
+      p.colorePupilla = p.backgroundColor;
+      p.backgroundColor = p.coloreBulbo;
+    }
 
     p.xAttractor = w / 2;
     p.yAttractor = h / 2;
-    p.sizeAttractor = 100;
+    p.sizeAttractor = h / 8;
 
     engine = Engine.create();
     engine.world.gravity.scale = 0;
@@ -60,7 +58,7 @@ var s1 = function(s) {
                 let m = Math.sqrt(vx * vx + vy * vy);
                 let dx = vx / m;
                 let dy = vy / m;
-                // let mM = 0.1
+                // let mM = 0.4
                 var force = {
                   x: (dx * p.mM) / m,
                   y: (dy * p.mM) / m,
@@ -79,7 +77,7 @@ var s1 = function(s) {
     // create engine particles
     let allBoxes = [];
     for (let i = 0; i < p.nBoxes; i++) {
-      allBoxes.push(Bodies.rectangle(s.random(w), s.random(h / 2 - 100, h / 2 + 100), s.random(30) + 15, s.random(10) + 5, {
+      allBoxes.push(Bodies.rectangle(s.random(w), s.random(h), s.random(30) + 15, s.random(10) + 5, {
         isStatic: false
       }));
     }
@@ -87,53 +85,73 @@ var s1 = function(s) {
     Composite.add(boxes, allBoxes);
     World.add(engine.world, boxes);
 
+    s.genEyes();
+
     // let's start the engine
     Runner.run(engine);
-
-    for (let i = 0; i < boxes.bodies.length; i++) {
-      // same mass
-      let particleSize = boxes.bodies[i].mass * p.sizeMultiplier;
-      sizes.push(particleSize);
-    }
   }
 
   s.draw = function() {
     s.clear();
     s.background(p.backgroundColor);
 
-        for(let i=0;i<sizes.length;i++){
-      sizes[i]=sizes[i]-velocity[i];
-      let boxH=boxes.bodies[i].mass * p.sizeMultiplier;
-      if (sizes[i]<boxH/7 || sizes[i]>boxH) velocity[i]=-velocity[i];
-      
-    }
-      
-    for (let i = 0; i < boxes.bodies.length; i++) {
-      s.push();
-      s.fill(p.colorePupilla);
-      // same mass
-      let particleSize = boxes.bodies[i].mass * p.sizeMultiplier;
-
-
-
-      s.translate(boxes.bodies[i].position.x, boxes.bodies[i].position.y)
-      // s.rotate(boxes.bodies[i].angle)
-      s.rect(0, 0, particleSize, sizes[i], particleSize / 10)
-      s.fill(p.coloreBulbo);
-      s.rect(0, 0, particleSize - 5, sizes[i] - 5, particleSize / 12)
-      s.fill(p.colorePupilla);
-      s.rect(0, 0, particleSize / 4, sizes[i] / 4, particleSize / 20)
-      //s.image(eyeImg, 0, 0, particleSize, particleSize)
-      s.pop();
+    if (s.mouseIsPressed) {
+      // smoothly move the first attractor body towards the mouse if clicked
+      Body.translate(attractors.bodies[0], {
+        x: (s.mouseX - attractors.bodies[0].position.x) * 0.25,
+        y: (s.mouseY - attractors.bodies[0].position.y) * 0.25
+      });
     }
 
-    /*s.filter(s.THRESHOLD);
-    if (p.isGreen) {
-      s.blendMode(s.MULTIPLY);
-      s.fill(0, 255, 0);
-      s.rect(0, 0, w, h);
-      s.blendMode(s.BLEND);
-    }*/
+    let isBlinking;
+    if (s.frameCount % 120 == 0 && random(1) > .5) isBlinking = true;
+    for (let e = 0; e < eyes.length; e++) {
+      eyes[e].display();
+      if (isBlinking) eyes[e].blinking = true;
+    }
+  }
+
+  s.genEyes = function() {
+    if (eyes.length > 0) eyes = [];
+    for (let e = 0; e < p.nBoxes; e++) {
+      eyes.push(new Eye(s, e, 0, 0, boxes.bodies[e].mass * p.sizeMultiplier));
+    }
+    // console.log(units.length);
+  }
+  class Eye {
+    constructor(_s, _id, _x, _y, _size) {
+      this.s = _s; // < our p5 instance object
+      this.id = _id;
+      this.x = _x;
+      this.y = _y;
+      this.size = _size;
+      this.originalVSize = 0;
+      this.VSize = 0;
+      this.blinking = false;
+    }
+    display() {
+      this.s.push();
+      if (this.blinking) this.blink();
+      // let volume = Sound.mapSound(10, this.id * 22, 0, 150);
+      this.s.translate(boxes.bodies[this.id].position.x, boxes.bodies[this.id].position.y)
+      if (p.angle) this.s.rotate(boxes.bodies[this.id].angle)
+      this.s.fill(p.colorePupilla);
+      this.s.rect(0, 0, this.size, this.size, this.size / 10)
+      this.s.fill(p.coloreBulbo);
+      this.s.rect(0, 0, this.size - 5, this.size - 5, this.size / 12)
+      this.s.fill(p.colorePupilla);
+      this.s.rect(0, 0, this.size / 4, this.size / 4, this.size / 20)
+      this.s.fill(p.coloreBulbo);
+      this.s.rect(0, 0, this.size - 5, this.VSize, this.size / 12) // palpebra
+      this.s.pop();
+    }
+    blink() {
+      this.VSize += 4;
+      if (this.VSize >= this.size / 2) {
+        this.VSize = this.originalVSize;
+        this.blinking = false;
+      }
+    }
   }
 
   s.keyPressed = function() {
