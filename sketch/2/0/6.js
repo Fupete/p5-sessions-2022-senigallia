@@ -6,7 +6,7 @@ var s1 = function(s) {
 
   let p = {
     gridScan: 0.5,
-    playSpeed: 0.6,
+    playSpeed: 1,
     duoTone: true,
     isYellow: true,
     deleteAtTheEnd: false,
