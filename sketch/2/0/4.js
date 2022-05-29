@@ -5,8 +5,8 @@ var s1 = function(s) {
   let xScan = 0;
 
   let p = {
-    gridScan: 1,
-    playSpeed: 0.7,
+    gridScan: 0.6,
+    playSpeed: 1,
     duoTone: true,
     isYellow: true,
     deleteAtTheEnd: false,

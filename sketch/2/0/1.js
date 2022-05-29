@@ -5,8 +5,8 @@ var s1 = function(s) {
   let xScan = 0;
 
   let p = {
-    gridScan: 0.3,
-    playSpeed: 0.4,
+    gridScan: 0.5,
+    playSpeed: 0.6,
     duoTone: true,
     isYellow: false,
     deleteAtTheEnd: false,
@@ -34,7 +34,7 @@ var s1 = function(s) {
     vidH = video.height;
 
     p.wDestinazione = w;
-    p.wCopia = vidW / 2;
+    p.wCopia = vidW;
 
     gialloNero = s.createGraphics(w, h);
   }
