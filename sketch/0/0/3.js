@@ -11,13 +11,13 @@ var s1 = function(s) {
     xAttractor: 100, //*
     yAttractor: 100, //*
     sizeAttractor: 200, //*
-    isBlack: [true, false],
+    isBlack: [false],
     coloreBulbo: "#000000",
-    colorePupilla: "#00ff00",
+    colorePupilla: "#ffffff",
     backgroundColor: "#000000",
-    sizeMultiplier: 60,
+    sizeMultiplier: 100,
     mM: 0.05,
-    nBoxes: 500,
+    nBoxes: 300,
     angle: false
   }
 
@@ -146,7 +146,7 @@ var s1 = function(s) {
       this.s.pop();
     }
     blink() {
-      this.VSize += 4;
+      this.VSize += 2;
       if (this.VSize >= this.size / 2) {
         this.VSize = this.originalVSize;
         this.blinking = false;

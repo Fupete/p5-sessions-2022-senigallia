@@ -11,13 +11,13 @@ var s1 = function(s) {
     xAttractor: 100, //*
     yAttractor: 100, //*
     sizeAttractor: 200, //*
-    isBlack: [false],
+    isBlack: [true,false],
     coloreBulbo: "#000000",
-    colorePupilla: "#ffffff",
+    colorePupilla: "#00ff00",
     backgroundColor: "#000000",
-    sizeMultiplier: 60,
-    mM: 0.4,
-    nBoxes: 400,
+    sizeMultiplier: 50,
+    mM: 0.5,
+    nBoxes: 200,
     angle: false
   }
 
@@ -38,8 +38,8 @@ var s1 = function(s) {
     }
 
     p.xAttractor = w / 2;
-    p.yAttractor = h / 3;
-    p.sizeAttractor = h * 1 / 2;
+    p.yAttractor = h / 2;
+    p.sizeAttractor = h * 1 / 4;
 
     engine = Engine.create();
     engine.world.gravity.scale = 0;
@@ -136,13 +136,13 @@ var s1 = function(s) {
       this.s.translate(boxes.bodies[this.id].position.x, boxes.bodies[this.id].position.y)
       if (p.angle) this.s.rotate(boxes.bodies[this.id].angle)
       this.s.fill(p.colorePupilla);
-      this.s.rect(0, 0, this.size, this.size, this.size / 10)
+      this.s.rect(0, 0, this.size, this.size, this.size / 5)
       this.s.fill(p.coloreBulbo);
-      this.s.rect(0, 0, this.size - 5, this.size - 5, this.size / 12)
+      this.s.rect(0, 0, this.size - 5, this.size - 5, this.size / 6)
       this.s.fill(p.colorePupilla);
-      this.s.rect(0, 0, this.size / 4, this.size / 4, this.size / 20)
+      this.s.rect(0, 0, this.size / 4, this.size / 4, this.size / 10)
       this.s.fill(p.coloreBulbo);
-      this.s.rect(0, 0, this.size - 5, this.VSize, this.size / 12) // palpebra
+      this.s.rect(0, 0, this.size - 5, this.VSize, this.size / 6) // palpebra
       this.s.pop();
     }
     blink() {

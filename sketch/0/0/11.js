@@ -11,9 +11,9 @@ var s1 = function(s) {
     xAttractor: 100, //*
     yAttractor: 100, //*
     sizeAttractor: 200, //*
-    isBlack: [false],
+    isBlack: [true],
     coloreBulbo: "#000000",
-    colorePupilla: "#ffffff",
+    colorePupilla: "#00ff00",
     backgroundColor: "#000000",
     sizeMultiplier: 60,
     mM: 0.4,
