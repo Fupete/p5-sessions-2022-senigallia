@@ -11,8 +11,8 @@ var s1 = function(s) {
     testo: "SERPENTE, VELENO, UCCIDERE, UCCISO, MASCHERA, SCORPIONI, PUGNALI, PIPISTRELLO, MALE, FORZA, VENDETTA, BUIO, LE COSE COMINCIATE DAL MALE DAL MALE TRAGGONO FORZA",
     gridWidth: 400, //* per tutto schermo vedi fine setup (righe commentate)
     gridHeight: 400,
-    gridColumns: [24,32,64],
-    gridRows: [24,32,64,82],
+    gridColumns: [24, 32, 64],
+    gridRows: [24, 32, 64, 82],
     showRect: false,
     autoScroll: true,
     scrollVel: 50, // >= 25!!! < 60 = 1sec, 10 = 1/6sec, 120 = 2sec, 1 = 1/60sec
@@ -50,15 +50,15 @@ var s1 = function(s) {
     s.clear();
 
 
-  //  if (isB) {
-  //    s.background(0);
-      s.fill(255)
-  //  }
+    //  if (isB) {
+    //    s.background(0);
+    s.fill(255)
+    //  }
     //else s.background(123, 40, 255); // < 98, 48, 255 || 108, 0, 240 || 124, 31, 191 || 193, 0, 255 || 113, 0, 213
-  //  s.fill(0)
+    //  s.fill(0)
 
 
-  //  if (p.isBackgroundViolet) s.background(255, 0, 150);
+    //  if (p.isBackgroundViolet) s.background(255, 0, 150);
     for (let l = 0; l < letters.length; l++) {
       let charIndex = (l + scrollIndex) % testoLength;
       letters[l].letter = p.testo[charIndex];
@@ -99,7 +99,7 @@ var s1 = function(s) {
       this.s.push();
       this.s.translate(w / 2 - p.gridWidth / 2, h / 2 - p.gridHeight / 2);
       if (p.showRect) {
-        this.s.fill(143,0,255);
+        this.s.fill(143, 0, 255);
         this.s.rect(this.col * letterW, this.row * letterH, letterW, letterH);
       }
 
@@ -115,6 +115,9 @@ var s1 = function(s) {
     }
   }
 
+  s.trigger = function() {
+    s.genGrid();
+  }
   s.keyPressed = function() {
     if (s.keyCode === s.RIGHT_ARROW) {
       s.genGrid();

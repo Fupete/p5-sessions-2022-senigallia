@@ -105,22 +105,19 @@ var s1 = function(s) {
     }
   }
 
+  s.trigger = function() {
+    for (var i = 0; i < icon.bodies.length; i++) {
+      var forceMagnitude = 0.02 * icon.bodies[i].mass;
+      Body.applyForce(icon.bodies[i], icon.bodies[i].position, {
+        x: (forceMagnitude + Common.random() * forceMagnitude) * Common.choose([1, -1]),
+        y: (forceMagnitude + Common.random() * forceMagnitude) * Common.choose([1, -1]),
+      });
+    }
+    Runner.run(engine);
+  }
   s.keyPressed = function() {
     if (s.keyCode === s.RIGHT_ARROW) {
-      console.log("explode");
-      // let bodies = Composite.allBodies(engine.world);
-      for (var i = 0; i < icon.bodies.length; i++) {
-        // icon.bodies[i].isStatic = false;
-        // if (bodies[i].isStatic /*&& body.position.y >= 500*/ ) {
-        var forceMagnitude = 0.02 * icon.bodies[i].mass;
-
-        Body.applyForce(icon.bodies[i], icon.bodies[i].position, {
-          x: (forceMagnitude + Common.random() * forceMagnitude) * Common.choose([1, -1]),
-          y: (forceMagnitude + Common.random() * forceMagnitude) * Common.choose([1, -1]),
-        });
-        // }
-      }
-      Runner.run(engine);
+      s.trigger();
     }
   }
 }

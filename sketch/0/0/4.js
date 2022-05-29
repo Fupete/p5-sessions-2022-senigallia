@@ -1,4 +1,7 @@
 var s1 = function(s) {
+  let midiMouseOn = false;
+  let mMx = -100,
+    mMy = -100;
   let w, h;
   let attractor;
   let attractors = [];
@@ -90,7 +93,13 @@ var s1 = function(s) {
     // let's start the engine
     Runner.run(engine);
   }
-
+  s.toggleMidiMouseOn = function() {
+    midiMouseOn = !midiMouseOn;
+  }
+  s.coordinateMidi = function(mx, my) {
+    mMx = mx;
+    mMy = my;
+  }
   s.draw = function() {
     s.clear();
     s.background(p.backgroundColor);
@@ -100,6 +109,14 @@ var s1 = function(s) {
       Body.translate(attractors.bodies[0], {
         x: (s.mouseX - attractors.bodies[0].position.x) * 0.25,
         y: (s.mouseY - attractors.bodies[0].position.y) * 0.25
+      });
+    }
+
+    if (midiMouseOn) {
+      // smoothly move the first attractor body towards the midi x,y if clicked
+      Body.translate(attractors.bodies[0], {
+        x: (mMx - attractors.bodies[0].position.x) * 0.25,
+        y: (mMy - attractors.bodies[0].position.y) * 0.25
       });
     }
 
@@ -154,14 +171,17 @@ var s1 = function(s) {
     }
   }
 
+  s.trigger = function() {
+    for (let i = 0; i < attractors.bodies.length; i++) {
+      Body.translate(attractors.bodies[i], {
+        x: (s.random(w) - attractors.bodies[i].position.x) * 1,
+        y: (s.random(h) - attractors.bodies[i].position.y) * 1
+      });
+    }
+  }
   s.keyPressed = function() {
     if (s.keyCode === s.RIGHT_ARROW) {
-      for (let i = 0; i < attractors.bodies.length; i++) {
-        Body.translate(attractors.bodies[i], {
-          x: (s.random(w) - attractors.bodies[i].position.x) * 1,
-          y: (s.random(h) - attractors.bodies[i].position.y) * 1
-        });
-      }
+      s.trigger();
     }
   }
 
