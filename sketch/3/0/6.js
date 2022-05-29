@@ -45,7 +45,7 @@ var s1 = function(s) {
 
     if (isB) {
       s.background(0);
-      s.fill(255)
+      s.fill("#4D0AFF")
     } else s.background("#4D0AFF");
     //  s.fill(0)
 
