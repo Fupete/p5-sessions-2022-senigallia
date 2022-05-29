@@ -1,14 +1,13 @@
-//LETTERA I.
+//LETTERA H.
+//foresta dal basso
 
 var s1 = function(s) {
   let w, h;
   let units = [];
-  let inverso = [];
 
   let p = {
-    grids: [ 12, 20, 32],
+    grids: [12, 36],
   }
-
 
   s.setup = function() {
     let cnv;
@@ -18,23 +17,18 @@ var s1 = function(s) {
     s.background(0);
     s.pixelDensity(1);
     s.genGrid();
-    s.frameRate(20);
   }
   s.draw = function() {
     s.clear();
     for (let u = 0; u < units.length; u++) {
-      units[u].display(250,22);//parametri da modificare fascia di sotto
-      inverso[u].display(-250,22);//parametri da modificare fascia di sopra
+      units[u].display();
     }
   }
   s.genGrid = function() {
     if (units.length > 0) units = [];
     let grid = s.random(p.grids);
     for (let u = 0; u < grid; u++) {
-      //units.push(new Unit(s, u, u * w / grid, h, w / grid - 30, 255));
-      units.push(new Unit(s, u, u * w / grid, h, w / grid, 255));//posizione fascia di sotto
-      inverso.push(new Unit(s, u, u * w / grid, 0, w / grid, 255));//posizione fascia di sopra rovesciata
-
+      units.push(new Unit(s, u, u * w / grid, h, w / grid, 255));
     }
     // console.log(units.length);
   }
@@ -48,22 +42,14 @@ var s1 = function(s) {
       this.w = _w;
       this.h = _h;
     }
-    display(cv=250,m=22) {
-      let volume = Sound.mapSound(10, this.id * m, 0, cv);
-
-      //se tolgo 10 tutti salgono contemporaneamente
+    display() {
+      let volume = Sound.mapSound(10, this.id * 22, 0, 150);
       this.s.fill(255);
       this.s.noStroke();
       this.s.beginShape();
       this.s.vertex(this.x, this.y);
       this.s.vertex(this.x + this.w, this.y);
-      let dif = (h/2)-(this.y - cv - volume);
-      if (volume >= h/2){
-        this.s.vertex(this.x + this.w/2, this.y - cv - volume - dif);
-      }
-      else {
-        this.s.vertex(this.x + this.w/2, this.y - cv - volume);
-      }
+      this.s.vertex(this.x + this.w/2, this.y - 500 - volume);
       this.s.endShape();
       //this.s.rect(this.x, this.y, this.w, -100 - volume);
       // this.s.push();

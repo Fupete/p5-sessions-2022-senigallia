@@ -1,4 +1,6 @@
-//LETTERA G.
+//LETTERA F.
+//foresta destra e sinistra denti piccoli
+
 
 var s1 = function(s) {
   let w, h;
@@ -58,7 +60,7 @@ var s1 = function(s) {
       this.s.beginShape();
       this.s.vertex(this.x, this.y);
       //this.s.vertex(this.x + cv/4 + volume, this.y);
-      this.s.vertex(this.x + cv*2 + volume, this.y+this.h/2 ); // 0 e per far partire i rettangoli dalla base
+      this.s.vertex(this.x + cv/2 + volume, this.y+this.h/2 ); // 0 e per far partire i rettangoli dalla base
       this.s.vertex(this.x, this.y+this.h)
       this.s.endShape();
       //this.s.rect(this.x, this.y, this.w, -100 - volume);

@@ -1,15 +1,18 @@
-//LETTERA C.
+//LETTERA B.
+//banqo rosso
+
 
 var s1 = function(s) {
   let w, h;
   let units = [];
 
   let p = {
-    grids: [4, 8, 16],
+    grids: [ 15, 30, 40],
+    isBlack: [true, false],
   }
 
-
   s.setup = function() {
+
     let cnv;
     if (fs) cnv = s.createCanvas(w = s.displayWidth, h = s.displayHeight);
     else cnv = s.createCanvas(w = s.windowWidth, h = s.windowHeight);
@@ -17,10 +20,19 @@ var s1 = function(s) {
     s.background(0);
     s.pixelDensity(1);
     s.genGrid();
-    s.frameRate(15);
+
+    isB = random(p.isBlack);
+
   }
   s.draw = function() {
     s.clear();
+    if (isB) {
+      s.background(255, 0, 0);
+    } else {
+      s.background(0);
+    }
+
+
     for (let u = 0; u < units.length; u++) {
       units[u].display();
     }
@@ -44,15 +56,21 @@ var s1 = function(s) {
       this.h = _h;
     }
     display() {
-      let volume = Sound.mapSound(10, this.id * 22, 0, 500); //se tolgo 10 tutti salgono contemporaneamente, da 0 a 255 = quanta sara l ampiezza del volume
-      this.s.fill(255);
-      this.s.stroke(255);
-      this.s.strokeWeight(2);
+      let volume = Sound.mapSound(10, this.id * 22, 0, 150);
+    //  this.s.fill("red");
+    if (isB) {
+      //this.s.background(255, 0, 0);
+      this.s.fill(0)
+    } else {
+      //this.s.background(0);
+      this.s.fill(255, 0, 0);
+    }
+
+      this.s.noStroke();
       this.s.beginShape();
       this.s.vertex(this.x, this.y);
       this.s.vertex(this.x + this.w, this.y);
-      this.s.vertex(this.x + this.w, this.y - volume); // 0 e per far partire i rettangoli dalla base
-      this.s.vertex(this.x, this.y - volume)
+      this.s.vertex(this.x + this.w/2 - volume, this.y - h );
       this.s.endShape();
       //this.s.rect(this.x, this.y, this.w, -100 - volume);
       // this.s.push();
@@ -65,6 +83,9 @@ var s1 = function(s) {
   s.keyPressed = function() {
     if (s.keyCode === s.RIGHT_ARROW) {
       s.genGrid();
+    }
+    if (s.keyCode === s.LEFT_ARROW) {
+       isB= !isB;
     }
   }
 }

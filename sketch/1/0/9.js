@@ -1,4 +1,5 @@
-//LETTERA J.
+//LETTERA I.
+//denti che si toccano bianchi
 
 var s1 = function(s) {
   let w, h;
@@ -6,7 +7,7 @@ var s1 = function(s) {
   let inverso = [];
 
   let p = {
-    grids: [12, 22, 30],
+    grids: [ 12, 20, 32],
   }
 
 
@@ -23,13 +24,8 @@ var s1 = function(s) {
   s.draw = function() {
     s.clear();
     for (let u = 0; u < units.length; u++) {
-      units[u].display(210,22);//parametri da modificare fascia di sotto
-      //inverso[u].display(-150,22);//parametri da modificare fascia di sopra
-    }
-
-    for (let u = 0; u < inverso.length; u++) {
-      //units[u].display(150,22);//parametri da modificare fascia di sotto
-      inverso[u].display(-210,22);//parametri da modificare fascia di sopra
+      units[u].display(250,22);//parametri da modificare fascia di sotto
+      inverso[u].display(-250,22);//parametri da modificare fascia di sopra
     }
   }
   s.genGrid = function() {
@@ -38,13 +34,8 @@ var s1 = function(s) {
     for (let u = 0; u < grid; u++) {
       //units.push(new Unit(s, u, u * w / grid, h, w / grid - 30, 255));
       units.push(new Unit(s, u, u * w / grid, h, w / grid, 255));//posizione fascia di sotto
-      //inverso.push(new Unit(s, u, u * w / grid, 0, w / grid, 255));//posizione fascia di sopra rovesciata
-    }
+      inverso.push(new Unit(s, u, u * w / grid, 0, w / grid, 255));//posizione fascia di sopra rovesciata
 
-    for (let u = 0; u < grid+1; u++) {
-      //units.push(new Unit(s, u, u * w / grid, h, w / grid - 30, 255));
-      //units.push(new Unit(s, u, u * w / grid, h, w / grid, 255));//posizione fascia di sotto
-      inverso.push(new Unit(s, u, u * w / grid-((w/grid)/2), 0, w / grid, 255));//posizione fascia di sopra rovesciata
     }
     // console.log(units.length);
   }
@@ -67,7 +58,13 @@ var s1 = function(s) {
       this.s.beginShape();
       this.s.vertex(this.x, this.y);
       this.s.vertex(this.x + this.w, this.y);
-      this.s.vertex(this.x + this.w/2, this.y - cv - volume);
+      let dif = (h/2)-(this.y - cv - volume);
+      if (volume >= h/2){
+        this.s.vertex(this.x + this.w/2, this.y - cv - volume - dif);
+      }
+      else {
+        this.s.vertex(this.x + this.w/2, this.y - cv - volume);
+      }
       this.s.endShape();
       //this.s.rect(this.x, this.y, this.w, -100 - volume);
       // this.s.push();
