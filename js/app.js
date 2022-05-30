@@ -12,7 +12,8 @@
       && Salil Parekh
       https://github.com/burnedsap/p5-vj */
 // —
-// Credits/Thanks to:
+// Credits/Thanks also to:
+// original MIDI sketch IDEA: https://editor.p5js.org/cdaein/sketches/01tCK67N_
 // ...
 // —
 
@@ -21,6 +22,8 @@ let myp5;
 let fs; // < fullscreen true/false
 let video = null;
 let Sound;
+let midiData; // < MIDI data holder
+let midiX, midiY;
 
 let artFolder = "sketch";
 let loc;
@@ -51,6 +54,14 @@ function setup() {
     console.log(Sound);
     changeFile(0);
   }, 5000);
+
+  // setup MIDI
+  if (navigator.requestMIDIAccess) console.log('This browser supports WebMIDI!')
+  else console.log('WebMIDI is not supported in this browser.')
+  navigator.requestMIDIAccess()
+    .then(onMIDISuccess, function(e) {
+      console.log('Could not access your MIDI devices: ', e)
+    });
 }
 
 // Methods

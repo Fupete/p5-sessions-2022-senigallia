@@ -23,13 +23,13 @@ var s1 = function(s) {
   s.draw = function() {
     s.clear();
     for (let u = 0; u < units.length; u++) {
-      units[u].display(210,22);//parametri da modificare fascia di sotto
+      units[u].display(210, 22); //parametri da modificare fascia di sotto
       //inverso[u].display(-150,22);//parametri da modificare fascia di sopra
     }
 
     for (let u = 0; u < inverso.length; u++) {
       //units[u].display(150,22);//parametri da modificare fascia di sotto
-      inverso[u].display(-210,22);//parametri da modificare fascia di sopra
+      inverso[u].display(-210, 22); //parametri da modificare fascia di sopra
     }
   }
   s.genGrid = function() {
@@ -37,14 +37,14 @@ var s1 = function(s) {
     let grid = s.random(p.grids);
     for (let u = 0; u < grid; u++) {
       //units.push(new Unit(s, u, u * w / grid, h, w / grid - 30, 255));
-      units.push(new Unit(s, u, u * w / grid, h, w / grid, 255));//posizione fascia di sotto
+      units.push(new Unit(s, u, u * w / grid, h, w / grid, 255)); //posizione fascia di sotto
       //inverso.push(new Unit(s, u, u * w / grid, 0, w / grid, 255));//posizione fascia di sopra rovesciata
     }
 
-    for (let u = 0; u < grid+1; u++) {
+    for (let u = 0; u < grid + 1; u++) {
       //units.push(new Unit(s, u, u * w / grid, h, w / grid - 30, 255));
       //units.push(new Unit(s, u, u * w / grid, h, w / grid, 255));//posizione fascia di sotto
-      inverso.push(new Unit(s, u, u * w / grid-((w/grid)/2), 0, w / grid, 255));//posizione fascia di sopra rovesciata
+      inverso.push(new Unit(s, u, u * w / grid - ((w / grid) / 2), 0, w / grid, 255)); //posizione fascia di sopra rovesciata
     }
     // console.log(units.length);
   }
@@ -58,7 +58,7 @@ var s1 = function(s) {
       this.w = _w;
       this.h = _h;
     }
-    display(cv=250,m=22) {
+    display(cv = 250, m = 22) {
       let volume = Sound.mapSound(10, this.id * m, 0, cv);
 
       //se tolgo 10 tutti salgono contemporaneamente
@@ -67,7 +67,7 @@ var s1 = function(s) {
       this.s.beginShape();
       this.s.vertex(this.x, this.y);
       this.s.vertex(this.x + this.w, this.y);
-      this.s.vertex(this.x + this.w/2, this.y - cv - volume);
+      this.s.vertex(this.x + this.w / 2, this.y - cv - volume);
       this.s.endShape();
       //this.s.rect(this.x, this.y, this.w, -100 - volume);
       // this.s.push();
@@ -77,6 +77,9 @@ var s1 = function(s) {
     }
   }
 
+  s.trigger = function() {
+    s.genGrid();
+  }
   s.keyPressed = function() {
     if (s.keyCode === s.RIGHT_ARROW) {
       s.genGrid();

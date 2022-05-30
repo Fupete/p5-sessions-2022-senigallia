@@ -5,8 +5,8 @@ var s1 = function(s) {
   let xScan = 0;
 
   let p = {
-    gridScan: 0.3,
-    playSpeed: 0.4,
+    gridScan: 0.5,
+    playSpeed: 0.6,
     duoTone: true,
     isYellow: false,
     deleteAtTheEnd: false,
@@ -34,7 +34,7 @@ var s1 = function(s) {
     vidH = video.height;
 
     p.wDestinazione = w;
-    p.wCopia = vidW / 2;
+    p.wCopia = vidW;
 
     gialloNero = s.createGraphics(w, h);
   }
@@ -46,7 +46,7 @@ var s1 = function(s) {
 
     if (!p.duoTone) s.copy(video, vidW / 2, 0, p.wCopia, vidH * 2, xScan, 0, p.wDestinazione, h);
     else {
-      gialloNero.copy(video, vidW / 2, 0, p.wCopia, vidH * 2 , xScan, 0, p.wDestinazione, h);
+      gialloNero.copy(video, vidW / 2, 0, p.wCopia, vidH * 2, xScan, 0, p.wDestinazione, h);
       gialloNero.filter(s.THRESHOLD, p.threeshold);
       if (p.invert) gialloNero.filter(s.INVERT);
       s.image(gialloNero, 0, 0);
