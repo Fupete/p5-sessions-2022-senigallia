@@ -53,6 +53,7 @@ function setup() {
     Sound = new Microphone();
     console.log(Sound);
     changeFile(0);
+    switchFullscreen();
   }, 5000);
 
   // setup MIDI
