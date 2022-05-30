@@ -40,7 +40,7 @@ var s1 = function(s) {
   }
   s.draw = function() {
     s.clear();
-    if (p.isBackgroundViolet) s.background(255, 0, 150);
+    if (p.isBackgroundViolet) s.background("#4D0AFF");
     for (let l = 0; l < letters.length; l++) {
       let charIndex = (l + scrollIndex) % testoLength;
       letters[l].letter = p.testo[charIndex];
@@ -87,7 +87,7 @@ var s1 = function(s) {
         this.s.fill(255, 0, 150);
         this.s.rect(this.col * letterW, this.row * letterH, letterW, letterH);
       }
-      if (p.isViolet) this.s.fill(255, 0, 150);
+      if (p.isViolet) this.s.fill("#4D0AFF");
       else if (p.isBackgroundViolet) this.s.fill(0);
       else this.s.fill(255);
       this.s.translate(this.col * letterW, this.row * letterH);
@@ -99,6 +99,9 @@ var s1 = function(s) {
     }
   }
 
+  s.trigger = function() {
+    s.genGrid();
+  }
   s.keyPressed = function() {
     if (s.keyCode === s.RIGHT_ARROW) {
       s.genGrid();

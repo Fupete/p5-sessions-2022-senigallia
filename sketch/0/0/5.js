@@ -1,30 +1,27 @@
 var s1 = function(s) {
+  let midiMouseOn = false;
+  let mMx = -100,
+    mMy = -100;
   let w, h;
   let attractor;
   let attractors = [];
   let boxes, eyeImg, boxImg;
-  let occhio1, occhio2, occhio3;
+  // let occhio1, occhio2, occhio3;
+  let eyes = [];
 
   let p = {
     noAttractors: 3,
-    xAttractor: 100, //** < connesso a quale è i...
+    xAttractor: 100, //*
     yAttractor: 100, //*
     sizeAttractor: 200, //*
-    mM:0.1,
-    isGreen: false,
-    isInvert: true,
-    nBoxes:400,
-
-
-
-
-  }
-
-  s.preload = function() {
-    let imgLoc = artFolder + '/' + current_set + '/' + current_bank + '/';
-    occhio1 = s.loadImage(imgLoc + "eye_01.gif");
-    occhio2 = s.loadImage(imgLoc + "eye_02.gif");
-    occhio3 = s.loadImage(imgLoc + "eye_03.gif");
+    isBlack: [false],
+    coloreBulbo: "#000000",
+    colorePupilla: "#00DC1B",
+    backgroundColor: "#000000",
+    sizeMultiplier: 60,
+    mM: 0.05,
+    nBoxes: 500,
+    angle: false
   }
 
   s.setup = function() {
@@ -32,12 +29,20 @@ var s1 = function(s) {
     if (fs) cnv = s.createCanvas(w = s.displayWidth, h = s.displayHeight);
     else cnv = s.createCanvas(w = s.windowWidth, h = s.windowHeight);
     cnv.parent("canvas");
-// s.noStroke();
-    s.fill(0,255,0);
+    s.noStroke();
     s.pixelDensity(1);
+    s.rectMode(CENTER);
 
+    let isB = random(p.isBlack);
+    if (isB) {
+      p.coloreBulbo = p.colorePupilla;
+      p.colorePupilla = p.backgroundColor;
+      p.backgroundColor = p.coloreBulbo;
+    }
+
+    p.xAttractor = w / 2;
     p.yAttractor = h / 2;
-    p.sizeAttractor = 100;
+    p.sizeAttractor = h / 8;
 
     engine = Engine.create();
     engine.world.gravity.scale = 0;
@@ -56,15 +61,13 @@ var s1 = function(s) {
                 let m = Math.sqrt(vx * vx + vy * vy);
                 let dx = vx / m;
                 let dy = vy / m;
-                // let mM = 0.1
+                // let mM = 0.4
                 var force = {
                   x: (dx * p.mM) / m,
                   y: (dy * p.mM) / m,
-
                 };
                 Body.applyForce(bodyA, bodyA.position, Matter.Vector.neg(force));
                 Body.applyForce(bodyB, bodyB.position, force);
-
               }
             ]
           }
@@ -85,72 +88,100 @@ var s1 = function(s) {
     Composite.add(boxes, allBoxes);
     World.add(engine.world, boxes);
 
+    s.genEyes();
+
     // let's start the engine
     Runner.run(engine);
   }
-
+  s.toggleMidiMouseOn = function() {
+    midiMouseOn = !midiMouseOn;
+  }
+  s.coordinateMidi = function(mx, my) {
+    mMx = mx;
+    mMy = my;
+  }
   s.draw = function() {
     s.clear();
-    s.background(0);
+    s.background(p.backgroundColor);
 
-
-    for (let i = 0; i < boxes.bodies.length; i++) {
-      s.push();
-      // same mass
-      let particleSize = boxes.bodies[i].mass * 120;
-      s.translate(boxes.bodies[i].position.x, boxes.bodies[i].position.y)
-      s.rotate(boxes.bodies[i].angle)
-      s.image(occhio1, 0, 0, particleSize, particleSize)
-      s.pop();
-}
-      for (let i = 0; i < boxes.bodies.length/2; i++) {
-        s.push();
-        // same mass
-        let particleSize = boxes.bodies[i].mass * 120;
-        s.translate(boxes.bodies[i].position.x, boxes.bodies[i].position.y)
-        s.rotate(boxes.bodies[i].angle)
-        s.image(occhio2, 0, 0, particleSize, particleSize)
-        s.pop();
-}
-        for (let i = 0; i < boxes.bodies.length/3; i++) {
-          s.push();
-          // same mass
-          let particleSize = boxes.bodies[i].mass * 120;
-          s.translate(boxes.bodies[i].position.x, boxes.bodies[i].position.y)
-          s.rotate(boxes.bodies[i].angle)
-          s.image(occhio3, 0, 0, particleSize, particleSize)
-          s.pop();
-        }
-
-
-    s.filter(s.THRESHOLD);
-    if (p.isInvert){
-      s.filter(s.INVERT);
-      s.blendMode(s.MULTIPLY);
-      s.fill(0, 255, 0);
-      s.rect(0, 0, w, h);
-      s.blendMode(s.BLEND);
-
-    }
-    if (p.isGreen) {
-      s.blendMode(s.MULTIPLY);
-      s.fill(0, 255, 0);
-      s.rect(0, 0, w, h);
-      s.blendMode(s.BLEND);
+    if (s.mouseIsPressed) {
+      // smoothly move the first attractor body towards the mouse if clicked
+      Body.translate(attractors.bodies[0], {
+        x: (s.mouseX - attractors.bodies[0].position.x) * 0.25,
+        y: (s.mouseY - attractors.bodies[0].position.y) * 0.25
+      });
     }
 
+    if (midiMouseOn) {
+      // smoothly move the first attractor body towards the midi x,y if clicked
+      Body.translate(attractors.bodies[0], {
+        x: (mMx - attractors.bodies[0].position.x) * 0.25,
+        y: (mMy - attractors.bodies[0].position.y) * 0.25
+      });
+    }
 
-
+    let isBlinking;
+    if (s.frameCount % 120 == 0 && random(1) > .5) isBlinking = true;
+    for (let e = 0; e < eyes.length; e++) {
+      eyes[e].display();
+      if (isBlinking) eyes[e].blinking = true;
+    }
   }
 
+  s.genEyes = function() {
+    if (eyes.length > 0) eyes = [];
+    for (let e = 0; e < p.nBoxes; e++) {
+      eyes.push(new Eye(s, e, 0, 0, boxes.bodies[e].mass * p.sizeMultiplier));
+    }
+    // console.log(units.length);
+  }
+  class Eye {
+    constructor(_s, _id, _x, _y, _size) {
+      this.s = _s; // < our p5 instance object
+      this.id = _id;
+      this.x = _x;
+      this.y = _y;
+      this.size = _size;
+      this.originalVSize = 0;
+      this.VSize = 0;
+      this.blinking = false;
+    }
+    display() {
+      this.s.push();
+      if (this.blinking) this.blink();
+      // let volume = Sound.mapSound(10, this.id * 22, 0, 150);
+      this.s.translate(boxes.bodies[this.id].position.x, boxes.bodies[this.id].position.y)
+      if (p.angle) this.s.rotate(boxes.bodies[this.id].angle)
+      this.s.fill(p.colorePupilla);
+      this.s.rect(0, 0, this.size, this.size, this.size / 10)
+      this.s.fill(p.coloreBulbo);
+      this.s.rect(0, 0, this.size - 5, this.size - 5, this.size / 12)
+      this.s.fill(p.colorePupilla);
+      this.s.rect(0, 0, this.size / 4, this.size / 4, this.size / 20)
+      this.s.fill(p.coloreBulbo);
+      this.s.rect(0, 0, this.size - 5, this.VSize, this.size / 12) // palpebra
+      this.s.pop();
+    }
+    blink() {
+      this.VSize += 4;
+      if (this.VSize >= this.size / 2) {
+        this.VSize = this.originalVSize;
+        this.blinking = false;
+      }
+    }
+  }
+
+  s.trigger = function() {
+    for (let i = 0; i < attractors.bodies.length; i++) {
+      Body.translate(attractors.bodies[i], {
+        x: (s.random(w) - attractors.bodies[i].position.x) * 1,
+        y: (s.random(h) - attractors.bodies[i].position.y) * 1
+      });
+    }
+  }
   s.keyPressed = function() {
     if (s.keyCode === s.RIGHT_ARROW) {
-      for (let i = 0; i < attractors.bodies.length; i++) {
-        Body.translate(attractors.bodies[i], {
-          x: (s.random(w) - attractors.bodies[i].position.x) * 1,
-          y: (s.random(h) - attractors.bodies[i].position.y) * 1
-        });
-      }
+      s.trigger();
     }
   }
 

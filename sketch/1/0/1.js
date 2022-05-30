@@ -6,7 +6,7 @@ var s1 = function(s) {
   let units = [];
 
   let p = {
-    grids: [ 15, 30, 40],
+    grids: [15, 30, 40],
   }
 
   s.setup = function() {
@@ -49,7 +49,7 @@ var s1 = function(s) {
       this.s.beginShape();
       this.s.vertex(this.x, this.y);
       this.s.vertex(this.x + this.w, this.y);
-      this.s.vertex(this.x + this.w/2 - volume, this.y - h );
+      this.s.vertex(this.x + this.w / 2 - volume, this.y - h);
       this.s.endShape();
       //this.s.rect(this.x, this.y, this.w, -100 - volume);
       // this.s.push();
@@ -59,6 +59,9 @@ var s1 = function(s) {
     }
   }
 
+  s.trigger = function() {
+    s.genGrid();
+  }
   s.keyPressed = function() {
     if (s.keyCode === s.RIGHT_ARROW) {
       s.genGrid();

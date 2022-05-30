@@ -24,8 +24,8 @@ var s1 = function(s) {
   s.draw = function() {
     s.clear();
     for (let u = 0; u < units.length; u++) {
-      units[u].display(80,22);
-      inverso[u].display(-80,22);
+      units[u].display(80, 22);
+      inverso[u].display(-80, 22);
       //inverso[u].display(-250,15)
     }
   }
@@ -34,8 +34,8 @@ var s1 = function(s) {
     let grid = s.random(p.grids);
     for (let u = 0; u < grid; u++) {
       //units.push(new Unit(s, u, u * w / grid, h, w / grid - 30, 255));
-      units.push(new Unit(s, u, 0, u * h/ grid, 200, h / grid));
-      inverso.push(new Unit(s, u, w, u * h/ grid, 200, h / grid));
+      units.push(new Unit(s, u, 0, u * h / grid, 200, h / grid));
+      inverso.push(new Unit(s, u, w, u * h / grid, 200, h / grid));
 
     }
     // console.log(units.length);
@@ -50,7 +50,7 @@ var s1 = function(s) {
       this.w = _w;
       this.h = _h;
     }
-    display(cv=250,m=22) {
+    display(cv = 250, m = 22) {
       let volume = Sound.mapSound(10, this.id * m, 0, cv);
 
       //se tolgo 10 tutti salgono contemporaneamente
@@ -60,8 +60,8 @@ var s1 = function(s) {
       this.s.beginShape();
       this.s.vertex(this.x, this.y);
       //this.s.vertex(this.x + cv/4 + volume, this.y);
-      this.s.vertex(this.x + cv/2 + volume, this.y+this.h/2 ); // 0 e per far partire i rettangoli dalla base
-      this.s.vertex(this.x, this.y+this.h)
+      this.s.vertex(this.x + cv * 2 + volume, this.y + this.h / 2); // 0 e per far partire i rettangoli dalla base
+      this.s.vertex(this.x, this.y + this.h)
       this.s.endShape();
       //this.s.rect(this.x, this.y, this.w, -100 - volume);
       // this.s.push();
@@ -71,6 +71,9 @@ var s1 = function(s) {
     }
   }
 
+  s.trigger = function() {
+    s.genGrid();
+  }
   s.keyPressed = function() {
     if (s.keyCode === s.RIGHT_ARROW) {
       s.genGrid();

@@ -24,14 +24,17 @@ var s1 = function(s) {
   s.draw = function() {
     s.clear();
     for (let u = 0; u < units.length; u++) {
-      units[u].display();
+      units[u].display(300, 22); //parametri da modificare fascia di sotto
+      inverso[u].display(-300, 22); //parametri da modificare fascia di sopra
     }
   }
   s.genGrid = function() {
     if (units.length > 0) units = [];
     let grid = s.random(p.grids);
     for (let u = 0; u < grid; u++) {
-      units.push(new Unit(s, u, u * w / grid, h, w / grid, 255));
+      //units.push(new Unit(s, u, u * w / grid, h, w / grid - 30, 255));
+      units.push(new Unit(s, u, u * w / grid, h, w / grid, 255)); //posizione fascia di sotto
+      inverso.push(new Unit(s, u, u * w / grid, 0, w / grid, 255)); //posizione fascia di sopra rovesciata
     }
     // console.log(units.length);
   }
@@ -45,8 +48,9 @@ var s1 = function(s) {
       this.w = _w;
       this.h = _h;
     }
-    display() {
-      let volume = Sound.mapSound(10, this.id * 22, 0, 500); //se tolgo 10 tutti salgono contemporaneamente, da 0 a 255 = quanta sara l ampiezza del volume
+    display(cv = 250, m = 22) {
+      let volume = Sound.mapSound(10, this.id * m, 0, cv);
+      //se tolgo 10 tutti salgono contemporaneamente
       this.s.fill(255);
       this.s.stroke(255);
       this.s.strokeWeight(2);
@@ -64,6 +68,9 @@ var s1 = function(s) {
     }
   }
 
+  s.trigger = function() {
+    s.genGrid();
+  }
   s.keyPressed = function() {
     if (s.keyCode === s.RIGHT_ARROW) {
       s.genGrid();

@@ -59,9 +59,8 @@ var s1 = function(s) {
       //this.s.strokeWeight(10);
       this.s.beginShape();
       this.s.vertex(this.x, this.y);
-      //this.s.vertex(this.x + cv/4 + volume, this.y);
-      this.s.vertex(this.x + cv*2 + volume, this.y+this.h/2 ); // 0 e per far partire i rettangoli dalla base
-      this.s.vertex(this.x, this.y+this.h)
+      this.s.vertex(this.x + this.w, this.y);
+      this.s.vertex(this.x + this.w / 2, this.y - 500 - volume);
       this.s.endShape();
       //this.s.rect(this.x, this.y, this.w, -100 - volume);
       // this.s.push();
@@ -71,6 +70,9 @@ var s1 = function(s) {
     }
   }
 
+  s.trigger = function() {
+    s.genGrid();
+  }
   s.keyPressed = function() {
     if (s.keyCode === s.RIGHT_ARROW) {
       s.genGrid();
