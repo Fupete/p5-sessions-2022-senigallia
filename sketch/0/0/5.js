@@ -10,17 +10,17 @@ var s1 = function(s) {
   let eyes = [];
 
   let p = {
-    noAttractors: 1,
+    noAttractors: 3,
     xAttractor: 100, //*
     yAttractor: 100, //*
     sizeAttractor: 200, //*
-    isBlack: [true, false],
+    isBlack: [false],
     coloreBulbo: "#000000",
     colorePupilla: "#00DC1B",
     backgroundColor: "#000000",
     sizeMultiplier: 60,
-    mM: 0.4,
-    nBoxes: 400,
+    mM: 0.05,
+    nBoxes: 500,
     angle: false
   }
 
@@ -41,8 +41,8 @@ var s1 = function(s) {
     }
 
     p.xAttractor = w / 2;
-    p.yAttractor = h / 3;
-    p.sizeAttractor = h * 1 / 2;
+    p.yAttractor = h / 2;
+    p.sizeAttractor = h / 8;
 
     engine = Engine.create();
     engine.world.gravity.scale = 0;
@@ -51,7 +51,7 @@ var s1 = function(s) {
     let allAttractors = [];
     for (let i = 0; i < p.noAttractors; i++)
       allAttractors.push(
-        Bodies.circle(p.xAttractor, p.yAttractor, p.sizeAttractor, {
+        Bodies.circle(w / 3 * i + w / 6, p.yAttractor, p.sizeAttractor, {
           isStatic: true,
           plugin: {
             attractors: [
@@ -80,7 +80,7 @@ var s1 = function(s) {
     // create engine particles
     let allBoxes = [];
     for (let i = 0; i < p.nBoxes; i++) {
-      allBoxes.push(Bodies.rectangle(s.random(w), s.random(h), s.random(30) + 15, s.random(5) + 15, {
+      allBoxes.push(Bodies.rectangle(s.random(w), s.random(h), s.random(30) + 15, s.random(10) + 5, {
         isStatic: false
       }));
     }
@@ -163,7 +163,7 @@ var s1 = function(s) {
       this.s.pop();
     }
     blink() {
-      this.VSize += 2;
+      this.VSize += 4;
       if (this.VSize >= this.size / 2) {
         this.VSize = this.originalVSize;
         this.blinking = false;

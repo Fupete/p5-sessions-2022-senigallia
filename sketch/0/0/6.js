@@ -1,7 +1,4 @@
 var s1 = function(s) {
-  let midiMouseOn = false;
-  let mMx = -100,
-    mMy = -100;
   let w, h;
   let attractor;
   let attractors = [];
@@ -10,18 +7,18 @@ var s1 = function(s) {
   let eyes = [];
 
   let p = {
-    noAttractors: 3,
+    noAttractors: 0,
     xAttractor: 100, //*
     yAttractor: 100, //*
     sizeAttractor: 200, //*
     isBlack: [false],
     coloreBulbo: "#000000",
-    colorePupilla: "#00DC1B",
+    colorePupilla: "#00ff00",
     backgroundColor: "#000000",
-    sizeMultiplier: 100,
-    mM: 0.05,
-    nBoxes: 300,
-    angle: false
+    sizeMultiplier: 50,
+    mM: 0.5,
+    nBoxes: 1,
+    angle: true
   }
 
   s.setup = function() {
@@ -42,7 +39,7 @@ var s1 = function(s) {
 
     p.xAttractor = w / 2;
     p.yAttractor = h / 2;
-    p.sizeAttractor = h / 8;
+    p.sizeAttractor = h * 1 / 4;
 
     engine = Engine.create();
     engine.world.gravity.scale = 0;
@@ -51,7 +48,7 @@ var s1 = function(s) {
     let allAttractors = [];
     for (let i = 0; i < p.noAttractors; i++)
       allAttractors.push(
-        Bodies.circle(w / 3 * i + w / 6, p.yAttractor, p.sizeAttractor, {
+        Bodies.circle(p.xAttractor, p.yAttractor, p.sizeAttractor, {
           isStatic: true,
           plugin: {
             attractors: [
@@ -80,7 +77,7 @@ var s1 = function(s) {
     // create engine particles
     let allBoxes = [];
     for (let i = 0; i < p.nBoxes; i++) {
-      allBoxes.push(Bodies.rectangle(s.random(w), s.random(h), s.random(30) + 15, s.random(10) + 5, {
+      allBoxes.push(Bodies.rectangle(w / 2, h / 2, h / 12, h / 12, {
         isStatic: false
       }));
     }
@@ -93,32 +90,18 @@ var s1 = function(s) {
     // let's start the engine
     Runner.run(engine);
   }
-  s.toggleMidiMouseOn = function() {
-    midiMouseOn = !midiMouseOn;
-  }
-  s.coordinateMidi = function(mx, my) {
-    mMx = mx;
-    mMy = my;
-  }
+
   s.draw = function() {
     s.clear();
     s.background(p.backgroundColor);
 
-    if (s.mouseIsPressed) {
-      // smoothly move the first attractor body towards the mouse if clicked
-      Body.translate(attractors.bodies[0], {
-        x: (s.mouseX - attractors.bodies[0].position.x) * 0.25,
-        y: (s.mouseY - attractors.bodies[0].position.y) * 0.25
-      });
-    }
-
-    if (midiMouseOn) {
-      // smoothly move the first attractor body towards the midi x,y if clicked
-      Body.translate(attractors.bodies[0], {
-        x: (mMx - attractors.bodies[0].position.x) * 0.25,
-        y: (mMy - attractors.bodies[0].position.y) * 0.25
-      });
-    }
+    // if (s.mouseIsPressed) {
+    //   // smoothly move the first attractor body towards the mouse if clicked
+    //   Body.translate(attractors.bodies[0], {
+    //     x: (s.mouseX - attractors.bodies[0].position.x) * 0.25,
+    //     y: (s.mouseY - attractors.bodies[0].position.y) * 0.25
+    //   });
+    // }
 
     let isBlinking;
     if (s.frameCount % 120 == 0 && random(1) > .5) isBlinking = true;
@@ -153,35 +136,65 @@ var s1 = function(s) {
       this.s.translate(boxes.bodies[this.id].position.x, boxes.bodies[this.id].position.y)
       if (p.angle) this.s.rotate(boxes.bodies[this.id].angle)
       this.s.fill(p.colorePupilla);
-      this.s.rect(0, 0, this.size, this.size, this.size / 10)
+      this.s.rect(0, 0, this.size, this.size, this.size / 5)
+      this.s.rect(0, 0, this.size, this.size, this.size / 5)
       this.s.fill(p.coloreBulbo);
-      this.s.rect(0, 0, this.size - 5, this.size - 5, this.size / 12)
+      this.s.rect(0, 0, this.size - 6, this.size - 6, this.size / 6)
       this.s.fill(p.colorePupilla);
-      this.s.rect(0, 0, this.size / 4, this.size / 4, this.size / 20)
+      this.s.rect(0, 0, this.size / 4, this.size / 4, this.size / 10)
       this.s.fill(p.coloreBulbo);
-      this.s.rect(0, 0, this.size - 5, this.VSize, this.size / 12) // palpebra
+      this.s.rect(0, -this.size / 8, this.size - 12, this.VSize, this.size / 6) // palpebra
       this.s.pop();
+
+      this.s.push();
+      if (this.blinking) this.blink();
+      // let volume = Sound.mapSound(10, this.id * 22, 0, 150);
+      this.s.translate(boxes.bodies[this.id].position.x, boxes.bodies[this.id].position.y)
+      if (p.angle) this.s.rotate(boxes.bodies[this.id].angle)
+      this.s.fill(p.colorePupilla);
+      this.s.rect(500, 0, this.size, this.size, this.size / 5)
+      this.s.rect(500, 0, this.size, this.size, this.size / 5)
+      this.s.fill(p.coloreBulbo);
+      this.s.rect(500, 0, this.size - 6, this.size - 6, this.size / 6)
+      this.s.fill(p.colorePupilla);
+      this.s.rect(500, 0, this.size / 4, this.size / 4, this.size / 10)
+      this.s.fill(p.coloreBulbo);
+      this.s.rect(500, -this.size / 8, this.size - 12, this.VSize, this.size / 6) // palpebra
+      this.s.pop();
+
+
+      this.s.push();
+      if (this.blinking) this.blink();
+      // let volume = Sound.mapSound(10, this.id * 22, 0, 150);
+      this.s.translate(boxes.bodies[this.id].position.x, boxes.bodies[this.id].position.y)
+      if (p.angle) this.s.rotate(boxes.bodies[this.id].angle)
+      this.s.fill(p.colorePupilla);
+      this.s.rect(-500, 0, this.size, this.size, this.size / 5)
+      this.s.rect(-500, 0, this.size, this.size, this.size / 5)
+      this.s.fill(p.coloreBulbo);
+      this.s.rect(-500, 0, this.size - 6, this.size - 6, this.size / 6)
+      this.s.fill(p.colorePupilla);
+      this.s.rect(-500, 0, this.size / 4, this.size / 4, this.size / 10)
+      this.s.fill(p.coloreBulbo);
+      this.s.rect(-500, -this.size / 8, this.size - 12, this.VSize, this.size / 6) // palpebra
+      this.s.pop();
+
+
     }
+
+    
     blink() {
-      this.VSize += 2;
-      if (this.VSize >= this.size / 2) {
+      this.VSize += 12;
+      if (this.VSize >= this.size * 2 / 3) {
         this.VSize = this.originalVSize;
         this.blinking = false;
       }
     }
   }
 
-  s.trigger = function() {
-    for (let i = 0; i < attractors.bodies.length; i++) {
-      Body.translate(attractors.bodies[i], {
-        x: (s.random(w) - attractors.bodies[i].position.x) * 1,
-        y: (s.random(h) - attractors.bodies[i].position.y) * 1
-      });
-    }
-  }
   s.keyPressed = function() {
     if (s.keyCode === s.RIGHT_ARROW) {
-      s.trigger();
+      engine.world.gravity.scale = 0.01;
     }
   }
 
