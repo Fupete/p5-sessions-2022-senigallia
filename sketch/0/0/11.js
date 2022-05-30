@@ -1,7 +1,4 @@
 var s1 = function(s) {
-  let midiMouseOn = false;
-  let mMx = -100,
-    mMy = -100;
   let w, h;
   let attractor;
   let attractors = [];
@@ -10,17 +7,17 @@ var s1 = function(s) {
   let eyes = [];
 
   let p = {
-    noAttractors: 3,
+    noAttractors: 1,
     xAttractor: 100, //*
     yAttractor: 100, //*
     sizeAttractor: 200, //*
-    isBlack: [false],
+    isBlack: [true],
     coloreBulbo: "#000000",
-    colorePupilla: "#00DC1B",
+    colorePupilla: "#00ff00",
     backgroundColor: "#000000",
-    sizeMultiplier: 100,
-    mM: 0.05,
-    nBoxes: 300,
+    sizeMultiplier: 60,
+    mM: 0.4,
+    nBoxes: 400,
     angle: false
   }
 
@@ -41,8 +38,8 @@ var s1 = function(s) {
     }
 
     p.xAttractor = w / 2;
-    p.yAttractor = h / 2;
-    p.sizeAttractor = h / 8;
+    p.yAttractor = h / 3;
+    p.sizeAttractor = h * 1 / 2;
 
     engine = Engine.create();
     engine.world.gravity.scale = 0;
@@ -51,7 +48,7 @@ var s1 = function(s) {
     let allAttractors = [];
     for (let i = 0; i < p.noAttractors; i++)
       allAttractors.push(
-        Bodies.circle(w / 3 * i + w / 6, p.yAttractor, p.sizeAttractor, {
+        Bodies.circle(p.xAttractor, p.yAttractor, p.sizeAttractor, {
           isStatic: true,
           plugin: {
             attractors: [
@@ -80,7 +77,7 @@ var s1 = function(s) {
     // create engine particles
     let allBoxes = [];
     for (let i = 0; i < p.nBoxes; i++) {
-      allBoxes.push(Bodies.rectangle(s.random(w), s.random(h), s.random(30) + 15, s.random(10) + 5, {
+      allBoxes.push(Bodies.rectangle(s.random(w), s.random(h), s.random(30) + 15, s.random(5) + 15, {
         isStatic: false
       }));
     }
@@ -93,13 +90,7 @@ var s1 = function(s) {
     // let's start the engine
     Runner.run(engine);
   }
-  s.toggleMidiMouseOn = function() {
-    midiMouseOn = !midiMouseOn;
-  }
-  s.coordinateMidi = function(mx, my) {
-    mMx = mx;
-    mMy = my;
-  }
+
   s.draw = function() {
     s.clear();
     s.background(p.backgroundColor);
@@ -109,14 +100,6 @@ var s1 = function(s) {
       Body.translate(attractors.bodies[0], {
         x: (s.mouseX - attractors.bodies[0].position.x) * 0.25,
         y: (s.mouseY - attractors.bodies[0].position.y) * 0.25
-      });
-    }
-
-    if (midiMouseOn) {
-      // smoothly move the first attractor body towards the midi x,y if clicked
-      Body.translate(attractors.bodies[0], {
-        x: (mMx - attractors.bodies[0].position.x) * 0.25,
-        y: (mMy - attractors.bodies[0].position.y) * 0.25
       });
     }
 
@@ -171,17 +154,14 @@ var s1 = function(s) {
     }
   }
 
-  s.trigger = function() {
-    for (let i = 0; i < attractors.bodies.length; i++) {
-      Body.translate(attractors.bodies[i], {
-        x: (s.random(w) - attractors.bodies[i].position.x) * 1,
-        y: (s.random(h) - attractors.bodies[i].position.y) * 1
-      });
-    }
-  }
   s.keyPressed = function() {
     if (s.keyCode === s.RIGHT_ARROW) {
-      s.trigger();
+      for (let i = 0; i < attractors.bodies.length; i++) {
+        Body.translate(attractors.bodies[i], {
+          x: (s.random(w) - attractors.bodies[i].position.x) * 1,
+          y: (s.random(h) - attractors.bodies[i].position.y) * 1
+        });
+      }
     }
   }
 
