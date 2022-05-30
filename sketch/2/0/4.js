@@ -5,12 +5,12 @@ var s1 = function(s) {
   let xScan = 0;
 
   let p = {
-    gridScan: 0.6,
-    playSpeed: 1,
+    gridScan: 0.8,
+    playSpeed: 0.4,
     duoTone: true,
     isYellow: true,
     deleteAtTheEnd: false,
-    threeshold: .52,
+    threeshold: .60,
     invert: false,
     wCopia: 8, // *
     wDestinazione: 20 // *
@@ -28,7 +28,7 @@ var s1 = function(s) {
     s.pixelDensity(1);
 
     let vidLoc = artFolder + '/' + current_set + '/' + current_bank + '/';
-    video = s.createVideo(vidLoc + "/" + "macbeth-banquo_mod.mp4 ", s.vidLoad);
+    video = s.createVideo(vidLoc + "/" + "preparazione-banchetto.mp4 ", s.vidLoad);
 
     vidW = video.width;
     vidH = video.height;
@@ -36,8 +36,9 @@ var s1 = function(s) {
     p.wDestinazione = w;
     p.wCopia = vidW;
 
+    xScan = w / 8;
+
     gialloNero = s.createGraphics(w, h);
-    // gialloNero.background(0);
   }
 
   s.draw = function() {
@@ -60,8 +61,8 @@ var s1 = function(s) {
       s.blendMode(s.BLEND);
     }
     xScan += p.gridScan;
-    if (xScan > w) {
-      xScan = 0;
+    if (xScan > w - w / 8) {
+      xScan = w / 8;
       if (p.deleteAtTheEnd) {
         s.background(0);
         gialloNero.background(0);

@@ -5,12 +5,12 @@ var s1 = function(s) {
   let xScan = 0;
 
   let p = {
-    gridScan: 0.5,
-    playSpeed: 1,
+    gridScan: 0.6,
+    playSpeed: .7,
     duoTone: true,
     isYellow: true,
     deleteAtTheEnd: false,
-    threeshold: .20,
+    threeshold: .40,
     invert: false,
     wCopia: 8, // *
     wDestinazione: 20 // *
@@ -34,9 +34,12 @@ var s1 = function(s) {
     vidH = video.height;
 
     p.wDestinazione = w;
-    p.wCopia = vidW * 4;
+    p.wCopia = vidW;
+
+    xScan = w / 8;
 
     gialloNero = s.createGraphics(w, h);
+    // gialloNero.background(0);
   }
 
   s.draw = function() {
@@ -59,8 +62,8 @@ var s1 = function(s) {
       s.blendMode(s.BLEND);
     }
     xScan += p.gridScan;
-    if (xScan > w) {
-      xScan = 0;
+    if (xScan > w - w / 8) {
+      xScan = w / 8;
       if (p.deleteAtTheEnd) {
         s.background(0);
         gialloNero.background(0);

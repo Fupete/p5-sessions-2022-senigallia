@@ -5,7 +5,7 @@ var s1 = function(s) {
   let xScan = 0;
 
   let p = {
-    gridScan: 0.5,
+    gridScan: 1,
     playSpeed: 0.6,
     duoTone: true,
     isYellow: false,
@@ -36,6 +36,8 @@ var s1 = function(s) {
     p.wDestinazione = w;
     p.wCopia = vidW;
 
+    xScan = w / 8;
+
     gialloNero = s.createGraphics(w, h);
   }
 
@@ -59,8 +61,8 @@ var s1 = function(s) {
       s.blendMode(s.BLEND);
     }
     xScan += p.gridScan;
-    if (xScan > w) {
-      xScan = 0;
+    if (xScan > w - w / 8) {
+      xScan = w / 8;
       if (p.deleteAtTheEnd) {
         s.background(0);
         gialloNero.background(0);

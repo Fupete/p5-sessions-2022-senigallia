@@ -5,8 +5,8 @@ var s1 = function(s) {
   let xScan = 0;
 
   let p = {
-    gridScan: 0.5,
-    playSpeed: 1,
+    gridScan: .8,
+    playSpeed: .6,
     duoTone: true,
     isYellow: true,
     deleteAtTheEnd: false,
@@ -28,13 +28,15 @@ var s1 = function(s) {
     s.pixelDensity(1);
 
     let vidLoc = artFolder + '/' + current_set + '/' + current_bank + '/';
-    video = s.createVideo(vidLoc + "/" + "banchetto-fantasma.mp4 ", s.vidLoad);
+    video = s.createVideo(vidLoc + "/" + "solitudine.mp4 ", s.vidLoad);
 
     vidW = video.width;
     vidH = video.height;
 
     p.wDestinazione = w;
     p.wCopia = vidW / 2;
+
+    xScan = w / 8;
 
     gialloNero = s.createGraphics(w, h);
   }
@@ -44,9 +46,9 @@ var s1 = function(s) {
     s.translate(0, h);
     s.scale(1, -1);
 
-    if (!p.duoTone) s.copy(video, vidW / 2, -100, p.wCopia, vidH * 3, xScan, 0, p.wDestinazione, h);
+    if (!p.duoTone) s.copy(video, vidW / 2, 0, p.wCopia, vidH * 1.5, xScan, 0, p.wDestinazione, h);
     else {
-      gialloNero.copy(video, vidW / 2, -100, p.wCopia, vidH * 3, xScan, 0, p.wDestinazione, h);
+      gialloNero.copy(video, vidW / 2, 0, p.wCopia, vidH * 1.5, xScan, 0, p.wDestinazione, h);
       gialloNero.filter(s.THRESHOLD, p.threeshold);
       if (p.invert) gialloNero.filter(s.INVERT);
       s.image(gialloNero, 0, 0);
@@ -59,8 +61,8 @@ var s1 = function(s) {
       s.blendMode(s.BLEND);
     }
     xScan += p.gridScan;
-    if (xScan > w) {
-      xScan = 0;
+    if (xScan > w - w / 8) {
+      xScan = w / 8;
       if (p.deleteAtTheEnd) {
         s.background(0);
         gialloNero.background(0);

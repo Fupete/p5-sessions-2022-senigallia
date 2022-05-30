@@ -6,11 +6,11 @@ var s1 = function(s) {
 
   let p = {
     gridScan: 0.8,
-    playSpeed: 0.6,
+    playSpeed: 1,
     duoTone: true,
-    isYellow: false,
+    isYellow: true,
     deleteAtTheEnd: false,
-    threeshold: .25,
+    threeshold: .20,
     invert: false,
     wCopia: 8, // *
     wDestinazione: 20 // *
@@ -28,13 +28,15 @@ var s1 = function(s) {
     s.pixelDensity(1);
 
     let vidLoc = artFolder + '/' + current_set + '/' + current_bank + '/';
-    video = s.createVideo(vidLoc + "/" + "dialogo.mp4 ", s.vidLoad);
+    video = s.createVideo(vidLoc + "/" + "macbeth-banquo_mod.mp4 ", s.vidLoad);
 
     vidW = video.width;
     vidH = video.height;
 
     p.wDestinazione = w;
-    p.wCopia = vidW;
+    p.wCopia = vidW * 4;
+
+    xScan = w / 8;
 
     gialloNero = s.createGraphics(w, h);
   }
@@ -44,9 +46,9 @@ var s1 = function(s) {
     s.translate(0, h);
     s.scale(1, -1);
 
-    if (!p.duoTone) s.copy(video, vidW / 2, 0, p.wCopia, vidH * 2, xScan, 0, p.wDestinazione/2, h);
+    if (!p.duoTone) s.copy(video, vidW / 2, 0, p.wCopia, vidH * 2, xScan, 0, p.wDestinazione, h);
     else {
-      gialloNero.copy(video, vidW / 2, 0, p.wCopia, vidH * 2, xScan, 0, p.wDestinazione/2, h);
+      gialloNero.copy(video, vidW / 2, 0, p.wCopia, vidH * 2, xScan, 0, p.wDestinazione, h);
       gialloNero.filter(s.THRESHOLD, p.threeshold);
       if (p.invert) gialloNero.filter(s.INVERT);
       s.image(gialloNero, 0, 0);
@@ -59,8 +61,8 @@ var s1 = function(s) {
       s.blendMode(s.BLEND);
     }
     xScan += p.gridScan;
-    if (xScan > w) {
-      xScan = 0;
+    if (xScan > w - w / 8) {
+      xScan = w / 8;
       if (p.deleteAtTheEnd) {
         s.background(0);
         gialloNero.background(0);
