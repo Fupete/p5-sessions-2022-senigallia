@@ -1,4 +1,5 @@
 //LETTERA B.
+//banqo bianco
 
 var s1 = function(s) {
   let w, h;

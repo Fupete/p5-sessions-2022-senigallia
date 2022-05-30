@@ -1,4 +1,6 @@
-//LETTERA F.
+//LETTERA E.
+//macduff rosso destra e sinistra
+
 
 var s1 = function(s) {
   let w, h;
@@ -6,7 +8,9 @@ var s1 = function(s) {
   let inverso = [];
 
   let p = {
-    grids: [20],
+    grids: [4, 8, 14],
+    isBlack: [true, false],
+
   }
 
 
@@ -18,9 +22,18 @@ var s1 = function(s) {
     s.background(0);
     s.pixelDensity(1);
     s.genGrid();
+
+    isB = random(p.isBlack);
+
   }
   s.draw = function() {
     s.clear();
+
+    if (isB) {
+      s.background(255, 0, 0);
+    } else {
+      s.background(0);
+    }
     for (let u = 0; u < units.length; u++) {
       units[u].display(80, 22);
       inverso[u].display(-80, 22);
@@ -50,11 +63,18 @@ var s1 = function(s) {
     }
     display(cv = 250, m = 22) {
       let volume = Sound.mapSound(10, this.id * m, 0, cv);
+      if (isB) {
+        //this.s.background(255, 0, 0);
+        this.s.fill(0)
+      } else {
+        //this.s.background(0);
+        this.s.fill(255, 0, 0);
+      }
 
       //se tolgo 10 tutti salgono contemporaneamente
-      this.s.fill(255);
+      //this.s.fill("red");
       this.s.noStroke();
-      //this.s.strokeWeight(10);
+      //this.s.strokeWeight(2);
       this.s.beginShape();
       this.s.vertex(this.x, this.y);
       //this.s.vertex(this.x + cv/4 + volume, this.y);
@@ -75,6 +95,9 @@ var s1 = function(s) {
   s.keyPressed = function() {
     if (s.keyCode === s.RIGHT_ARROW) {
       s.genGrid();
+    }
+    if (s.keyCode === s.LEFT_ARROW) {
+       isB= !isB;
     }
   }
 }

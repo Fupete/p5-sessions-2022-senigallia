@@ -1,13 +1,16 @@
-//LETTERA C.
-//macduff bianco solo sotto
+//LETTERA I.
+//denti che si toccano rossi
 
 
 var s1 = function(s) {
   let w, h;
   let units = [];
+  let inverso = [];
 
   let p = {
-    grids: [4, 8, 16],
+    grids: [ 12, 20, 32],
+    isBlack: [true, false],
+
   }
 
 
@@ -19,13 +22,22 @@ var s1 = function(s) {
     s.background(0);
     s.pixelDensity(1);
     s.genGrid();
-    s.frameRate(15);
+    s.frameRate(20);
+
+    isB = random(p.isBlack);
+
   }
   s.draw = function() {
     s.clear();
+
+    if (isB) {
+      s.background(255, 0, 0);
+    } else {
+      s.background(0);
+    }
     for (let u = 0; u < units.length; u++) {
-      units[u].display(300, 22); //parametri da modificare fascia di sotto
-      inverso[u].display(-300, 22); //parametri da modificare fascia di sopra
+      units[u].display(250,22);//parametri da modificare fascia di sotto
+      inverso[u].display(-250,22);//parametri da modificare fascia di sopra
     }
   }
   s.genGrid = function() {
@@ -33,8 +45,9 @@ var s1 = function(s) {
     let grid = s.random(p.grids);
     for (let u = 0; u < grid; u++) {
       //units.push(new Unit(s, u, u * w / grid, h, w / grid - 30, 255));
-      units.push(new Unit(s, u, u * w / grid, h, w / grid, 255)); //posizione fascia di sotto
-      inverso.push(new Unit(s, u, u * w / grid, 0, w / grid, 255)); //posizione fascia di sopra rovesciata
+      units.push(new Unit(s, u, u * w / grid, h, w / grid, 255));//posizione fascia di sotto
+      inverso.push(new Unit(s, u, u * w / grid, 0, w / grid, 255));//posizione fascia di sopra rovesciata
+
     }
     // console.log(units.length);
   }
@@ -48,17 +61,29 @@ var s1 = function(s) {
       this.w = _w;
       this.h = _h;
     }
-    display(cv = 250, m = 22) {
+    display(cv=250,m=22) {
       let volume = Sound.mapSound(10, this.id * m, 0, cv);
+      if (isB) {
+        //this.s.background(255, 0, 0);
+        this.s.fill(0)
+      } else {
+        //this.s.background(0);
+        this.s.fill(255, 0, 0);
+      }
+
       //se tolgo 10 tutti salgono contemporaneamente
-      this.s.fill(255);
-      this.s.stroke(255);
-      this.s.strokeWeight(2);
+      //this.s.fill("red");
+      this.s.noStroke();
       this.s.beginShape();
       this.s.vertex(this.x, this.y);
       this.s.vertex(this.x + this.w, this.y);
-      this.s.vertex(this.x + this.w, this.y - volume); // 0 e per far partire i rettangoli dalla base
-      this.s.vertex(this.x, this.y - volume)
+      let dif = (h/2)-(this.y - cv - volume);
+      if (volume >= h/2){
+        this.s.vertex(this.x + this.w/2, this.y - cv - volume - dif);
+      }
+      else {
+        this.s.vertex(this.x + this.w/2, this.y - cv - volume);
+      }
       this.s.endShape();
       //this.s.rect(this.x, this.y, this.w, -100 - volume);
       // this.s.push();
@@ -68,12 +93,12 @@ var s1 = function(s) {
     }
   }
 
-  s.trigger = function() {
-    s.genGrid();
-  }
   s.keyPressed = function() {
     if (s.keyCode === s.RIGHT_ARROW) {
       s.genGrid();
+    }
+    if (s.keyCode === s.LEFT_ARROW) {
+       isB= !isB;
     }
   }
 }
