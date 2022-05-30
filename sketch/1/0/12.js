@@ -46,19 +46,14 @@ var s1 = function(s) {
   }
   s.genGrid = function() {
     if (units.length > 0) units = [];
+    if (inverso.length > 0) inverso = [];
     let grid = s.random(p.grids);
     for (let u = 0; u < grid; u++) {
-      //units.push(new Unit(s, u, u * w / grid, h, w / grid - 30, 255));
       units.push(new Unit(s, u, u * w / grid, h, w / grid, 255)); //posizione fascia di sotto
-      //inverso.push(new Unit(s, u, u * w / grid, 0, w / grid, 255));//posizione fascia di sopra rovesciata
     }
-
     for (let u = 0; u < grid + 1; u++) {
-      //units.push(new Unit(s, u, u * w / grid, h, w / grid - 30, 255));
-      //units.push(new Unit(s, u, u * w / grid, h, w / grid, 255));//posizione fascia di sotto
       inverso.push(new Unit(s, u, u * w / grid - ((w / grid) / 2), 0, w / grid, 255)); //posizione fascia di sopra rovesciata
     }
-    // console.log(units.length);
   }
 
   class Unit {
