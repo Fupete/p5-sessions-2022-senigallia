@@ -4,6 +4,7 @@
 var s1 = function(s) {
   let w, h;
   let units = [];
+  let inverso = [];
 
   let p = {
     grids: [12, 20, 32],

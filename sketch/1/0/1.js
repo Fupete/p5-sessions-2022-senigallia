@@ -28,7 +28,7 @@ var s1 = function(s) {
     if (units.length > 0) units = [];
     let grid = s.random(p.grids);
     for (let u = 0; u < grid; u++) {
-      units.push(new Unit(s, u, u * w / grid, h, w / grid, 255));
+      units.push(new Unit(s, u, u * (w - w / 4) / grid + w / 8, h, (w - w / 4) / grid, 255));
     }
     // console.log(units.length);
   }

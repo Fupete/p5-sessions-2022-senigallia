@@ -7,7 +7,7 @@ var s1 = function(s) {
   let units = [];
 
   let p = {
-    grids: [ 15, 30, 40],
+    grids: [15, 30, 40],
     isBlack: [true, false],
   }
 
@@ -41,7 +41,7 @@ var s1 = function(s) {
     if (units.length > 0) units = [];
     let grid = s.random(p.grids);
     for (let u = 0; u < grid; u++) {
-      units.push(new Unit(s, u, u * w / grid, h, w / grid, 255));
+      units.push(new Unit(s, u, u * (w - w / 4) / grid + w / 8, h, (w - w / 4) / grid, 255));
     }
     // console.log(units.length);
   }
@@ -57,20 +57,20 @@ var s1 = function(s) {
     }
     display() {
       let volume = Sound.mapSound(10, this.id * 22, 0, 150);
-    //  this.s.fill("red");
-    if (isB) {
-      //this.s.background(255, 0, 0);
-      this.s.fill(0)
-    } else {
-      //this.s.background(0);
-      this.s.fill(255, 0, 0);
-    }
+      //  this.s.fill("red");
+      if (isB) {
+        //this.s.background(255, 0, 0);
+        this.s.fill(0)
+      } else {
+        //this.s.background(0);
+        this.s.fill(255, 0, 0);
+      }
 
       this.s.noStroke();
       this.s.beginShape();
       this.s.vertex(this.x, this.y);
       this.s.vertex(this.x + this.w, this.y);
-      this.s.vertex(this.x + this.w/2 - volume, this.y - h );
+      this.s.vertex(this.x + this.w / 2 - volume, this.y - h);
       this.s.endShape();
       //this.s.rect(this.x, this.y, this.w, -100 - volume);
       // this.s.push();
@@ -86,9 +86,6 @@ var s1 = function(s) {
   s.keyPressed = function() {
     if (s.keyCode === s.RIGHT_ARROW) {
       s.genGrid();
-    }
-    if (s.keyCode === s.LEFT_ARROW) {
-       isB= !isB;
     }
   }
 }

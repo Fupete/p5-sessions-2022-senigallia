@@ -24,6 +24,11 @@ var s1 = function(s) {
   }
   s.draw = function() {
     s.clear();
+    s.push();
+    s.fill(255);
+    s.rect(0, 0, w / 8, h);
+    s.rect(w - w / 8, 0, w / 8, h);
+    s.pop();
     for (let u = 0; u < units.length; u++) {
       units[u].display(350, 22);
       inverso[u].display(-350, 22);
@@ -32,11 +37,12 @@ var s1 = function(s) {
   }
   s.genGrid = function() {
     if (units.length > 0) units = [];
+    if (inverso.length > 0) inverso = [];
     let grid = s.random(p.grids);
     for (let u = 0; u < grid; u++) {
       //units.push(new Unit(s, u, u * w / grid, h, w / grid - 30, 255));
-      units.push(new Unit(s, u, 0, u * h / grid, 200, h / grid));
-      inverso.push(new Unit(s, u, w, u * h / grid, 200, h / grid));
+      units.push(new Unit(s, u, w / 8, u * h / grid, 200, h / grid));
+      inverso.push(new Unit(s, u, w - w / 8, u * h / grid, 200, h / grid));
     }
     // console.log(units.length);
   }
