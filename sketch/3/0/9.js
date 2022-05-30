@@ -8,14 +8,14 @@ var s1 = function(s) {
 
 
   let p = {
-    testo: "QUANDO OSAVI REALIZZARLO ALLORA SI CHE ERI UN UOMO IO HO ALLATTATO SO COME E TENERO AMARE IL BIMBO CHE SUCCHIA EPPURE AVREI STRAPPATO IL CAPEZZOLO DALLE SUE GENGIVE SENZ OSSO E GLI AVREI FATTO SCHIZZARE IL CERVELLO MENTRE MI SORRIDEVA SE AVESSI GIURATO COME HAI TU HAI GIURATO OGNI MIA FACOLTA TENDA VERSO QUESTA TERRIBILE AZIONE INGANNIAMO IL MONDO CON L APPARENZA PIU LIETA UN VISO FALSO NASCONDA CIO CHE IL FALSO CUORE CONOSCE",
+    testo: "abcdefghijklmnopqr",
     gridWidth: 400, //* per tutto schermo vedi fine setup (righe commentate)
     gridHeight: 400,
-    gridColumns: [7, 10, 14, 17, 20],
-    gridRows: [9],
+    gridColumns: [1],
+    gridRows: [1],
     showRect: false,
     autoScroll: true,
-    scrollVel: 60, // >= 25!!! < 60 = 1sec, 10 = 1/6sec, 120 = 2sec, 1 = 1/60sec
+    scrollVel: 300, // >= 25!!! < 60 = 1sec, 10 = 1/6sec, 120 = 2sec, 1 = 1/60sec
     //isBlack: [true, false],
 
   }
@@ -36,10 +36,7 @@ var s1 = function(s) {
     //s.fill (255);
     isB = random(p.isBlack);
 
-
-
-
-    p.gridWidth = w; // < griglie tutto schermo
+    p.gridWidth = w - w / 4; // < griglie tutto schermo
     p.gridHeight = h;
 
     s.genGrid();

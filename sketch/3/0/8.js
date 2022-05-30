@@ -8,14 +8,14 @@ var s1 = function(s) {
 
 
   let p = {
-    testo: "IL RE DUNCAN E STATO COSI LIMPIDO NEL SUO GRANDE UFFICIO CHE GLI ANGELI COME DESTRIERI DELL ARIA SOFFIERANNO IN OGNI OCCHIO L ATTO ORRENDO SI CHE LE LACRIME AFFOGHERANNO IL VENTO IO HO SOLO LA MIA VOLTEGGIANTE AMBIZIONE CHE SPICCA UN BALZO TROPPO ALTO E CADE DALL ALTRA PARTE",
+    testo: "abcdefghijklmnopqr",
     gridWidth: 400, //* per tutto schermo vedi fine setup (righe commentate)
     gridHeight: 400,
-    gridColumns: [1],
-    gridRows: [1],
+    gridColumns: [2],
+    gridRows: [2],
     showRect: false,
     autoScroll: true,
-    scrollVel: 60, // >= 25!!! < 60 = 1sec, 10 = 1/6sec, 120 = 2sec, 1 = 1/60sec
+    scrollVel: 120, // >= 25!!! < 60 = 1sec, 10 = 1/6sec, 120 = 2sec, 1 = 1/60sec
     //isBlack: [true, false],
 
   }
@@ -36,10 +36,7 @@ var s1 = function(s) {
     //s.fill (255);
     isB = random(p.isBlack);
 
-
-
-
-    p.gridWidth = w; // < griglie tutto schermo
+    p.gridWidth = w - w / 4; // < griglie tutto schermo
     p.gridHeight = h;
 
     s.genGrid();

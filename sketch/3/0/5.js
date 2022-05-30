@@ -8,21 +8,21 @@ var s1 = function(s) {
 
 
   let p = {
-    testo: "MI INCONTRARONO NEL GIORNO DELLA VITTORIA HO APPRESO CHE ESSE HANNO IN SE UNA CONOSCENZA PIU CHE MORTALE SARAI QUEL CHE TI E STATO PROMESSO MA LA TUA NATURA E TROPPO PIENA DEL LATTE DELL UMANA BONTA TU VORRESTI ESSERE GRANDE MA NON VUOI CHE IL MALE L ACCOMPAGNI",
+    testo: "QUANDO OSAVI REALIZZARLO ALLORA SI CHE ERI UN UOMO IO HO ALLATTATO SO COME E TENERO AMARE IL BIMBO CHE SUCCHIA EPPURE AVREI STRAPPATO IL CAPEZZOLO DALLE SUE GENGIVE SENZ OSSO E GLI AVREI FATTO SCHIZZARE IL CERVELLO MENTRE MI SORRIDEVA SE AVESSI GIURATO COME HAI TU HAI GIURATO OGNI MIA FACOLTA TENDA VERSO QUESTA TERRIBILE AZIONE INGANNIAMO IL MONDO CON L APPARENZA PIU LIETA UN VISO FALSO NASCONDA CIO CHE IL FALSO CUORE CONOSCE",
     gridWidth: 400, //* per tutto schermo vedi fine setup (righe commentate)
     gridHeight: 400,
-    gridColumns: [4, 8, 12, 16],
-    gridRows: [1],
+    gridColumns: [7, 10, 14, 17, 20],
+    gridRows: [9],
     showRect: false,
     autoScroll: true,
-    scrollVel: 45, // >= 25!!! < 60 = 1sec, 10 = 1/6sec, 120 = 2sec, 1 = 1/60sec
-    isBlack: [true, false],
+    scrollVel: 90, // >= 25!!! < 60 = 1sec, 10 = 1/6sec, 120 = 2sec, 1 = 1/60sec
+    //isBlack: [true, false],
 
   }
 
   let fontRegular;
   s.preload = function() {
-    fontRegular = loadFont('assets/fonts/Macbeth-Regular.otf');
+    fontRegular = loadFont('assets/fonts/Macbeth-Mad-Regular.otf');
   }
 
   s.setup = function() {
@@ -36,10 +36,7 @@ var s1 = function(s) {
     //s.fill (255);
     isB = random(p.isBlack);
 
-
-
-
-    p.gridWidth = w; // < griglie tutto schermo
+    p.gridWidth = w - w / 4; // < griglie tutto schermo
     p.gridHeight = h;
 
     s.genGrid();
@@ -50,10 +47,11 @@ var s1 = function(s) {
     s.clear();
 
 
-    if (isB) {
-      s.background(0);
-      s.fill("#4D0AFF")
-    } else s.background("#4D0AFF");
+    //  if (isB) {
+    //    s.background(0);
+    s.fill(255)
+    //  }
+    //else s.background(123, 40, 255); // < 98, 48, 255 || 108, 0, 240 || 124, 31, 191 || 193, 0, 255 || 113, 0, 213
     //  s.fill(0)
 
 
@@ -107,7 +105,7 @@ var s1 = function(s) {
 
       this.s.translate(this.col * letterW, this.row * letterH);
       let letterWidth = this.s.textWidth(this.letter);
-      this.s.translate(letterW / 2 - letterWidth / 2, letterH / 2 + s.textSize() / 3);
+      this.s.translate(letterW / 2 - letterWidth / 2, letterH / 2 + s.textSize() / 2);
       this.s.text(this.letter, 0, 0);
       // console.log(this.letter);
       this.s.pop();

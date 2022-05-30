@@ -4,20 +4,18 @@ var s1 = function(s) {
   let rows, cols, letterW, letterH;
   let testoLength;
   let scrollIndex = 0;
-  let isB;
-
 
   let p = {
-    testo: "abcdefghijklmnopqr",
-    gridWidth: 400, //* per tutto schermo vedi fine setup (righe commentate)
-    gridHeight: 400,
-    gridColumns: [24, 32],
-    gridRows: [24, 32],
+    testo: "ASTRO NASCENTE RIDE DI GUSTO ",
+    gridWidth: 600, //* per tutto schermo vedi fine setup (righe commentate)
+    gridHeight: 300,
+    gridColumns: [8],
+    gridRows: [8],
     showRect: false,
     autoScroll: true,
-    scrollVel: 50, // >= 25!!! < 60 = 1sec, 10 = 1/6sec, 120 = 2sec, 1 = 1/60sec
-    //isBlack: [true, false],
-
+    scrollVel: 25, // >= 25!!! < 60 = 1sec, 10 = 1/6sec, 120 = 2sec, 1 = 1/60sec
+    isViolet: false,
+    isBackgroundViolet: false
   }
 
   let fontRegular;
@@ -32,40 +30,27 @@ var s1 = function(s) {
     cnv.parent("canvas");
     s.background(0);
     s.pixelDensity(1);
+
+    // p.gridWidth = w; // < griglie tutto schermo
+    // p.gridHeight = h;
     s.textFont(fontRegular);
-    //s.fill (255);
-    isB = random(p.isBlack);
-
-
-
-
-    p.gridWidth = w; // < griglie tutto schermo
-    p.gridHeight = h;
-
     s.genGrid();
     testoLength = p.testo.length;
     //console.log(testoLength);
   }
   s.draw = function() {
     s.clear();
-
-
-    //  if (isB) {
-    //    s.background(0);
-    s.fill(255);
-    //  }
-    //else s.background(123, 40, 255); // < 98, 48, 255 || 108, 0, 240 || 124, 31, 191 || 193, 0, 255 || 113, 0, 213
-    //  s.fill(0)
-
-
-    //  if (p.isBackgroundViolet) s.background(255, 0, 150);
+    if (p.isBackgroundViolet) s.background("#4D0AFF");
     for (let l = 0; l < letters.length; l++) {
       let charIndex = (l + scrollIndex) % testoLength;
       letters[l].letter = p.testo[charIndex];
       letters[l].display();
     }
+    //
+    // rettangoli a caso sullo schermo usando la griglia...
+    //
     if (p.autoScroll)
-      if (s.frameCount % p.scrollVel == 1) scrollIndex++;
+      if (s.frameCount % p.scrollVel == 0) scrollIndex++;
   }
   s.genGrid = function() {
     if (letters.length > 0) letters = [];
@@ -99,16 +84,15 @@ var s1 = function(s) {
       this.s.push();
       this.s.translate(w / 2 - p.gridWidth / 2, h / 2 - p.gridHeight / 2);
       if (p.showRect) {
-        this.s.fill(143, 0, 255);
+        this.s.fill(255, 0, 150);
         this.s.rect(this.col * letterW, this.row * letterH, letterW, letterH);
       }
-
-      //if (p.isBlack) this.s.fill(255, 0, 150);
-
-
+      if (p.isViolet) this.s.fill("#4D0AFF");
+      else if (p.isBackgroundViolet) this.s.fill(0);
+      else this.s.fill(255);
       this.s.translate(this.col * letterW, this.row * letterH);
       let letterWidth = this.s.textWidth(this.letter);
-      this.s.translate(letterW / 2 - letterWidth / 2, letterH / 2 + s.textSize() / 2);
+      this.s.translate(letterW / 2 - letterWidth / 2, letterH / 2 + s.textSize() / 3);
       this.s.text(this.letter, 0, 0);
       // console.log(this.letter);
       this.s.pop();

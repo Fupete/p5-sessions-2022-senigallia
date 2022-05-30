@@ -4,25 +4,23 @@ var s1 = function(s) {
   let rows, cols, letterW, letterH;
   let testoLength;
   let scrollIndex = 0;
-  let isB;
-
 
   let p = {
-    testo: "abcdefghijklmnopqr",
+    testo: "LOREM IPSUM IS SIMPLY DUMMY TEXT OF THE PRINTING AND TYPESETTING INDUSTRY. LOREM IPSUM HAS BEEN THE INDUSTRY'S STANDARD DUMMY TEXT EVER SINCE THE 1500S, WHEN AN UNKNOWN PRINTER TOOK A GALLEY OF TYPE AND SCRAMBLED IT TO MAKE A TYPE SPECIMEN BOOK. IT HAS SURVIVED NOT ONLY FIVE CENTURIES, BUT ALSO THE LEAP INTO ELECTRONIC TYPESETTING, REMAINING ESSENTIALLY UNCHANGED. IT WAS POPULARISED IN THE 1960S WITH THE RELEASE OF LETRASET SHEETS CONTAINING LOREM IPSUM PASSAGES, AND MORE RECENTLY WITH DESKTOP PUBLISHING SOFTWARE LIKE ALDUS PAGEMAKER INCLUDING VERSIONS OF LOREM IPSUM.",
     gridWidth: 400, //* per tutto schermo vedi fine setup (righe commentate)
     gridHeight: 400,
-    gridColumns: [1],
-    gridRows: [1],
+    gridColumns: [1, 2, 4, 8, 16, 32, 64],
+    gridRows: [1, 2, 4, 8, 16, 32, 64],
     showRect: false,
     autoScroll: true,
-    scrollVel: 60, // >= 25!!! < 60 = 1sec, 10 = 1/6sec, 120 = 2sec, 1 = 1/60sec
-    //isBlack: [true, false],
-
+    scrollVel: 10, // >= 25!!! < 60 = 1sec, 10 = 1/6sec, 120 = 2sec, 1 = 1/60sec
+    isViolet: false,
+    isBackgroundViolet: true
   }
 
   let fontRegular;
   s.preload = function() {
-    fontRegular = loadFont('assets/fonts/Macbeth-Mad-Regular.otf');
+    fontRegular = loadFont('assets/fonts/Macbeth-Regular.otf');
   }
 
   s.setup = function() {
@@ -34,7 +32,6 @@ var s1 = function(s) {
     s.pixelDensity(1);
     s.textFont(fontRegular);
     //s.fill (255);
-    isB = random(p.isBlack);
 
 
 
@@ -48,17 +45,7 @@ var s1 = function(s) {
   }
   s.draw = function() {
     s.clear();
-
-
-    //  if (isB) {
-    //    s.background(0);
-    s.fill(255)
-    //  }
-    //else s.background(123, 40, 255); // < 98, 48, 255 || 108, 0, 240 || 124, 31, 191 || 193, 0, 255 || 113, 0, 213
-    //  s.fill(0)
-
-
-    //  if (p.isBackgroundViolet) s.background(255, 0, 150);
+    if (p.isBackgroundViolet) s.background("#4D0AFF");
     for (let l = 0; l < letters.length; l++) {
       let charIndex = (l + scrollIndex) % testoLength;
       letters[l].letter = p.testo[charIndex];
@@ -102,13 +89,12 @@ var s1 = function(s) {
         this.s.fill(143, 0, 255);
         this.s.rect(this.col * letterW, this.row * letterH, letterW, letterH);
       }
-
-      //if (p.isBlack) this.s.fill(255, 0, 150);
-
-
+      if (p.isViolet) this.s.fill("#4D0AFF");
+      else if (p.isBackgroundViolet) this.s.fill(0);
+      else this.s.fill(255);
       this.s.translate(this.col * letterW, this.row * letterH);
       let letterWidth = this.s.textWidth(this.letter);
-      this.s.translate(letterW / 2 - letterWidth / 2, letterH / 2 + s.textSize() / 2);
+      this.s.translate(letterW / 2 - letterWidth / 2, letterH / 2 + s.textSize() / 3);
       this.s.text(this.letter, 0, 0);
       // console.log(this.letter);
       this.s.pop();

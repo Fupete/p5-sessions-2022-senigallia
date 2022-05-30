@@ -8,21 +8,21 @@ var s1 = function(s) {
 
 
   let p = {
-    testo: "MAI SOLE VEDRA QUEL DOMANI LEGGERE INGANNA IL MONDO ASSUMI IL SUO ASPETTO ABBI IL BENVENUTO NELL OCCHIO APPARI COME IL FIORE INNOCENTE MA SII LA SERPE CHE SI CELA SOTTO",
+    testo: "abcdefghijklmnopqr",
     gridWidth: 400, //* per tutto schermo vedi fine setup (righe commentate)
     gridHeight: 400,
-    gridColumns: [2],
-    gridRows: [4, 8, 12, 16],
+    gridColumns: [12, 24, 32],
+    gridRows: [12, 24, 32],
     showRect: false,
     autoScroll: true,
-    scrollVel: 35, // >= 25!!! < 60 = 1sec, 10 = 1/6sec, 120 = 2sec, 1 = 1/60sec
-    isBlack: [true, false],
+    scrollVel: 70, // >= 25!!! < 60 = 1sec, 10 = 1/6sec, 120 = 2sec, 1 = 1/60sec
+    //isBlack: [true, false],
 
   }
 
   let fontRegular;
   s.preload = function() {
-    fontRegular = loadFont('assets/fonts/Macbeth-Regular.otf');
+    fontRegular = loadFont('assets/fonts/Macbeth-Mad-Regular.otf');
   }
 
   s.setup = function() {
@@ -36,10 +36,7 @@ var s1 = function(s) {
     //s.fill (255);
     isB = random(p.isBlack);
 
-
-
-
-    p.gridWidth = w; // < griglie tutto schermo
+    p.gridWidth = w - w / 4; // < griglie tutto schermo
     p.gridHeight = h;
 
     s.genGrid();
@@ -50,10 +47,11 @@ var s1 = function(s) {
     s.clear();
 
 
-    if (isB) {
-      s.background(0);
-      s.fill("#4D0AFF")
-    } else s.background("#4D0AFF"); // < 98, 48, 255 || 108, 0, 240 || 124, 31, 191 || 193, 0, 255 || 113, 0, 213
+    //  if (isB) {
+    //    s.background(0);
+    s.fill(255);
+    //  }
+    //else s.background(123, 40, 255); // < 98, 48, 255 || 108, 0, 240 || 124, 31, 191 || 193, 0, 255 || 113, 0, 213
     //  s.fill(0)
 
 
