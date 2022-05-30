@@ -7,8 +7,17 @@ var s1 = function(s) {
   let units = [];
 
   let p = {
+    volSensitivity: 22,
+    volSpace: 5, // 0-100
+    volSpaceMin: 5,
+    volSpaceMax: 100,
     grids: [15, 30, 40],
     isBlack: [true, false],
+  }
+
+  s.setMicGain = function(g) {
+    p.volSpace = s.map(g, 0, 100, p.volSpaceMin, p.volSpaceMax);
+    s.genGrid();
   }
 
   s.setup = function() {
@@ -41,22 +50,24 @@ var s1 = function(s) {
     if (units.length > 0) units = [];
     let grid = s.random(p.grids);
     for (let u = 0; u < grid; u++) {
-      units.push(new Unit(s, u, u * (w - w / 4) / grid + w / 8, h, (w - w / 4) / grid, 255));
+      units.push(new Unit(s, u, u * (w - w / 4) / grid + w / 8, h, (w - w / 4) / grid, 255, p.volSensitivity, p.volSpace));
     }
     // console.log(units.length);
   }
 
   class Unit {
-    constructor(_s, _id, _x, _y, _w, _h) {
+    constructor(_s, _id, _x, _y, _w, _h, _vS, _vSp) {
       this.s = _s; // < our p5 instance object
       this.id = _id + 1;
       this.x = _x;
       this.y = _y;
       this.w = _w;
       this.h = _h;
+      this.volSensitivity = _vS;
+      this.volSpace = _vSp;
     }
     display() {
-      let volume = Sound.mapSound(10, this.id * 22, 0, 150);
+      let volume = Sound.mapSound(10, this.id * this.volSensitivity, 0, this.volSpace);
       //  this.s.fill("red");
       if (isB) {
         //this.s.background(255, 0, 0);

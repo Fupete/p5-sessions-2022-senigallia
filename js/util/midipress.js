@@ -18,14 +18,20 @@ function onMIDIMessage(message) {
     if (myp5.trigger)
       myp5.trigger();
   } else if (midiData[0] == 179) { // 179/0 e 179/1 = x/y < da 0 a 99
-    midiX = map(midiData[1], 0, 99, 0, w);
-    midiY = map(midiData[2], 0, 99, 0, h);
+    let midiX = map(midiData[1], 0, 99, 0, w);
+    let midiY = map(midiData[2], 0, 99, 0, h);
     if (myp5.coordinateMidi)
       myp5.coordinateMidi(midiX, midiY);
     //console.log("x:" + midiX + " / y:" + midiY)
   } else if (midiData[0] == 180) { // touch x/y
     if (myp5.toggleMidiMouseOn)
       myp5.toggleMidiMouseOn();
+  } else if (midiData[0] == 181) { // mic gain
+    if (midiData[1] == 1) {
+      let gain = midiData[2];
+      if (myp5.setMicGain)
+        myp5.setMicGain(gain);
+    }
   }
   midiData = [];
 }

@@ -8,7 +8,17 @@ var s1 = function(s) {
   let inverso = [];
 
   let p = {
+    volSensitivity: 22,
+    volSpace: 50, // 0-100
+    volSpaceMin: 20,
+    volSpaceMax: 300,
     grids: [4, 8, 16],
+    isBlack: [true, false],
+  }
+
+  s.setMicGain = function(g) {
+    p.volSpace = s.map(g, 0, 100, p.volSpaceMin, p.volSpaceMax);
+    s.genGrid();
   }
 
 
@@ -25,8 +35,8 @@ var s1 = function(s) {
   s.draw = function() {
     s.clear();
     for (let u = 0; u < units.length; u++) {
-      units[u].display(300, 22); //parametri da modificare fascia di sotto
-      inverso[u].display(-300, 22); //parametri da modificare fascia di sopra
+      units[u].display();
+      inverso[u].display();
     }
   }
   s.genGrid = function() {
@@ -34,24 +44,24 @@ var s1 = function(s) {
     if (inverso.length > 0) inverso = [];
     let grid = s.random(p.grids);
     for (let u = 0; u < grid; u++) {
-      //units.push(new Unit(s, u, u * w / grid, h, w / grid - 30, 255));
-      units.push(new Unit(s, u, u * (w - w / 4) / grid + w / 8, h, (w - w / 4) / grid, 255)); //posizione fascia di sotto
-      inverso.push(new Unit(s, u, u * (w - w / 4) / grid + w / 8, 0, (w - w / 4) / grid, 255)); //posizione fascia di sopra rovesciata
+      units.push(new Unit(s, u, u * (w - w / 4) / grid + w / 8, h, (w - w / 4) / grid, 255, p.volSensitivity, p.volSpace)); //posizione fascia di sotto
+      inverso.push(new Unit(s, u, u * (w - w / 4) / grid + w / 8, 0, (w - w / 4) / grid, 255, p.volSensitivity, -p.volSpace)); //posizione fascia di sopra rovesciata
     }
-    // console.log(units.length);
   }
 
   class Unit {
-    constructor(_s, _id, _x, _y, _w, _h) {
+    constructor(_s, _id, _x, _y, _w, _h, _vS, _vSp) {
       this.s = _s; // < our p5 instance object
       this.id = _id + 1;
       this.x = _x;
       this.y = _y;
       this.w = _w;
       this.h = _h;
+      this.volSensitivity = _vS;
+      this.volSpace = _vSp;
     }
     display(cv = 250, m = 22) {
-      let volume = Sound.mapSound(10, this.id * m, 0, cv);
+      let volume = Sound.mapSound(10, this.id * this.volSensitivity, 0, this.volSpace);
       //se tolgo 10 tutti salgono contemporaneamente
       this.s.fill(255);
       this.s.stroke(255);
