@@ -8,11 +8,11 @@ var s1 = function(s) {
 
 
   let p = {
-    testo: "SERPENTE, VELENO, UCCIDERE, UCCISO, MASCHERA, SCORPIONI, PUGNALI, PIPISTRELLO, MALE, FORZA, VENDETTA, BUIO, LE COSE COMINCIATE DAL MALE DAL MALE TRAGGONO FORZA",
+    testo: "abcdefghijklmnopqr",
     gridWidth: 400, //* per tutto schermo vedi fine setup (righe commentate)
     gridHeight: 400,
-    gridColumns: [24, 32, 64],
-    gridRows: [24, 32, 64, 82],
+    gridColumns: [24, 32],
+    gridRows: [24, 32],
     showRect: false,
     autoScroll: true,
     scrollVel: 50, // >= 25!!! < 60 = 1sec, 10 = 1/6sec, 120 = 2sec, 1 = 1/60sec
@@ -52,7 +52,7 @@ var s1 = function(s) {
 
     //  if (isB) {
     //    s.background(0);
-    s.fill("#4D0AFF")
+    s.fill(255);
     //  }
     //else s.background(123, 40, 255); // < 98, 48, 255 || 108, 0, 240 || 124, 31, 191 || 193, 0, 255 || 113, 0, 213
     //  s.fill(0)

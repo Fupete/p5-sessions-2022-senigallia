@@ -52,7 +52,7 @@ var s1 = function(s) {
 
     if (isB) {
       s.background(0);
-      s.fill(255)
+      s.fill("#4D0AFF")
     } else s.background("#4D0AFF"); // < 98, 48, 255 || 108, 0, 240 || 124, 31, 191 || 193, 0, 255 || 113, 0, 213
     //  s.fill(0)
 
