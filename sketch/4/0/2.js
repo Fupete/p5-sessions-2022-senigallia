@@ -85,6 +85,9 @@ var s1 = function(s) {
     }
   }
 
+  s.trigger = function() {
+    //
+  }
   s.keyPressed = function() {
     if (s.keyCode === s.RIGHT_ARROW) {
       //

@@ -45,10 +45,9 @@ var s1 = function(s) {
 
     if (isB) {
       s.background(0);
-      s.fill(255)
-    }
-    else s.background(143,0,255);
-  //  s.fill(0)
+      s.fill("#4D0AFF")
+    } else s.background("#4D0AFF");
+    //  s.fill(0)
 
     for (let l = 0; l < letters.length; l++) {
       let charIndex = (l + scrollIndex) % testoLength;
@@ -106,6 +105,9 @@ var s1 = function(s) {
     }
   }
 
+  s.trigger = function() {
+    s.genGrid();
+  }
   s.keyPressed = function() {
     if (s.keyCode === s.RIGHT_ARROW) {
       s.genGrid();

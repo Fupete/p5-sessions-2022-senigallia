@@ -11,7 +11,7 @@ var s1 = function(s) {
     testo: "QUANDO OSAVI REALIZZARLO ALLORA SI CHE ERI UN UOMO IO HO ALLATTATO SO COME E TENERO AMARE IL BIMBO CHE SUCCHIA EPPURE AVREI STRAPPATO IL CAPEZZOLO DALLE SUE GENGIVE SENZ OSSO E GLI AVREI FATTO SCHIZZARE IL CERVELLO MENTRE MI SORRIDEVA SE AVESSI GIURATO COME HAI TU HAI GIURATO OGNI MIA FACOLTA TENDA VERSO QUESTA TERRIBILE AZIONE INGANNIAMO IL MONDO CON L APPARENZA PIU LIETA UN VISO FALSO NASCONDA CIO CHE IL FALSO CUORE CONOSCE",
     gridWidth: 400, //* per tutto schermo vedi fine setup (righe commentate)
     gridHeight: 400,
-    gridColumns: [7,10,14,17,20],
+    gridColumns: [7, 10, 14, 17, 20],
     gridRows: [9],
     showRect: false,
     autoScroll: true,
@@ -50,15 +50,15 @@ var s1 = function(s) {
     s.clear();
 
 
-  //  if (isB) {
-  //    s.background(0);
-      s.fill(255)
-  //  }
+    //  if (isB) {
+    //    s.background(0);
+    s.fill(255)
+    //  }
     //else s.background(123, 40, 255); // < 98, 48, 255 || 108, 0, 240 || 124, 31, 191 || 193, 0, 255 || 113, 0, 213
-  //  s.fill(0)
+    //  s.fill(0)
 
 
-  //  if (p.isBackgroundViolet) s.background(255, 0, 150);
+    //  if (p.isBackgroundViolet) s.background(255, 0, 150);
     for (let l = 0; l < letters.length; l++) {
       let charIndex = (l + scrollIndex) % testoLength;
       letters[l].letter = p.testo[charIndex];
@@ -99,7 +99,7 @@ var s1 = function(s) {
       this.s.push();
       this.s.translate(w / 2 - p.gridWidth / 2, h / 2 - p.gridHeight / 2);
       if (p.showRect) {
-        this.s.fill(143,0,255);
+        this.s.fill(143, 0, 255);
         this.s.rect(this.col * letterW, this.row * letterH, letterW, letterH);
       }
 
@@ -115,6 +115,9 @@ var s1 = function(s) {
     }
   }
 
+  s.trigger = function() {
+    s.genGrid();
+  }
   s.keyPressed = function() {
     if (s.keyCode === s.RIGHT_ARROW) {
       s.genGrid();

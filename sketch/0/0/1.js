@@ -13,7 +13,7 @@ var s1 = function(s) {
     sizeAttractor: 200, //*
     isBlack: [false],
     coloreBulbo: "#000000",
-    colorePupilla: "#ffffff",
+    colorePupilla: "#FFFFFF",
     backgroundColor: "#000000",
     sizeMultiplier: 50,
     mM: 0.5,
@@ -94,14 +94,6 @@ var s1 = function(s) {
   s.draw = function() {
     s.clear();
     s.background(p.backgroundColor);
-
-    // if (s.mouseIsPressed) {
-    //   // smoothly move the first attractor body towards the mouse if clicked
-    //   Body.translate(attractors.bodies[0], {
-    //     x: (s.mouseX - attractors.bodies[0].position.x) * 0.25,
-    //     y: (s.mouseY - attractors.bodies[0].position.y) * 0.25
-    //   });
-    // }
 
     let isBlinking;
     if (s.frameCount % 120 == 0 && random(1) > .5) isBlinking = true;
