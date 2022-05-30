@@ -55,12 +55,12 @@ var s1 = function(s) {
     });
     World.add(engine.world, ground);
 
-    let left = Bodies.rectangle(0, h / 2, 10, h, {
+    let left = Bodies.rectangle(w / 8, h / 2, 10, h, {
       isStatic: true
     });
     World.add(engine.world, left);
 
-    let right = Bodies.rectangle(w, h / 2, 10, h, {
+    let right = Bodies.rectangle(w - w / 8, h / 2, 10, h, {
       isStatic: true
     });
     World.add(engine.world, right);
