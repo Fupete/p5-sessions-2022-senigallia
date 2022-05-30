@@ -1,4 +1,6 @@
-//LETTERA G.
+//LETTERA F.
+//foresta destra e sinistra denti piccoli
+
 
 var s1 = function(s) {
   let w, h;

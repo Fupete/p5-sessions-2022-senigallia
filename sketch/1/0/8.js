@@ -1,14 +1,13 @@
-//LETTERA I.
+//LETTERA H.
+//foresta dal basso
 
 var s1 = function(s) {
   let w, h;
   let units = [];
-  let inverso = [];
 
   let p = {
     grids: [12, 20, 32],
   }
-
 
   s.setup = function() {
     let cnv;
@@ -18,7 +17,6 @@ var s1 = function(s) {
     s.background(0);
     s.pixelDensity(1);
     s.genGrid();
-    s.frameRate(20);
   }
   s.draw = function() {
     s.clear();
@@ -34,7 +32,6 @@ var s1 = function(s) {
       //units.push(new Unit(s, u, u * w / grid, h, w / grid - 30, 255));
       units.push(new Unit(s, u, u * w / grid, h, w / grid, 255)); //posizione fascia di sotto
       inverso.push(new Unit(s, u, u * w / grid, 0, w / grid, 255)); //posizione fascia di sopra rovesciata
-
     }
     // console.log(units.length);
   }

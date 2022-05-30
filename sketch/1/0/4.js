@@ -1,4 +1,6 @@
-//LETTERA E.
+//LETTERA D.
+//macduff bianco sotto e sopra
+
 
 var s1 = function(s) {
   let w, h;
@@ -6,7 +8,7 @@ var s1 = function(s) {
   let inverso = [];
 
   let p = {
-    grids: [4, 8, 14],
+    grids: [4, 8, 22],
   }
 
 
@@ -18,6 +20,7 @@ var s1 = function(s) {
     s.background(0);
     s.pixelDensity(1);
     s.genGrid();
+    s.frameRate(15);
   }
   s.draw = function() {
     s.clear();
@@ -34,7 +37,6 @@ var s1 = function(s) {
       //units.push(new Unit(s, u, u * w / grid, h, w / grid - 30, 255));
       units.push(new Unit(s, u, 0, u * h / grid, 200, h / grid));
       inverso.push(new Unit(s, u, w, u * h / grid, 200, h / grid));
-
     }
     // console.log(units.length);
   }
@@ -50,7 +52,6 @@ var s1 = function(s) {
     }
     display(cv = 250, m = 22) {
       let volume = Sound.mapSound(10, this.id * m, 0, cv);
-
       //se tolgo 10 tutti salgono contemporaneamente
       this.s.fill(255);
       this.s.stroke(255);
