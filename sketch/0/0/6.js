@@ -1,4 +1,7 @@
 var s1 = function(s) {
+  let midiMouseOn = false;
+  let mMx = -100,
+    mMy = -100;
   let w, h;
   let attractor;
   let attractors = [];
@@ -96,7 +99,13 @@ var s1 = function(s) {
     // let's start the engine
     Runner.run(engine);
   }
-
+  s.toggleMidiMouseOn = function() {
+    midiMouseOn = !midiMouseOn;
+  }
+  s.coordinateMidi = function(mx, my) {
+    mMx = mx;
+    mMy = my;
+  }
   s.draw = function() {
     s.clear();
     s.background(p.backgroundColor);
@@ -161,7 +170,9 @@ var s1 = function(s) {
       }
     }
   }
-
+  s.trigger = function() {
+    engine.world.gravity.scale = 0.01;
+  }
   s.keyPressed = function() {
     if (s.keyCode === s.RIGHT_ARROW) {
       engine.world.gravity.scale = 0.01;
