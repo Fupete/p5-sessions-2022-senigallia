@@ -51,7 +51,7 @@ var s1 = function(s) {
     let allAttractors = [];
     for (let i = 0; i < p.noAttractors; i++)
       allAttractors.push(
-        Bodies.circle(w / 3 * i + w / 6, p.yAttractor, p.sizeAttractor, {
+        Bodies.circle((w - w / 4) / 3 * i + w / 4, p.yAttractor, p.sizeAttractor, {
           isStatic: true,
           plugin: {
             attractors: [
@@ -174,7 +174,7 @@ var s1 = function(s) {
   s.trigger = function() {
     for (let i = 0; i < attractors.bodies.length; i++) {
       Body.translate(attractors.bodies[i], {
-        x: (s.random(w) - attractors.bodies[i].position.x) * 1,
+        x: (w / 8 + s.random(w - w / 4) - attractors.bodies[i].position.x) * 1,
         y: (s.random(h) - attractors.bodies[i].position.y) * 1
       });
     }

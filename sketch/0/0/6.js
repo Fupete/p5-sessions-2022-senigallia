@@ -13,11 +13,11 @@ var s1 = function(s) {
     sizeAttractor: 200, //*
     isBlack: [false],
     coloreBulbo: "#000000",
-    colorePupilla: "#00ff00",
+    colorePupilla: "#00DC1B",
     backgroundColor: "#000000",
     sizeMultiplier: 50,
     mM: 0.5,
-    nBoxes: 1,
+    nBoxes: 3,
     angle: true
   }
 
@@ -38,8 +38,8 @@ var s1 = function(s) {
     }
 
     p.xAttractor = w / 2;
-    p.yAttractor = h / 2;
-    p.sizeAttractor = h * 1 / 4;
+    p.yAttractor = h / 2 - h / 4;
+    p.sizeAttractor = h * 1 / 6;
 
     engine = Engine.create();
     engine.world.gravity.scale = 0;
@@ -77,7 +77,13 @@ var s1 = function(s) {
     // create engine particles
     let allBoxes = [];
     for (let i = 0; i < p.nBoxes; i++) {
-      allBoxes.push(Bodies.rectangle(w / 2, h / 2, h / 12, h / 12, {
+      allBoxes.push(Bodies.rectangle((w - w / 4) / 3, h / 2 + h / 20, h / 14, h / 14, {
+        isStatic: false
+      }));
+      allBoxes.push(Bodies.rectangle((w - w / 4) / 3 * 2, h / 2 + h / 20, h / 14, h / 14, {
+        isStatic: false
+      }));
+      allBoxes.push(Bodies.rectangle((w - w / 4), h / 2 + h / 20, h / 14, h / 14, {
         isStatic: false
       }));
     }
@@ -137,52 +143,16 @@ var s1 = function(s) {
       if (p.angle) this.s.rotate(boxes.bodies[this.id].angle)
       this.s.fill(p.colorePupilla);
       this.s.rect(0, 0, this.size, this.size, this.size / 5)
-      this.s.rect(0, 0, this.size, this.size, this.size / 5)
       this.s.fill(p.coloreBulbo);
-      this.s.rect(0, 0, this.size - 6, this.size - 6, this.size / 6)
+      this.s.rect(0, 0, this.size - 10, this.size - 10, this.size / 6)
       this.s.fill(p.colorePupilla);
       this.s.rect(0, 0, this.size / 4, this.size / 4, this.size / 10)
       this.s.fill(p.coloreBulbo);
       this.s.rect(0, -this.size / 8, this.size - 12, this.VSize, this.size / 6) // palpebra
       this.s.pop();
-
-      this.s.push();
-      if (this.blinking) this.blink();
-      // let volume = Sound.mapSound(10, this.id * 22, 0, 150);
-      this.s.translate(boxes.bodies[this.id].position.x, boxes.bodies[this.id].position.y)
-      if (p.angle) this.s.rotate(boxes.bodies[this.id].angle)
-      this.s.fill(p.colorePupilla);
-      this.s.rect(500, 0, this.size, this.size, this.size / 5)
-      this.s.rect(500, 0, this.size, this.size, this.size / 5)
-      this.s.fill(p.coloreBulbo);
-      this.s.rect(500, 0, this.size - 6, this.size - 6, this.size / 6)
-      this.s.fill(p.colorePupilla);
-      this.s.rect(500, 0, this.size / 4, this.size / 4, this.size / 10)
-      this.s.fill(p.coloreBulbo);
-      this.s.rect(500, -this.size / 8, this.size - 12, this.VSize, this.size / 6) // palpebra
-      this.s.pop();
-
-
-      this.s.push();
-      if (this.blinking) this.blink();
-      // let volume = Sound.mapSound(10, this.id * 22, 0, 150);
-      this.s.translate(boxes.bodies[this.id].position.x, boxes.bodies[this.id].position.y)
-      if (p.angle) this.s.rotate(boxes.bodies[this.id].angle)
-      this.s.fill(p.colorePupilla);
-      this.s.rect(-500, 0, this.size, this.size, this.size / 5)
-      this.s.rect(-500, 0, this.size, this.size, this.size / 5)
-      this.s.fill(p.coloreBulbo);
-      this.s.rect(-500, 0, this.size - 6, this.size - 6, this.size / 6)
-      this.s.fill(p.colorePupilla);
-      this.s.rect(-500, 0, this.size / 4, this.size / 4, this.size / 10)
-      this.s.fill(p.coloreBulbo);
-      this.s.rect(-500, -this.size / 8, this.size - 12, this.VSize, this.size / 6) // palpebra
-      this.s.pop();
-
-
     }
 
-    
+
     blink() {
       this.VSize += 12;
       if (this.VSize >= this.size * 2 / 3) {

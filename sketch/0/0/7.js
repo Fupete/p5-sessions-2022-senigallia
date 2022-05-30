@@ -13,7 +13,7 @@ var s1 = function(s) {
     sizeAttractor: 200, //*
     isBlack: [false],
     coloreBulbo: "#000000",
-    colorePupilla: "#00ff00",
+    colorePupilla: "#00DC1B",
     backgroundColor: "#000000",
     sizeMultiplier: 60,
     mM: 0.4,

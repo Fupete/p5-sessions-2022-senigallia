@@ -11,9 +11,9 @@ var s1 = function(s) {
     xAttractor: 100, //*
     yAttractor: 100, //*
     sizeAttractor: 200, //*
-    isBlack: [false],
+    isBlack: [true, false],
     coloreBulbo: "#000000",
-    colorePupilla: "#00ff00",
+    colorePupilla: "#00DC1B",
     backgroundColor: "#000000",
     sizeMultiplier: 50,
     mM: 0.5,
@@ -38,8 +38,8 @@ var s1 = function(s) {
     }
 
     p.xAttractor = w / 2;
-    p.yAttractor = h / 2;
-    p.sizeAttractor = h * 1 / 4;
+    p.yAttractor = h / 2 - h / 4;
+    p.sizeAttractor = h * 1 / 6;
 
     engine = Engine.create();
     engine.world.gravity.scale = 0;
@@ -77,7 +77,7 @@ var s1 = function(s) {
     // create engine particles
     let allBoxes = [];
     for (let i = 0; i < p.nBoxes; i++) {
-      allBoxes.push(Bodies.rectangle(w / 2, h / 2, h / 12, h / 12, {
+      allBoxes.push(Bodies.rectangle(w / 2, h / 2 - h / 10, h / 14, h / 14, {
         isStatic: false
       }));
     }
@@ -94,14 +94,6 @@ var s1 = function(s) {
   s.draw = function() {
     s.clear();
     s.background(p.backgroundColor);
-
-    // if (s.mouseIsPressed) {
-    //   // smoothly move the first attractor body towards the mouse if clicked
-    //   Body.translate(attractors.bodies[0], {
-    //     x: (s.mouseX - attractors.bodies[0].position.x) * 0.25,
-    //     y: (s.mouseY - attractors.bodies[0].position.y) * 0.25
-    //   });
-    // }
 
     let isBlinking;
     if (s.frameCount % 120 == 0 && random(1) > .5) isBlinking = true;
@@ -138,7 +130,7 @@ var s1 = function(s) {
       this.s.fill(p.colorePupilla);
       this.s.rect(0, 0, this.size, this.size, this.size / 5)
       this.s.fill(p.coloreBulbo);
-      this.s.rect(0, 0, this.size - 6, this.size - 6, this.size / 6)
+      this.s.rect(0, 0, this.size - 10, this.size - 10, this.size / 6)
       this.s.fill(p.colorePupilla);
       this.s.rect(0, 0, this.size / 4, this.size / 4, this.size / 10)
       this.s.fill(p.coloreBulbo);
