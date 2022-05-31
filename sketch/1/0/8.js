@@ -9,11 +9,11 @@ var s1 = function(s) {
   let p = {
     volSensitivity: 22,
     volSpace: 250, // 0-100
-    volSpaceMin: 150,
+    volSpaceMin: 20,
     volSpaceMax: 400,
     grids: [12, 20, 32],
     isBlack: [true, false],
-    minSpace: 400
+    minSpace: 100
   }
 
   s.setMicGain = function(g) {

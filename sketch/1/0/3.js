@@ -8,12 +8,13 @@ var s1 = function(s) {
   let inverso = [];
 
   let p = {
-    volSensitivity: 22,
-    volSpace: 50, // 0-100
+    volSensitivity: 44,
+    volSpace: 40, // 0-100
     volSpaceMin: 20,
     volSpaceMax: 300,
-    grids: [4, 8, 16],
+    grids: [1, 2, 4, 8, 16, 24],
     isBlack: [true, false],
+    minSpace: 164,
   }
 
   s.setMicGain = function(g) {
@@ -44,13 +45,13 @@ var s1 = function(s) {
     if (inverso.length > 0) inverso = [];
     let grid = s.random(p.grids);
     for (let u = 0; u < grid; u++) {
-      units.push(new Unit(s, u, u * (w - w / 4) / grid + w / 8, h, (w - w / 4) / grid, 255, p.volSensitivity, p.volSpace)); //posizione fascia di sotto
-      inverso.push(new Unit(s, u, u * (w - w / 4) / grid + w / 8, 0, (w - w / 4) / grid, 255, p.volSensitivity, -p.volSpace)); //posizione fascia di sopra rovesciata
+      units.push(new Unit(s, u, u * (w - w / 4) / grid + w / 8, h, (w - w / 4) / grid, 255, p.volSensitivity, p.volSpace, p.minSpace)); //posizione fascia di sotto
+      inverso.push(new Unit(s, u, u * (w - w / 4) / grid + w / 8, 0, (w - w / 4) / grid, 255, p.volSensitivity, -p.volSpace, 0)); //posizione fascia di sopra rovesciata
     }
   }
 
   class Unit {
-    constructor(_s, _id, _x, _y, _w, _h, _vS, _vSp) {
+    constructor(_s, _id, _x, _y, _w, _h, _vS, _vSp, _mSp) {
       this.s = _s; // < our p5 instance object
       this.id = _id + 1;
       this.x = _x;
@@ -59,6 +60,7 @@ var s1 = function(s) {
       this.h = _h;
       this.volSensitivity = _vS;
       this.volSpace = _vSp;
+      this.minSpace = _mSp;
     }
     display() {
       let volume = Sound.mapSound(10, this.id * this.volSensitivity, 0, this.volSpace);
@@ -69,8 +71,8 @@ var s1 = function(s) {
       this.s.beginShape();
       this.s.vertex(this.x, this.y);
       this.s.vertex(this.x + this.w, this.y);
-      this.s.vertex(this.x + this.w, this.y - volume); // 0 e per far partire i rettangoli dalla base
-      this.s.vertex(this.x, this.y - volume)
+      this.s.vertex(this.x + this.w, this.y - this.minSpace - volume); // 0 e per far partire i rettangoli dalla base
+      this.s.vertex(this.x, this.y - this.minSpace - volume)
       this.s.endShape();
       //this.s.rect(this.x, this.y, this.w, -100 - volume);
       // this.s.push();

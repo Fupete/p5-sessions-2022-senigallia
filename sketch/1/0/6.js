@@ -11,9 +11,9 @@ var s1 = function(s) {
     volSensitivity: 22,
     volSpace: 80, // 0-100
     volSpaceMin: 20,
-    volSpaceMax: 160,
-    minSpace: 160,
-    grids: [20, 10],
+    volSpaceMax: 400,
+    minSpace: 220,
+    grids: [24, 12],
     isBlack: [true, false],
   }
 

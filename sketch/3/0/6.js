@@ -12,11 +12,11 @@ var s1 = function(s) {
     gridWidth: 400, //* per tutto schermo vedi fine setup (righe commentate)
     gridHeight: 400,
     gridColumns: [24, 32, 64],
-    gridRows: [24, 32, 64, 82],
+    gridRows: [24, 32, 64],
     showRect: false,
     autoScroll: true,
     scrollVel: 70, // >= 25!!! < 60 = 1sec, 10 = 1/6sec, 120 = 2sec, 1 = 1/60sec
-    //isBlack: [true, false],
+    isBlack: [false],
 
   }
 
@@ -47,12 +47,13 @@ var s1 = function(s) {
     s.clear();
 
 
-    //  if (isB) {
-    //    s.background(0);
-    s.fill("#4D0AFF")
-    //  }
-    //else s.background(123, 40, 255); // < 98, 48, 255 || 108, 0, 240 || 124, 31, 191 || 193, 0, 255 || 113, 0, 213
-    //  s.fill(0)
+    if (isB) {
+      s.background(0);
+      s.fill("#4D0AFF")
+    } else {
+      s.background("#4D0AFF"); // < 98, 48, 255 || 108, 0, 240 || 124, 31, 191 || 193, 0, 255 || 113, 0, 213
+      s.fill(0)
+    }
 
 
     //  if (p.isBackgroundViolet) s.background(255, 0, 150);

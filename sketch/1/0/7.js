@@ -1,18 +1,19 @@
-//LETTERA I.
-//denti che si toccano bianchi
+//LETTERA H.
+//foresta dal basso
 
 var s1 = function(s) {
   let w, h;
   let units = [];
+  let inverso = [];
 
   let p = {
     volSensitivity: 22,
-    volSpace: 200, // 0-100
-    volSpaceMin: 100,
-    volSpaceMax: 300,
-    minSpace: 100,
-    grids: [80, 12, 20],
+    volSpace: 300, // 0-100
+    volSpaceMin: 20,
+    volSpaceMax: 500,
+    grids: [12, 20, 32],
     isBlack: [true, false],
+    minSpace: 400
   }
 
   s.setMicGain = function(g) {
@@ -28,21 +29,21 @@ var s1 = function(s) {
     s.background(0);
     s.pixelDensity(1);
     s.genGrid();
-    //s.frameRate(20);
-    p.minSpace = h * 4 / 7;
-    // p.volSpace = h - p.minSpace;
   }
   s.draw = function() {
     s.clear();
     for (let u = 0; u < units.length; u++) {
       units[u].display();
+      // inverso[u].display();
     }
   }
   s.genGrid = function() {
     if (units.length > 0) units = [];
+    if (inverso.length > 0) inverso = [];
     let grid = s.random(p.grids);
     for (let u = 0; u < grid; u++) {
-      units.push(new Unit(s, u, u * (w - w / 4) / grid + w / 8, h, (w - w / 4) / grid, 255, p.volSensitive, p.volSpace, p.minSpace)); //posizione fascia di sotto
+      units.push(new Unit(s, u, u * w / grid, h, w / grid, 255, p.volSensitivity, p.volSpace, p.minSpace)); //posizione fascia di sotto
+      // inverso.push(new Unit(s, u, u * w / grid, 0, w / grid, 255, p.volSensitivity, -p.volSpace, -p.minSpace)); //posizione fascia di sopra rovesciata
     }
   }
 
@@ -54,21 +55,31 @@ var s1 = function(s) {
       this.y = _y;
       this.w = _w;
       this.h = _h;
-      this.volSensitive = _vS;
+      this.volSensitivity = _vS;
       this.volSpace = _vSp;
       this.minSpace = _mS;
-
     }
-    display() {
-      let volume = Sound.mapSound(10, this.id * this.volSensitive, 0, this.volSpace);
+    display(cv = 250, m = 22) {
+      let volume = Sound.mapSound(10, this.id * this.volSensitivity, 0, this.volSpace);
 
+      //se tolgo 10 tutti salgono contemporaneamente
       this.s.fill(255);
       this.s.noStroke();
       this.s.beginShape();
       this.s.vertex(this.x, this.y);
       this.s.vertex(this.x + this.w, this.y);
-      this.s.vertex(this.x + this.w / 2, this.y - this.minSpace - volume);
+      let dif = (h / 2) - (this.y - this.minSpace - volume);
+      if (volume >= h / 2) {
+        this.s.vertex(this.x + this.w / 2, this.y - this.minSpace - volume - dif);
+      } else {
+        this.s.vertex(this.x + this.w / 2, this.y - this.minSpace - volume);
+      }
       this.s.endShape();
+      //this.s.rect(this.x, this.y, this.w, -100 - volume);
+      // this.s.push();
+      // this.s.fill(255, 0, 0);
+      // this.s.text(this.id, this.x, this.y);
+      // this.s.pop();
     }
   }
 
