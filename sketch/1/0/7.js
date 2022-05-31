@@ -6,10 +6,18 @@ var s1 = function(s) {
   let units = [];
 
   let p = {
-    grids: [8, 12, 20],
-    volSpace: 200,
-    volSensitive: 22,
+    volSensitivity: 22,
+    volSpace: 200, // 0-100
+    volSpaceMin: 100,
+    volSpaceMax: 300,
+    grids: [80, 12, 20],
+    isBlack: [true, false],
     minSpace: 400
+  }
+
+  s.setMicGain = function(g) {
+    p.volSpace = s.map(g, 0, 100, p.volSpaceMin, p.volSpaceMax);
+    s.genGrid();
   }
 
   s.setup = function() {
@@ -20,9 +28,9 @@ var s1 = function(s) {
     s.background(0);
     s.pixelDensity(1);
     s.genGrid();
-    s.frameRate(20);
+    //s.frameRate(20);
     p.minSpace = h * 4 / 7;
-    p.volSpace = h - p.minSpace;
+    // p.volSpace = h - p.minSpace;
   }
   s.draw = function() {
     s.clear();

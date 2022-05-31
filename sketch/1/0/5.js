@@ -8,9 +8,17 @@ var s1 = function(s) {
   let inverso = [];
 
   let p = {
+    volSensitivity: 22,
+    volSpace: 80, // 0-100
+    volSpaceMin: 20,
+    volSpaceMax: 160,
     grids: [4, 8, 14],
     isBlack: [true, false],
+  }
 
+  s.setMicGain = function(g) {
+    p.volSpace = s.map(g, 0, 100, p.volSpaceMin, p.volSpaceMax);
+    s.genGrid();
   }
 
 
@@ -41,9 +49,8 @@ var s1 = function(s) {
     s.rect(w - w / 8, 0, w / 8, h);
 
     for (let u = 0; u < units.length; u++) {
-      units[u].display(80, 22);
-      inverso[u].display(-80, 22);
-      //inverso[u].display(-250,15)
+      units[u].display();
+      inverso[u].display();
     }
   }
   s.genGrid = function() {
@@ -51,25 +58,24 @@ var s1 = function(s) {
     if (inverso.length > 0) inverso = [];
     let grid = s.random(p.grids);
     for (let u = 0; u < grid; u++) {
-      //units.push(new Unit(s, u, u * w / grid, h, w / grid - 30, 255));
-      units.push(new Unit(s, u, w / 8, u * h / grid, 200, h / grid));
-      inverso.push(new Unit(s, u, w - w / 8, u * h / grid, 200, h / grid));
-
+      units.push(new Unit(s, u, w / 8, u * h / grid, 200, h / grid, p.volSensitivity, p.volSpace));
+      inverso.push(new Unit(s, u, w - w / 8, u * h / grid, 200, h / grid, p.volSensitivity, -p.volSpace));
     }
-    // console.log(units.length);
   }
 
   class Unit {
-    constructor(_s, _id, _x, _y, _w, _h) {
+    constructor(_s, _id, _x, _y, _w, _h, _vS, _vSp) {
       this.s = _s; // < our p5 instance object
       this.id = _id + 1;
       this.x = _x;
       this.y = _y;
       this.w = _w;
       this.h = _h;
+      this.volSensitivity = _vS;
+      this.volSpace = _vSp;
     }
-    display(cv = 250, m = 22) {
-      let volume = Sound.mapSound(10, this.id * m, 0, cv);
+    display() {
+      let volume = Sound.mapSound(10, this.id * this.volSensitivity, 0, this.volSpace);
       if (isB) {
         //this.s.background(255, 0, 0);
         this.s.fill(0)

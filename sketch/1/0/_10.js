@@ -1,5 +1,5 @@
-//LETTERA C.
-//macduff bianco solo sotto
+//LETTERA I.
+//denti che si toccano rossi
 
 
 var s1 = function(s) {
@@ -9,10 +9,10 @@ var s1 = function(s) {
 
   let p = {
     volSensitivity: 22,
-    volSpace: 50, // 0-100
-    volSpaceMin: 20,
-    volSpaceMax: 300,
-    grids: [4, 8, 16],
+    volSpace: 250, // 0-100
+    volSpaceMin: 150,
+    volSpaceMax: 400,
+    grids: [12, 20, 32],
     isBlack: [true, false],
   }
 
@@ -20,7 +20,6 @@ var s1 = function(s) {
     p.volSpace = s.map(g, 0, 100, p.volSpaceMin, p.volSpaceMax);
     s.genGrid();
   }
-
 
   s.setup = function() {
     let cnv;
@@ -30,10 +29,17 @@ var s1 = function(s) {
     s.background(0);
     s.pixelDensity(1);
     s.genGrid();
-    //s.frameRate(15);
+    //s.frameRate(20);
+    isB = random(p.isBlack);
   }
   s.draw = function() {
     s.clear();
+
+    if (isB) {
+      s.background(255, 0, 0);
+    } else {
+      s.background(0);
+    }
     for (let u = 0; u < units.length; u++) {
       units[u].display();
       inverso[u].display();
@@ -44,8 +50,8 @@ var s1 = function(s) {
     if (inverso.length > 0) inverso = [];
     let grid = s.random(p.grids);
     for (let u = 0; u < grid; u++) {
-      units.push(new Unit(s, u, u * (w - w / 4) / grid + w / 8, h, (w - w / 4) / grid, 255, p.volSensitivity, p.volSpace)); //posizione fascia di sotto
-      inverso.push(new Unit(s, u, u * (w - w / 4) / grid + w / 8, 0, (w - w / 4) / grid, 255, p.volSensitivity, -p.volSpace)); //posizione fascia di sopra rovesciata
+      units.push(new Unit(s, u, u * w / grid, h, w / grid, 255, p.volSensitivity, p.volSpace)); //posizione fascia di sotto
+      inverso.push(new Unit(s, u, u * w / grid, 0, w / grid, 255, p.volSensitivity, -p.volSpace)); //posizione fascia di sopra rovesciata
     }
   }
 
@@ -62,15 +68,26 @@ var s1 = function(s) {
     }
     display() {
       let volume = Sound.mapSound(10, this.id * this.volSensitivity, 0, this.volSpace);
+      if (isB) {
+        //this.s.background(255, 0, 0);
+        this.s.fill(0)
+      } else {
+        //this.s.background(0);
+        this.s.fill(255, 0, 0);
+      }
+
       //se tolgo 10 tutti salgono contemporaneamente
-      this.s.fill(255);
-      this.s.stroke(255);
-      this.s.strokeWeight(2);
+      //this.s.fill("red");
+      this.s.noStroke();
       this.s.beginShape();
       this.s.vertex(this.x, this.y);
       this.s.vertex(this.x + this.w, this.y);
-      this.s.vertex(this.x + this.w, this.y - volume); // 0 e per far partire i rettangoli dalla base
-      this.s.vertex(this.x, this.y - volume)
+      let dif = (h / 2) - (this.y - cv - volume);
+      if (volume >= h / 2) {
+        this.s.vertex(this.x + this.w / 2, this.y - cv - volume - dif);
+      } else {
+        this.s.vertex(this.x + this.w / 2, this.y - cv - volume);
+      }
       this.s.endShape();
       //this.s.rect(this.x, this.y, this.w, -100 - volume);
       // this.s.push();

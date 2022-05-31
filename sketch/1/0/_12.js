@@ -21,7 +21,7 @@ var s1 = function(s) {
     s.background(0);
     s.pixelDensity(1);
     s.genGrid();
-    s.frameRate(20);
+    //s.frameRate(20);
 
     isB = random(p.isBlack);
 

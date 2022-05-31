@@ -29,7 +29,7 @@ var s1 = function(s) {
     s.background(0);
     s.pixelDensity(1);
     s.genGrid();
-    s.frameRate(15);
+    //s.frameRate(15);
   }
   s.draw = function() {
     s.clear();
@@ -64,7 +64,7 @@ var s1 = function(s) {
       this.volSensitivity = _vS;
       this.volSpace = _vSp;
     }
-    display(cv = 250, m = 22) {
+    display() {
       let volume = Sound.mapSound(10, this.id * this.volSensitivity, 0, this.volSpace);
       //se tolgo 10 tutti salgono contemporaneamente
       this.s.fill(255);
