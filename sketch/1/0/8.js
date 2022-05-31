@@ -43,7 +43,7 @@ var s1 = function(s) {
     let grid = s.random(p.grids);
     for (let u = 0; u < grid; u++) {
       units.push(new Unit(s, u, u * w / grid, h, w / grid, 255, p.volSensitivity, p.volSpace, p.minSpace)); //posizione fascia di sotto
-      inverso.push(new Unit(s, u, u * w / grid, 0, w / grid, 255, p.volSensitivity, -p.volSpace, p.minSpace)); //posizione fascia di sopra rovesciata
+      inverso.push(new Unit(s, u, u * w / grid, 0, w / grid, 255, p.volSensitivity, -p.volSpace, -p.minSpace)); //posizione fascia di sopra rovesciata
     }
   }
 

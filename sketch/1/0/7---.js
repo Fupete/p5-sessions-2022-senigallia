@@ -10,9 +10,9 @@ var s1 = function(s) {
     volSpace: 200, // 0-100
     volSpaceMin: 100,
     volSpaceMax: 300,
+    minSpace: 100,
     grids: [80, 12, 20],
     isBlack: [true, false],
-    minSpace: 400
   }
 
   s.setMicGain = function(g) {

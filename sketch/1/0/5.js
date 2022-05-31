@@ -12,6 +12,7 @@ var s1 = function(s) {
     volSpace: 80, // 0-100
     volSpaceMin: 20,
     volSpaceMax: 160,
+    minSpace: 40,
     grids: [4, 8, 14],
     isBlack: [true, false],
   }
@@ -58,13 +59,13 @@ var s1 = function(s) {
     if (inverso.length > 0) inverso = [];
     let grid = s.random(p.grids);
     for (let u = 0; u < grid; u++) {
-      units.push(new Unit(s, u, w / 8, u * h / grid, 200, h / grid, p.volSensitivity, p.volSpace));
-      inverso.push(new Unit(s, u, w - w / 8, u * h / grid, 200, h / grid, p.volSensitivity, -p.volSpace));
+      units.push(new Unit(s, u, w / 8, u * h / grid, 200, h / grid, p.volSensitivity, p.volSpace, p.minSpace));
+      inverso.push(new Unit(s, u, w - w / 8, u * h / grid, 200, h / grid, p.volSensitivity, -p.volSpace, -p.minSpace));
     }
   }
 
   class Unit {
-    constructor(_s, _id, _x, _y, _w, _h, _vS, _vSp) {
+    constructor(_s, _id, _x, _y, _w, _h, _vS, _vSp, _mSp) {
       this.s = _s; // < our p5 instance object
       this.id = _id + 1;
       this.x = _x;
@@ -73,6 +74,7 @@ var s1 = function(s) {
       this.h = _h;
       this.volSensitivity = _vS;
       this.volSpace = _vSp;
+      this.minSpace = _mSp;
     }
     display() {
       let volume = Sound.mapSound(10, this.id * this.volSensitivity, 0, this.volSpace);
@@ -91,7 +93,7 @@ var s1 = function(s) {
       this.s.beginShape();
       this.s.vertex(this.x, this.y);
       //this.s.vertex(this.x + cv/4 + volume, this.y);
-      this.s.vertex(this.x + cv / 2 + volume, this.y + this.h / 2); // 0 e per far partire i rettangoli dalla base
+      this.s.vertex(this.x + this.minSpace + volume, this.y + this.h / 2); // 0 e per far partire i rettangoli dalla base
       this.s.vertex(this.x, this.y + this.h)
       this.s.endShape();
       //this.s.rect(this.x, this.y, this.w, -100 - volume);
